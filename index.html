@@ -1,0 +1,55 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Chord Tone Finder</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="SitePoint">
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <h1>Chord Tone Finder</h1>
+    <!-- <form action="#"> -->
+    <label for="name">Letter name:</label>
+      <select name="name" id="name">
+        <option value="c">c</option>
+        <option value="d">d</option>
+        <option value="e">e</option>
+        <option value="f">f</option>
+        <option value="g">g</option>
+        <option value="a">a</option>
+        <option value="b">b</option>
+      </select>
+    <label for="accidental">Accidental:</label>
+      <select name="accidental" id="accidental">
+        <option value=""></option>
+        <option value="#">sharp #</option>
+        <option value="b">flat b</option>
+      </select>
+    <label for="type">Triad type:</label>
+      <select name="type" id="type">
+        <option value="major">major</option>
+        <option value="minor">minor</option>
+        <option value="dominant">dominant</option>
+        <option value="augmented">augmented</option>
+        <option value="diminished">diminished</option>
+        <option value="invalid type">invalid type</option>
+      </select>
+    <label for="sixthSeventh">6th / 7th:</label>
+      <select name="sixthSeventh" id="sixthSeventh">
+        <option value=""></option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+      </select>
+        <!-- <button type="button" onclick="displayData()">Get chord tones-onclick</button> -->
+    <button id="buttonEvtList">Get chord tones</button>
+      <!-- </form> -->
+    <p >Chord scale: <span id="chordScale"></span></p>
+    <p >Chord name: <span id="chordNameType"></span></p>
+    <p >Chord tones: <span id="chordTones"></span></p>
+    <p id="message" class="hidden">This is a theoretical chord!</p>
+    <script src="script.js"></script>
+  </body>
+</html>
