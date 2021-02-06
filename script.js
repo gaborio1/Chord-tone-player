@@ -1,20 +1,17 @@
-// ADD CURLY BRACES TO ELSE
-
-
 console.log('connected');
 
 class Chord {
-
-    constructor(name, accidental, type) {
+    constructor(name, accidental, type, optSeventh) {
         this.name = name;
         this.accidental = accidental;
         this.type = type;
+        this.optSeventh = optSeventh;
         // this.root = getRoot();
         // this.sixthSeventh = this.sixthSeventh;
         this.test = function() {
-            const {name, type, getRoot, getThird, getFifth, getMinorSeventh} = this;
+            const {name, type, getRoot, getThird, getFifth, getMinorSeventh, optSeventh} = this;
             // console.log(`Hello from: ${name}${accidental} ${type}, my notes: ${getRoot()}, ${getThird()}, ${getFifth()}`);
-            return `Hello from: ${name}${accidental} ${type}, my notes: ${getRoot()}, ${getThird()}, ${getFifth()}`;
+            return `Hello from: ${name}${accidental} ${type} ${optSeventh}, my notes: ${getRoot()}, ${getThird()}, ${getFifth()}, ${this.getSeventh()}`;
         }
     }
 
@@ -25,14 +22,15 @@ class Chord {
 
     // FLATTEN FIFTH 
     getFlatFifth = () => {
+        const {getFifth} = this;
         // IF fifth HAS A SECOND CHAR "#", ONLY RETURN THE FIRST CHAR (LETTER NAME)
-        let secondChar = this.getFifth().charAt(1);
+        let secondChar = getFifth().charAt(1);
         switch (secondChar) {
             case "#":
-                return this.getFifth().charAt(0);
+                return getFifth().charAt(0);
                 break;
             default:
-                return this.getFifth().concat("b");
+                return getFifth().concat("b");
         }
     }
 
@@ -40,28 +38,30 @@ class Chord {
 
     // SHARPEN FIFTH
     getSharpFifth = () => {
+        const {getFifth} = this;
         // IF fifth HAS A SECOND CHAR "b", ONLY RETURN THE FIRST CHAR (LETTER NAME)
-        let secondChar = this.getFifth().charAt(1);
+        let secondChar = getFifth().charAt(1);
         switch (secondChar) {
             case "b":
-                return this.getFifth().charAt(0);
+                return getFifth().charAt(0);
                 break;
             default:
-                return this.getFifth().concat("#");
+                return getFifth().concat("#");
         }
     }
 
     // getSixth = () => getDiatonicScale(this.name, this.accidental, this.type)[5];
 
     getMinorSeventh = () => {
+        const {getSeventh} = this;
         // IF sixth HAS A SECOND CHAR "#", ONLY RETURN THE FIRST CHAR (LETTER NAME)
-        let secondChar = this.getSeventh().charAt(1);
+        let secondChar = getSeventh().charAt(1);
         switch (secondChar) {
             case "#":
-                return this.getSeventh().charAt(0);
+                return getSeventh().charAt(0);
                 break;
             default:
-                return this.getSeventh().concat("b");
+                return getSeventh().concat("b");
         }
     }
 
@@ -89,9 +89,18 @@ function getAccidental() {
     return chordAccidental;
 }
 
+// GET OPTIONAL SEVENTH
+//  The value property of an HTML option element can only be a string !!!
+function getOptSeventh() {
+    const seventhSelect = document.getElementById("seventh");
+    let chordSeventh = seventhSelect.options[seventhSelect.selectedIndex].value;
+    return chordSeventh;
+}
+
 // DISP CHORD NAME BASED OFF OF name, accidental AND type
 // CHANGE type VALUE TO SYMBOLS
 function displayChord() {
+    let chordNameType;
     let typeSymbol;
     switch (getType()) {
         case "major" :
@@ -112,14 +121,25 @@ function displayChord() {
         default:
             typeSymbol = "invalid type"
         }
-
-    let chordNameType = `${getName().toUpperCase()}${getAccidental()} ${typeSymbol}`;
+        // ADD OPTIONAL 7th TO SYMBOL
+    let seventhValue = getOptSeventh();
+    let type = getType();
+    if (seventhValue === "7") {
+        if (type === "major") {
+            typeSymbol += "M7";
+        } else if (type === "minor") {
+            typeSymbol += "7";
+        } else {
+            console.log("not major or minor, FIX THIS!");
+        }
+    }
+    chordNameType = `${getName().toUpperCase()}${getAccidental()}${typeSymbol}`;
     document.getElementById("chordNameType").innerText = chordNameType;
 }
 
 // DISP CHORD TONES BASED ON DIATONIC CHORD SCALE
 function displayChordTones() {
-    const chordObj = new Chord(getName(), getAccidental(), getType());
+    const chordObj = new Chord(getName(), getAccidental(), getType(), getOptSeventh());
     // this.test FROM CONSTRUCTOR
     console.log(chordObj.test());
     const chordTonesDisplay = document.getElementById("chordTones");
@@ -136,6 +156,11 @@ function displayChordTones() {
             break;
         default:
             chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getFifth()}`;
+    }
+    // ADD CORRECT SEVENTH BASED ON MINOR OR MAJOR
+    let seventhValue = getOptSeventh();
+    if (seventhValue === "7") {
+        chordTones += " " + chordObj.getSeventh();
     }
     chordTonesDisplay.innerText = chordTones;
 }
@@ -154,11 +179,9 @@ buttonTest.addEventListener("click", function(evt) {
     handleClick();
 })
 
-const c1 = new Chord("c", "", "major");
-const c2 = new Chord("a#", "major");
-
-
-// ===============================================================================
+// CHORD OBJECT TEST
+// const c1 = new Chord("c", "", "major");
+// const c2 = new Chord("a#", "major");
 
 // MODELLING SCALES
 
