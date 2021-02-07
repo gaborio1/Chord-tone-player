@@ -1,11 +1,13 @@
 console.log('connected');
 
 class Chord {
-    constructor(name, accidental, type, optSeventh) {
+    constructor(name, accidental, type, optSixth = "", optSeventh = "", optNinth = "") {
         this.name = name;
         this.accidental = accidental;
         this.type = type;
+        this.optSixth = optSixth;
         this.optSeventh = optSeventh;
+        this.optNinth = optNinth;
         // this.root = getRoot();
         // this.sixthSeventh = this.sixthSeventh;
         this.test = function() {
@@ -14,12 +16,9 @@ class Chord {
             return `Hello from: ${name}${accidental} ${type} ${optSeventh}, my notes: ${getRoot()}, ${getThird()}, ${getFifth()}, ${this.getSeventh()}`;
         }
     }
-
     // FIND AND RETURN APPROPRIATE SCALE DEGREE FROM DIATONIC SCALE
     getRoot = () => getDiatonicScale(this.name, this.accidental, this.type)[0];
-
     getThird = () => getDiatonicScale(this.name, this.accidental, this.type)[2];
-
     // FLATTEN FIFTH 
     getFlatFifth = () => {
         const {getFifth} = this;
@@ -33,9 +32,7 @@ class Chord {
                 return getFifth().concat("b");
         }
     }
-
     getFifth = () => getDiatonicScale(this.name, this.accidental, this.type)[4];
-
     // SHARPEN FIFTH
     getSharpFifth = () => {
         const {getFifth} = this;
@@ -49,9 +46,7 @@ class Chord {
                 return getFifth().concat("#");
         }
     }
-
-    // getSixth = () => getDiatonicScale(this.name, this.accidental, this.type)[5];
-
+    getSixth = () => getDiatonicScale(this.name, this.accidental, this.type)[5];
     getMinorSeventh = () => {
         const {getSeventh} = this;
         // IF sixth HAS A SECOND CHAR "#", ONLY RETURN THE FIRST CHAR (LETTER NAME)
@@ -64,8 +59,8 @@ class Chord {
                 return getSeventh().concat("b");
         }
     }
-
     getSeventh = () => getDiatonicScale(this.name, this.accidental, this.type)[6];
+    getNinth = () => getDiatonicScale(this.name, this.accidental, this.type)[1];
 }
 
 // GET NAME FROM DROPDOWN
@@ -74,21 +69,24 @@ function getName() {
     let chordName = nameSelect.options[nameSelect.selectedIndex].value;
     return chordName;
 }
-
 // GET TYPE FROM DROPDOWN
 function getType() {
     const typeSelect = document.getElementById("type");
     let chordType = typeSelect.options[typeSelect.selectedIndex].value;
     return chordType;
 }
-
 // GET ACCIDENTALS FROM DROPDOWN
 function getAccidental() {
     const accidentalSelect = document.getElementById("accidental");
     let chordAccidental = accidentalSelect.options[accidentalSelect.selectedIndex].value;
     return chordAccidental;
 }
-
+// GET OPTIONAL SIXTH
+function getOptSixth() {
+    const sixthSelect = document.getElementById("sixth");
+    let chordSixth = sixthSelect.options[sixthSelect.selectedIndex].value;
+    return chordSixth;
+}
 // GET OPTIONAL SEVENTH
 //  The value property of an HTML option element can only be a string !!!
 function getOptSeventh() {
@@ -96,10 +94,15 @@ function getOptSeventh() {
     let chordSeventh = seventhSelect.options[seventhSelect.selectedIndex].value;
     return chordSeventh;
 }
-
+// GET OPTIONAL NINTH
+function getOptninth() {
+    const ninthSelect = document.getElementById("ninth");
+    let chordNinth = ninthSelect.options[ninthSelect.selectedIndex].value;
+    return chordNinth;
+}
 // DISP CHORD NAME BASED OFF OF name, accidental AND type
 // CHANGE type VALUE TO SYMBOLS
-function displayChord() {
+function displayChordName() {
     let chordNameType;
     let typeSymbol;
     switch (getType()) {
@@ -110,7 +113,11 @@ function displayChord() {
             typeSymbol = "m";
             break;
         case "dominant" :
-            typeSymbol = "7";
+            if (getOptninth() === "9" || getOptninth() === "add9") {
+                typeSymbol = "9";
+            } else {
+                typeSymbol = "7";
+            }
             break;
         case "augmented" :
             typeSymbol = "+";
@@ -121,9 +128,21 @@ function displayChord() {
         default:
             typeSymbol = "invalid type"
         }
-        // ADD OPTIONAL 7th TO SYMBOL
-    let seventhValue = getOptSeventh();
+
     let type = getType();
+    // ADD OPTIONAL SIXTH TO SYMBOL
+    let sixthValue = getOptSixth();
+    if (sixthValue === "6") {
+        if (type === "major") {
+            typeSymbol += "6";
+        } else if (type === "minor") {
+            typeSymbol += "6";
+        } else {
+            console.log("not major or minor, FIX THIS!");
+        }
+    }
+    // ADD OPTIONAL 7th TO SYMBOL
+    let seventhValue = getOptSeventh();
     if (seventhValue === "7") {
         if (type === "major") {
             typeSymbol += "M7";
@@ -133,11 +152,30 @@ function displayChord() {
             console.log("not major or minor, FIX THIS!");
         }
     }
+    // ADD OPTIONAL 9th TO SYMBOL
+    let ninthValue = getOptninth();
+    if (ninthValue === "9") {
+        if (type === "major") {
+            typeSymbol += "M9";
+        } else if (type === "minor") {
+            typeSymbol += "9";
+        } else if (type === "dominant") {
+            typeSymbol += "";
+        } else {
+            console.log("not major or minor, FIX THIS!");
+        }
+    } else if (ninthValue === "add9") {
+        if (type === "dominant") {
+            typeSymbol = "9";
+        } else {
+            typeSymbol += " add9";
+        }
+    }
     chordNameType = `${getName().toUpperCase()}${getAccidental()}${typeSymbol}`;
     document.getElementById("chordNameType").innerText = chordNameType;
 }
 
-// DISP CHORD TONES BASED ON DIATONIC CHORD SCALE
+// DISP CHORD TONES BASED ON DIATONIC SCALE
 function displayChordTones() {
     const chordObj = new Chord(getName(), getAccidental(), getType(), getOptSeventh());
     // this.test FROM CONSTRUCTOR
@@ -157,17 +195,31 @@ function displayChordTones() {
         default:
             chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getFifth()}`;
     }
-    // ADD CORRECT SEVENTH BASED ON MINOR OR MAJOR
+    // ADD SIXTH BASED ON type => chordScale
+    let sixthValue = getOptSixth();
+    if (sixthValue === "6") {
+        chordTones += " " + chordObj.getSixth();
+    }
+    chordTonesDisplay.innerText = chordTones;
+    // ADD SEVENTH BASED ON type => chordScale
     let seventhValue = getOptSeventh();
     if (seventhValue === "7") {
         chordTones += " " + chordObj.getSeventh();
+    }
+    chordTonesDisplay.innerText = chordTones;
+    // ADD NINTH BASED ON type => chordScale
+    let ninthValue = getOptninth();
+    if (ninthValue === "9") {
+        chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth();
+    } else if (ninthValue === "add9") {
+        chordTones += " " + chordObj.getNinth();
     }
     chordTonesDisplay.innerText = chordTones;
 }
 
 // EVT HANDLER
 function handleClick() {
-    displayChord();
+    displayChordName();
     displayChordTones();
     displayChordScale();
 }
