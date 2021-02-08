@@ -392,3 +392,15 @@ function displayChordScale() {
     document.getElementById("chordScale").innerText = scale;
 }
 
+
+// HOWLER JS AUDIO TEST PLAYS WAV FILE
+const sound = new Howl({
+    src: ['sounds/soundTest.wav']
+  });
+
+function soundTest() {
+    console.log("sound!");
+    console.log(sound);
+    sound.play();
+}
+

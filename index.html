@@ -6,6 +6,14 @@
     <title>Chord Tone Finder</title>
     <meta name="description" content="The HTML5 Herald">
     <meta name="author" content="SitePoint">
+    <!-- HOWLER JS MDN -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.js"></script>
+    <!-- SCRIPT IN NOW IN JS FILE !!1 -->
+    <!-- <script>
+      const sound = new Howl({
+        src: ['sounds/soundTest.wav']
+      });
+  </script> -->
     <link rel="stylesheet" href="style.css">
   </head>
 
@@ -55,7 +63,8 @@
       </select>
         <!-- <button type="button" onclick="displayData()">Get chord tones-onclick</button> -->
     <button id="buttonEvtList">Get chord tones</button>
-      <!-- </form> -->
+    <!-- HOWLER JS AUDIO TEST -->
+    <button onclick="soundTest()">Howler JS sound test</button>
     <p >Chord scale: <span id="chordScale"></span></p>
     <p >Chord name: <span id="chordNameType"></span></p>
     <p >Chord tones: <span id="chordTones"></span></p>
