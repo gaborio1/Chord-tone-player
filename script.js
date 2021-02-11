@@ -212,6 +212,7 @@ function displayChordName() {
     }
     chordNameType = `${getName().toUpperCase()}${getAccidental()}${typeSymbol}`;
     document.getElementById("chordNameType").innerText = chordNameType;
+    return chordNameType;
 }
 
 // DISP CHORD TONES BASED ON DIATONIC SCALE
@@ -326,6 +327,7 @@ function getNaturalScale(ton) {
     return naturalScale;
 }
 
+// BUILD DIATONIC SCALE (MAJOR OR MINOR)
 function getDiatonicScale(name, accidental, type) {  
     let naturalScale = getNaturalScale(name);
     // GET FIRST NOTE OF SCALE
@@ -459,55 +461,109 @@ function displayChordScale() {
 // SHARP-FLAT COMBINED CHROMATIC SCALE E2-B4 
 // "s"="sharp" AND "b"="flat"
 const chromaticScale = [
-    // "E2", "FEs2", "FsGb2", "G2", "GsAb2", "A2", "AsBb2", "BCb2", "C3", "CsDb3", "D3", "DsEb3", 
-    "E3", "FEs3", "FsGb3", "G3", "GsAb3", "A3", "AsBb3", "BCb3", "C4", "CsDb4", "D4", "DsEb4", "E4", "FEs4", "FsGb4", "G4", "GsAb4", "A4", "AsBb4", "B4"];
-
-// const chromaticScale = ["E2", "FE#2", "F#Gb2", "G2", "G#Ab2", "A2", "A#Bb2", "BCb2", "C3", "C#Db3", "D3", "D#Eb3", "E3", "FE#3", "F#Gb3", "G3", "G#Ab3", "A3", "A#Bb3", "BCb3", "C4", "C#Db4", "D4", "D#Eb4", "E4", "FE#4", "F#Gb4", "G4", "G#Ab4", "A4", "A#Bb4", "B4"];
+    "E2", "FEs2", "FsGb2", "G2", "GsAb2", "A2", "AsBb2", "BCb2", "C3", "CsDb3", "D3", "DsEb3", "E3", "FEs3", "FsGb3", "G3", "GsAb3", "A3", "AsBb3", "BCb3", "C4", "CsDb4", "D4", "DsEb4", "E4", "FEs4", "FsGb4", "G4", "GsAb4", "A4", "AsBb4", "B4"];
 
 function getChordToneSounds() {
-    // SPLIT CHORD NOTES INTO ARRAY
+    // SPLIT CHORD NOTES INTO ARRAY ["C", "E", "G", "Bb"]
     const chordNotesArr = displayChordTones().split(" ");
-
     // !!! REPLACE SPECIAL CHAR "#" WITH "s" FOR SHARP AS HOWLER WILL NOT LOAD MP3'S WITH SPEC CHARACTER IN FILENAME !!! 
+    // ["Cs", "Es", "Gs"]
     for (let i = 0; i < chordNotesArr.length; i++) {
             chordNotesArr[i] = chordNotesArr[i].replace("#", "s");
            }
-    console.log(chordNotesArr);
-
+    console.log("chordNotesArr: " + chordNotesArr);
+        // EMPTY ARRAY FOR SOUNDS WITH PATHS AND EXTENSION
     const soundsArr = [];
-    // FIND EACH NOTE IN chromaticScale
-    console.log(chordNotesArr);
+    // FIND EACH NOTE OF chordNotesArr [C,E,G] IN chromaticScale 
     chordNotesArr.forEach((chordTone) => {
-        console.log(chordTone);
-        for (const note of chromaticScale) {
-            // IF CHORDTONE IS SINGLE CHARACTER (F)
-            if (chordTone.length === 1 && note.charAt(0) === chordTone) {
-                console.log("found in " + note.concat(".mp3"));
-                soundsArr.push("sounds/" + note.concat(".mp3"));
+        // FOR EACH NOTE LOOP THROUGH chromaticScale
+        // for (const note of chromaticScale) {
+        //     // IF CHORDTONE IS SINGLE CHARACTER (F) AND IS AT THE FIRST CHARACTER OF THE CHROMATIC NOTE
+        //     if (chordTone.length === 1 && note.charAt(0) === chordTone) {
+        //         // console.log("found in " + note.concat(".mp3"));
+        //         // GRAB THAT CHROMATIC NOTE "G#Ab2" AND ADD PATH TO FRONT, EXTENSION TO END LIKE THIS sounds/C3.mp3
+        //         soundsArr.push("sounds/" + note.concat(".mp3"));
+        //         break;
+        //     // IF CHORDTONE IS 2 CHARACTERS LONG (F#) AND IS INCLUDED IN CHROMATIC NOTE "F#Gb2" ANYWHERE
+        //     } else if (chordTone.length > 1 && note.includes(chordTone)) {
+        //         // console.log("found in " + note.concat(".mp3"));
+        //         soundsArr.push("sounds/" + note.concat(".mp3"));
+        //         break;
+        //     }
+        // }
+    // SAME WITH FOR LOOP:
+        for (let i = 0; i < chromaticScale.length; i++) {
+            if (chordTone.length === 1 && chromaticScale[i].charAt(0) === chordTone) {
+                console.log(i);
+                soundsArr.push("sounds/" + chromaticScale[i].concat(".mp3"));
                 break;
-            // IF CHORDTONE IS 2 CHARACTERS LONG (F#)
-            } else if (chordTone.length > 1 && note.includes(chordTone)) {
-                console.log("found in " + note.concat(".mp3"));
-                soundsArr.push("sounds/" + note.concat(".mp3"));
+            } else if (chordTone.length > 1 && chromaticScale[i].includes(chordTone)) {
+                soundsArr.push("sounds/" + chromaticScale[i].concat(".mp3"));
                 break;
             }
         }
     })
-    console.log(soundsArr);
+    console.log("soundsArr original octave: " + soundsArr);
+
+    // FIND OCTAVEDIGIT AND CHANGE IF NECESSARY WITH REGEX
+    // const octaveDigit = /(\d)(?=\.)/;
+    // for (let i = 1; i < soundsArr.length; i++) {
+    //     console.log(soundsArr[i]);
+    //     soundsArr[i] = soundsArr[i].replace(octaveDigit, "hello")
+    //     console.log(soundsArr[i].replace(octaveDigit, "hello"));
+    //     // if (octaveDigit IS LESS THAN PREVIOUS ELEMENT'S ) {
+    //         // ADD 1 TO IT  
+    //         // console.log("wrong octave");
+    //     // }
+    // }
+    // console.log(soundsArr);
+
+
+    // FIND OCTAVEDIGIT AND TRANSPOSE INDIVIDUAL NOTES IF NECESSARY (THIS IS EASIER THAN USING REGEX)
+    for (let i = 1; i < soundsArr.length; i++) {
+        const octaveDigit = soundsArr[i].charAt(soundsArr[i].length - 5);
+        // console.log(typeof(octaveDigit));
+        console.log(soundsArr[i] + ", octave: " + octaveDigit);
+        if (soundsArr[i].charAt(soundsArr[i].length - 5) < soundsArr[i - 1].charAt(soundsArr[i - 1].length - 5)) {
+            console.log("wrong octave");
+            console.log("current octave: " + soundsArr[i].charAt(soundsArr[i].length - 5));
+            console.log("previous octave: " + soundsArr[i - 1].charAt(soundsArr[i - 1].length - 5));
+            // INCREMENT OCTAVEDIGIT BY 1
+            let octaveDigitNum = parseInt(octaveDigit, 10);
+            octaveDigitNum += 1;
+            soundsArr[i] = soundsArr[i].replace(soundsArr[i].charAt(soundsArr[i].length - 5), octaveDigitNum.toString());
+        }
+    }
+    // ALSO, TRANSPOSE NOTES THAT ARE BEYOND THE OCTAVE (9,11,13)
+    if (soundsArr.length > 3  && (displayChordName().indexOf("9") !== -1 || displayChordName().indexOf("11")!== -1)) {
+        console.log("9 or 11 !!!");
+    }
+    console.log("soundsArr updated octave: " + soundsArr);
     return soundsArr;
 }
 
 // THIS IS GOING TO PLAY ACTUAL SOUND FILES
 function playChordTones() {
     const soundFiles = getChordToneSounds();
-    console.log(soundFiles);
+    console.log("soundFiles: " + soundFiles);
     for (const soundFile of soundFiles) {
-        console.log(soundFile);
+        // console.log(soundFile);
         const sound = new Howl({
             src: [soundFile]
         });
         sound.play();
     }
+
+    // var sound = new Howl({
+    //     src: ["sounds/C4.mp3", "sounds/E3.mp3", "sounds/G3.mp3"],
+    //     autoplay: true,
+    //     loop: false,
+    //     volume: 0.5,
+    //     onend: function() {
+    //       console.log('Finished!');
+    //     }
+    //   });
+
     // var sound1 = new Howl({
     //     src: [soundFiles[0]],
     //     preload: true
