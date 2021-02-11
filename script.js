@@ -456,12 +456,24 @@ function displayChordScale() {
 
 // PLAY CHORD 
 
-// SHARP-FLAT COMBINED CHROMATIC SCALE E2-B4
-const chromaticScale = ["E2", "FE#2", "F#Gb2", "G2", "G#Ab2", "A2", "A#Bb2", "BCb2", "C3", "C#Db3", "D3", "D#Eb3", "E3", "FE#3", "F#Gb3", "G3", "G#Ab3", "A3", "A#Bb3", "BCb3", "C4", "C#Db4", "D4", "D#Eb4", "E4", "FE#4", "F#Gb4", "G4", "G#Ab4", "A4", "A#Bb4", "B4"];
+// SHARP-FLAT COMBINED CHROMATIC SCALE E2-B4 
+// "s"="sharp" AND "b"="flat"
+const chromaticScale = [
+    // "E2", "FEs2", "FsGb2", "G2", "GsAb2", "A2", "AsBb2", "BCb2", "C3", "CsDb3", "D3", "DsEb3", 
+    "E3", "FEs3", "FsGb3", "G3", "GsAb3", "A3", "AsBb3", "BCb3", "C4", "CsDb4", "D4", "DsEb4", "E4", "FEs4", "FsGb4", "G4", "GsAb4", "A4", "AsBb4", "B4"];
+
+// const chromaticScale = ["E2", "FE#2", "F#Gb2", "G2", "G#Ab2", "A2", "A#Bb2", "BCb2", "C3", "C#Db3", "D3", "D#Eb3", "E3", "FE#3", "F#Gb3", "G3", "G#Ab3", "A3", "A#Bb3", "BCb3", "C4", "C#Db4", "D4", "D#Eb4", "E4", "FE#4", "F#Gb4", "G4", "G#Ab4", "A4", "A#Bb4", "B4"];
 
 function getChordToneSounds() {
     // SPLIT CHORD NOTES INTO ARRAY
     const chordNotesArr = displayChordTones().split(" ");
+
+    // !!! REPLACE SPECIAL CHAR "#" WITH "s" FOR SHARP AS HOWLER WILL NOT LOAD MP3'S WITH SPEC CHARACTER IN FILENAME !!! 
+    for (let i = 0; i < chordNotesArr.length; i++) {
+            chordNotesArr[i] = chordNotesArr[i].replace("#", "s");
+           }
+    console.log(chordNotesArr);
+
     const soundsArr = [];
     // FIND EACH NOTE IN chromaticScale
     console.log(chordNotesArr);
@@ -489,18 +501,34 @@ function getChordToneSounds() {
 function playChordTones() {
     const soundFiles = getChordToneSounds();
     console.log(soundFiles);
-    // let soundFilePath = "sounds/";
     for (const soundFile of soundFiles) {
-        // soundFilePath += soundFile;
         console.log(soundFile);
         const sound = new Howl({
             src: [soundFile]
-            // src: ['sounds/soundTest.wav']
-            // src: ['sounds/C3.mp3']
         });
         sound.play();
     }
-    // sound.play();
+    // var sound1 = new Howl({
+    //     src: [soundFiles[0]],
+    //     preload: true
+    //   });
+    // var sound2 = new Howl({
+    //     src: [soundFiles[1]],
+    //     preload: true
+    //   });
+    // var sound3 = new Howl({
+    //     src: [soundFiles[2]],
+    //     preload: true
+    //   });
+
+    //   var sound4 = new Howl({
+    //     src: ['sounds/FsGb2.mp3'],
+    //     preload: true
+    //   });
+    //   sound1.play()
+    //   sound2.play()
+    //   sound3.play()
+    // sound4.play()
 }
 
 function handlePlay() {
