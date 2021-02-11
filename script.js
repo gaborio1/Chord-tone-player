@@ -471,12 +471,12 @@ function getChordToneSounds() {
             // IF CHORDTONE IS SINGLE CHARACTER (F)
             if (chordTone.length === 1 && note.charAt(0) === chordTone) {
                 console.log("found in " + note.concat(".mp3"));
-                soundsArr.push(note.concat(".mp3"));
+                soundsArr.push("sounds/" + note.concat(".mp3"));
                 break;
             // IF CHORDTONE IS 2 CHARACTERS LONG (F#)
             } else if (chordTone.length > 1 && note.includes(chordTone)) {
                 console.log("found in " + note.concat(".mp3"));
-                soundsArr.push(note.concat(".mp3"));
+                soundsArr.push("sounds/" + note.concat(".mp3"));
                 break;
             }
         }
@@ -489,7 +489,18 @@ function getChordToneSounds() {
 function playChordTones() {
     const soundFiles = getChordToneSounds();
     console.log(soundFiles);
-    // return soundFiles;
+    // let soundFilePath = "sounds/";
+    for (const soundFile of soundFiles) {
+        // soundFilePath += soundFile;
+        console.log(soundFile);
+        const sound = new Howl({
+            src: [soundFile]
+            // src: ['sounds/soundTest.wav']
+            // src: ['sounds/C3.mp3']
+        });
+        sound.play();
+    }
+    // sound.play();
 }
 
 function handlePlay() {
