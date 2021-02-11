@@ -271,6 +271,7 @@ function displayChordTones() {
         chordTones += " " + chordObj.getEleventh();
     }
     chordTonesDisplay.innerText = chordTones;
+    return chordTones;
 }
 
 // EVT HANDLER
@@ -449,15 +450,68 @@ function displayChordScale() {
 }
 
 
-// HOWLER JS AUDIO TEST PLAYS WAV FILE
-const sound = new Howl({
-    src: ['sounds/soundTest.wav']
-  });
 
-function soundTest() {
-    console.log("sound!");
-    console.log(sound);
-    // _src: "sounds/soundTest.wav"
-    sound.play();
+
+
+
+// PLAY CHORD 
+
+// SHARP-FLAT COMBINED CHROMATIC SCALE E2-B4
+const chromaticScale = ["E2", "FE#2", "F#Gb2", "G2", "G#Ab2", "A2", "A#Bb2", "BCb2", "C3", "C#Db3", "D3", "D#Eb3", "E3", "FE#3", "F#Gb3", "G3", "G#Ab3", "A3", "A#Bb3", "BCb3", "C4", "C#Db4", "D4", "D#Eb4", "E4", "FE#4", "F#Gb4", "G4", "G#Ab4", "A4", "A#Bb4", "B4"];
+
+function getChordToneSounds() {
+    // SPLIT CHORD NOTES INTO ARRAY
+    const chordNotesArr = displayChordTones().split(" ");
+    const soundsArr = [];
+    // FIND EACH NOTE IN chromaticScale
+    console.log(chordNotesArr);
+    chordNotesArr.forEach((chordTone) => {
+        console.log(chordTone);
+        for (const note of chromaticScale) {
+            // IF CHORDTONE IS SINGLE CHARACTER (F)
+            if (chordTone.length === 1 && note.charAt(0) === chordTone) {
+                console.log("found in " + note.concat(".mp3"));
+                soundsArr.push(note.concat(".mp3"));
+                break;
+            // IF CHORDTONE IS 2 CHARACTERS LONG (F#)
+            } else if (chordTone.length > 1 && note.includes(chordTone)) {
+                console.log("found in " + note.concat(".mp3"));
+                soundsArr.push(note.concat(".mp3"));
+                break;
+            }
+        }
+    })
+    console.log(soundsArr);
+    return soundsArr;
 }
+
+// THIS IS GOING TO PLAY ACTUAL SOUND FILES
+function playChordTones() {
+    const soundFiles = getChordToneSounds();
+    console.log(soundFiles);
+    // return soundFiles;
+}
+
+function handlePlay() {
+    playChordTones();
+}
+
+// LISTEN FOR CLICK ON PLAY
+const playButton = document.getElementById("play");
+playButton.addEventListener("click", function(evt) {
+    evt.preventDefault();
+    handlePlay();
+})
+
+// HOWLER JS AUDIO TEST PLAYS WAV FILE
+// const sound = new Howl({
+//     src: ['sounds/soundTest.wav']
+//   });
+
+// function soundTest() {
+//     console.log("sound!");
+//     console.log(sound);
+//     // _src: "sounds/soundTest.wav"
+//     sound.play();
+// }
 
