@@ -1,7 +1,7 @@
 console.log('connected');
 
 class Chord {
-    constructor(name, accidental, type, optSixth = "", optSeventh = "", optNinth = "", optEleventh = "") {
+    constructor(name, accidental, type, optSixth = "", optSeventh = "", optNinth = "", optEleventh = "", optThirteenth = "") {
         this.name = name;
         this.accidental = accidental;
         this.type = type;
@@ -9,6 +9,7 @@ class Chord {
         this.optSeventh = optSeventh;
         this.optNinth = optNinth;
         this.optEleventh = optEleventh;
+        this.optThirteenth = optThirteenth;
         // this.root = getRoot();
         // this.sixthSeventh = this.sixthSeventh;
         this.test = function() {
@@ -75,9 +76,11 @@ class Chord {
                 return getEleventh().concat("#");
         }
     }
-
+    // USE SIXTH FOR THIRTEENTH
+    getThirteenth = () => this.getSixth();
 }
 
+//  The value property of an HTML option element can only be a string !!!
 // GET NAME FROM DROPDOWN
 function getName() {
     const nameSelect = document.getElementById("name");
@@ -96,29 +99,31 @@ function getAccidental() {
     let chordAccidental = accidentalSelect.options[accidentalSelect.selectedIndex].value;
     return chordAccidental;
 }
-// GET OPTIONAL SIXTH
+// GET OPTIONAL 6,7,11,13
 function getOptSixth() {
     const sixthSelect = document.getElementById("sixth");
     let chordSixth = sixthSelect.options[sixthSelect.selectedIndex].value;
     return chordSixth;
 }
-// GET OPTIONAL SEVENTH
-//  The value property of an HTML option element can only be a string !!!
 function getOptSeventh() {
     const seventhSelect = document.getElementById("seventh");
     let chordSeventh = seventhSelect.options[seventhSelect.selectedIndex].value;
     return chordSeventh;
 }
-// GET OPTIONAL NINTH
 function getOptNinth() {
     const ninthSelect = document.getElementById("ninth");
     let chordNinth = ninthSelect.options[ninthSelect.selectedIndex].value;
     return chordNinth;
 }
 function getOptEleventh() {
-    const EleventhSelect = document.getElementById("eleventh");
-    let chordEleventh = EleventhSelect.options[EleventhSelect.selectedIndex].value;
+    const eleventhSelect = document.getElementById("eleventh");
+    let chordEleventh = eleventhSelect.options[eleventhSelect.selectedIndex].value;
     return chordEleventh;
+}
+function getOptThirteenth() {
+    const thirteenthSelect = document.getElementById("thirteenth");
+    let chordThirteenth = thirteenthSelect.options[thirteenthSelect.selectedIndex].value;
+    return chordThirteenth;
 }
 // DISP CHORD NAME BASED OFF OF name, accidental AND type
 // CHANGE type VALUE TO SYMBOLS
@@ -135,7 +140,12 @@ function displayChordName() {
         case "dominant" :
             if (getOptNinth() === "9" || getOptNinth() === "add9") {
                 typeSymbol = "9";
-            } else {
+            } else if (getOptEleventh() === "11") {
+                typeSymbol = "11";
+            } else if (getOptThirteenth() === "13") {
+                typeSymbol = "13"
+            }
+            else {
                 typeSymbol = "7";
             }
             break;
@@ -150,7 +160,7 @@ function displayChordName() {
         }
 
     let type = getType();
-    // ADD OPTIONAL SIXTH TO SYMBOL
+    // ADD OPTIONAL 6,7,9,11,13 TO SYMBOL
     let sixthValue = getOptSixth();
     if (sixthValue === "6") {
         if (type === "major") {
@@ -161,7 +171,7 @@ function displayChordName() {
             console.log("not major or minor, FIX THIS!");
         }
     }
-    // ADD OPTIONAL 7th TO SYMBOL
+
     let seventhValue = getOptSeventh();
     if (seventhValue === "7") {
         if (type === "major") {
@@ -172,7 +182,7 @@ function displayChordName() {
             console.log("not major or minor, FIX THIS!");
         }
     }
-    // ADD OPTIONAL 9th TO SYMBOL
+
     let ninthValue = getOptNinth();
     if (ninthValue === "9") {
         if (type === "major") {
@@ -191,7 +201,7 @@ function displayChordName() {
             typeSymbol += " add9";
         }
     }
-    // ADD OPTIONAL 11th TO SYMBOL
+
     let eleventhValue = getOptEleventh();
     if (eleventhValue === "11") {
         if (type === "major") {
@@ -210,6 +220,26 @@ function displayChordName() {
             typeSymbol += " add11";
         }
     }
+
+    let thirteenthValue = getOptThirteenth();
+    if (thirteenthValue === "13") {
+        if (type === "major") {
+            typeSymbol += "M13";
+        } else if (type === "minor") {
+            typeSymbol += "13";
+        } else if (type === "dominant") {
+            typeSymbol += "";
+        } else {
+            console.log("not major or minor, FIX THIS!");
+        }
+    } else if (thirteenthValue === "add13") {
+        if (type === "dominant") {
+            typeSymbol = "13";
+        } else {
+            typeSymbol += " add13";
+        }
+    }
+
     chordNameType = `${getName().toUpperCase()}${getAccidental()}${typeSymbol}`;
     document.getElementById("chordNameType").innerText = chordNameType;
     return chordNameType;
@@ -235,19 +265,20 @@ function displayChordTones() {
         default:
             chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getFifth()}`;
     }
-    // ADD SIXTH BASED ON type => chordScale
+    // DUPICATED CODE let sixthValue = getOptSixth(); DISPLAYCHORDNAME() ALSO USES SAME VARIABLES !!!
+    // ADD OPTIONAL 6,7,9,11,13 BASED ON type => chordScale
     let sixthValue = getOptSixth();
     if (sixthValue === "6") {
         chordTones += " " + chordObj.getSixth();
     }
     chordTonesDisplay.innerText = chordTones;
-    // ADD SEVENTH BASED ON type => chordScale
+
     let seventhValue = getOptSeventh();
     if (seventhValue === "7") {
         chordTones += " " + chordObj.getSeventh();
     }
     chordTonesDisplay.innerText = chordTones;
-    // ADD NINTH BASED ON type => chordScale
+
     let ninthValue = getOptNinth();
     if (ninthValue === "9") {
         if (getType() === "dominant") {
@@ -258,7 +289,7 @@ function displayChordTones() {
     } else if (ninthValue === "add9") {
         chordTones += " " + chordObj.getNinth();
     }
-    // ADD ELEVENTH BASED ON type => chordScale
+
     let eleventhValue = getOptEleventh();
     // SHARP 11 WITH MAJOR !!!
     if (eleventhValue === "11" && getType() === "major") {
@@ -271,6 +302,24 @@ function displayChordTones() {
     } else if (eleventhValue === "add11" && getType() === "minor") {
         chordTones += " " + chordObj.getEleventh();
     }
+
+    let thirteenthValue = getOptThirteenth();
+    if (thirteenthValue === "13" && getType() === "major") {
+        chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth() + " " + chordObj.getSharpEleventh() + " " + chordObj.getThirteenth();
+        // NATURAL 11 WITH MINOR !!!
+    } else if (thirteenthValue === "13" && getType() === "minor") {
+        chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth() + " " + chordObj.getEleventh() + " " + chordObj.getThirteenth();
+    } else if (thirteenthValue === "add13" && getType() === "major") {
+        chordTones += " " +  chordObj.getThirteenth();
+    } else if (thirteenthValue === "add13" && getType() === "minor") {
+        chordTones += " " + chordObj.getThirteenth();
+    }
+
+
+
+
+
+
     chordTonesDisplay.innerText = chordTones;
     return chordTones;
 }
@@ -423,7 +472,7 @@ function getDiatonicScale(name, accidental, type) {
             }
         // IF A NATURAL MINOR
         } else if (name === "a" && accidental === "" && (type === "minor" || type === "diminished")) {
-            console.log("c major");
+            // console.log("c major");
             diatonicScale = naturalScale.slice();
             message.classList.add("hidden");
         } else {
@@ -456,7 +505,7 @@ function displayChordScale() {
 // SHARP-FLAT COMBINED CHROMATIC SCALE E2-B4 
 // "s"="sharp" AND "b"="flat"
 const chromaticScale = [
-    "E2", "FEs2", "FsGb2", "G2", "GsAb2", "A2", "AsBb2", "BCb2", "C3", "CsDb3", "D3", "DsEb3", "E3", "FEs3", "FsGb3", "G3", "GsAb3", "A3", "AsBb3", "BCb3", "C4", "CsDb4", "D4", "DsEb4", "E4", "FEs4", "FsGb4", "G4", "GsAb4", "A4", "AsBb4", "B4"];
+    "E2", "FEs2", "FsGb2", "G2", "GsAb2", "A2", "AsBb2", "BCb2", "C3", "CsDb3", "D3", "DsEb3", "E3", "FEs3", "FsGb3", "G3", "GsAb3", "A3", "AsBb3", "BCb3", "C4", "CsDb4", "D4", "DsEb4", "E4", "FEs4", "FsGb4", "G4", "GsAb4", "A4", "AsBb4", "BCb4"];
 
 function getChordToneSounds() {
     // SPLIT CHORD NOTES INTO ARRAY ["C", "E", "G", "Bb"]
