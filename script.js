@@ -466,39 +466,26 @@ function getChordToneSounds() {
     for (let i = 0; i < chordNotesArr.length; i++) {
             chordNotesArr[i] = chordNotesArr[i].replace("#", "s");
            }
-    console.log("chordNotesArr: " + chordNotesArr);
         // EMPTY ARRAY FOR SOUNDS WITH PATHS AND EXTENSION
     const soundsArr = [];
+     // KEEP TRACK OF ACTUAL MINIMUM INDEX (OUTSIDE OF LOOP!!!), INITIALISE WITH A VALUE OF 0 AND ACCUMULATE IN INNER LOOP
+    let minIdx = 0;
     // FIND EACH NOTE OF chordNotesArr [C,E,G] IN chromaticScale 
     chordNotesArr.forEach((chordTone) => {
-        // FOR EACH NOTE LOOP THROUGH chromaticScale
-        // for (const note of chromaticScale) {
-        //     // IF CHORDTONE IS SINGLE CHARACTER (F) AND IS AT THE FIRST CHARACTER OF THE CHROMATIC NOTE
-        //     if (chordTone.length === 1 && note.charAt(0) === chordTone) {
-        //         // console.log("found in " + note.concat(".mp3"));
-        //         // GRAB THAT CHROMATIC NOTE "G#Ab2" AND ADD PATH TO FRONT, EXTENSION TO END LIKE THIS sounds/C3.mp3
-        //         soundsArr.push("sounds/" + note.concat(".mp3"));
-        //         break;
-        //     // IF CHORDTONE IS 2 CHARACTERS LONG (F#) AND IS INCLUDED IN CHROMATIC NOTE "F#Gb2" ANYWHERE
-        //     } else if (chordTone.length > 1 && note.includes(chordTone)) {
-        //         // console.log("found in " + note.concat(".mp3"));
-        //         soundsArr.push("sounds/" + note.concat(".mp3"));
-        //         break;
-        //     }
-        // }
-    // SAME WITH FOR LOOP:
+       
         for (let i = 0; i < chromaticScale.length; i++) {
-            if (chordTone.length === 1 && chromaticScale[i].charAt(0) === chordTone) {
-                console.log(i);
+            if (chordTone.length === 1 && chromaticScale[i].charAt(0) === chordTone && i >= minIdx) {
                 soundsArr.push("sounds/" + chromaticScale[i].concat(".mp3"));
+                minIdx = i;
                 break;
-            } else if (chordTone.length > 1 && chromaticScale[i].includes(chordTone)) {
+            } else if (chordTone.length > 1 && chromaticScale[i].includes(chordTone ) && i >= minIdx) {
                 soundsArr.push("sounds/" + chromaticScale[i].concat(".mp3"));
+                minIdx = i;
                 break;
             }
         }
+        return minIdx;
     })
-    console.log("soundsArr original octave: " + soundsArr);
 
     // FIND OCTAVEDIGIT AND CHANGE IF NECESSARY WITH REGEX
     // const octaveDigit = /(\d)(?=\.)/;
@@ -513,33 +500,32 @@ function getChordToneSounds() {
     // }
     // console.log(soundsArr);
 
-
     // FIND OCTAVEDIGIT AND TRANSPOSE INDIVIDUAL NOTES IF NECESSARY (THIS IS EASIER THAN USING REGEX)
-    for (let i = 1; i < soundsArr.length; i++) {
-        const octaveDigit = soundsArr[i].charAt(soundsArr[i].length - 5);
-        // console.log(typeof(octaveDigit));
-        console.log(soundsArr[i] + ", octave: " + octaveDigit);
-        // IF CURRENT OCTAVE IS SMALLER THAN PREVIOUS, TRANSPOSE IT UP BY 1
-        if (soundsArr[i].charAt(soundsArr[i].length - 5) < soundsArr[i - 1].charAt(soundsArr[i - 1].length - 5)) {
-            console.log("wrong octave");
-            console.log("current octave: " + soundsArr[i].charAt(soundsArr[i].length - 5));
-            console.log("previous octave: " + soundsArr[i - 1].charAt(soundsArr[i - 1].length - 5));
-            // INCREMENT OCTAVEDIGIT BY 1
-            let octaveDigitNum = parseInt(octaveDigit, 10);
-            octaveDigitNum += 1;
-            soundsArr[i] = soundsArr[i].replace(soundsArr[i].charAt(soundsArr[i].length - 5), octaveDigitNum.toString());
-        }
-    }
-    // ALSO, TRANSPOSE NOTES THAT ARE BEYOND THE OCTAVE (9,11,13)
-    if (soundsArr.length > 3  && (displayChordName().indexOf("9") !== -1 || displayChordName().indexOf("11")!== -1)) {
-        console.log("9 or 11 !!!");
-        for (let i = 3; i < soundsArr.length; i++) {
-            const octaveDigit = soundsArr[i].charAt(soundsArr[i].length - 5);
-            let octaveDigitNum = parseInt(octaveDigit, 10);
-            octaveDigitNum += 1;
-            soundsArr[i] = soundsArr[i].replace(soundsArr[i].charAt(soundsArr[i].length - 5), octaveDigitNum.toString());
-        }
-    }
+    // for (let i = 1; i < soundsArr.length; i++) {
+    //     const octaveDigit = soundsArr[i].charAt(soundsArr[i].length - 5);
+    //     // console.log(typeof(octaveDigit));
+    //     console.log(soundsArr[i] + ", octave: " + octaveDigit);
+    //     // IF CURRENT OCTAVE IS SMALLER THAN PREVIOUS, TRANSPOSE IT UP BY 1
+    //     if (soundsArr[i].charAt(soundsArr[i].length - 5) < soundsArr[i - 1].charAt(soundsArr[i - 1].length - 5)) {
+    //         console.log("wrong octave");
+    //         console.log("current octave: " + soundsArr[i].charAt(soundsArr[i].length - 5));
+    //         console.log("previous octave: " + soundsArr[i - 1].charAt(soundsArr[i - 1].length - 5));
+    //         // INCREMENT OCTAVEDIGIT BY 1
+    //         let octaveDigitNum = parseInt(octaveDigit, 10);
+    //         octaveDigitNum += 1;
+    //         soundsArr[i] = soundsArr[i].replace(soundsArr[i].charAt(soundsArr[i].length - 5), octaveDigitNum.toString());
+    //     }
+    // }
+    // // ALSO, TRANSPOSE NOTES THAT ARE BEYOND THE OCTAVE (9,11,13)
+    // if (soundsArr.length > 3  && (displayChordName().indexOf("9") !== -1 || displayChordName().indexOf("11")!== -1)) {
+    //     console.log("9 or 11 !!!");
+    //     for (let i = 3; i < soundsArr.length; i++) {
+    //         const octaveDigit = soundsArr[i].charAt(soundsArr[i].length - 5);
+    //         let octaveDigitNum = parseInt(octaveDigit, 10);
+    //         octaveDigitNum += 1;
+    //         soundsArr[i] = soundsArr[i].replace(soundsArr[i].charAt(soundsArr[i].length - 5), octaveDigitNum.toString());
+    //     }
+    // }
     console.log("soundsArr updated octave: " + soundsArr);
     return soundsArr;
 }
