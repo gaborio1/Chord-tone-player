@@ -451,11 +451,6 @@ function displayChordScale() {
     document.getElementById("chordScale").innerText = scale;
 }
 
-
-
-
-
-
 // PLAY CHORD 
 
 // SHARP-FLAT COMBINED CHROMATIC SCALE E2-B4 
@@ -524,6 +519,7 @@ function getChordToneSounds() {
         const octaveDigit = soundsArr[i].charAt(soundsArr[i].length - 5);
         // console.log(typeof(octaveDigit));
         console.log(soundsArr[i] + ", octave: " + octaveDigit);
+        // IF CURRENT OCTAVE IS SMALLER THAN PREVIOUS, TRANSPOSE IT UP BY 1
         if (soundsArr[i].charAt(soundsArr[i].length - 5) < soundsArr[i - 1].charAt(soundsArr[i - 1].length - 5)) {
             console.log("wrong octave");
             console.log("current octave: " + soundsArr[i].charAt(soundsArr[i].length - 5));
@@ -537,6 +533,12 @@ function getChordToneSounds() {
     // ALSO, TRANSPOSE NOTES THAT ARE BEYOND THE OCTAVE (9,11,13)
     if (soundsArr.length > 3  && (displayChordName().indexOf("9") !== -1 || displayChordName().indexOf("11")!== -1)) {
         console.log("9 or 11 !!!");
+        for (let i = 3; i < soundsArr.length; i++) {
+            const octaveDigit = soundsArr[i].charAt(soundsArr[i].length - 5);
+            let octaveDigitNum = parseInt(octaveDigit, 10);
+            octaveDigitNum += 1;
+            soundsArr[i] = soundsArr[i].replace(soundsArr[i].charAt(soundsArr[i].length - 5), octaveDigitNum.toString());
+        }
     }
     console.log("soundsArr updated octave: " + soundsArr);
     return soundsArr;
