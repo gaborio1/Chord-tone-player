@@ -48,7 +48,23 @@ class Chord {
                 return getFifth().concat("#");
         }
     }
+    
+    // MINOR6 IN MINOR AND MAJOR6 IN MAJOR !!!
     getSixth = () => getDiatonicScale(this.name, this.accidental, this.type)[5];
+
+    // MAKE MINOR SIXTH MAJOR IN MINOR CHORDS:  C E G Ab  => C E G A
+    getMajorSixth = () => {
+        const {getSixth} = this;
+        // IF fifth HAS A SECOND CHAR "#", ONLY RETURN THE FIRST CHAR (LETTER NAME)
+        let secondChar = getSixth().charAt(1);
+        switch (secondChar) {
+            case "b":
+                return getSixth().charAt(0);
+                break;
+            default:
+                return getSixth().concat("#");
+        }
+}
     getMinorSeventh = () => {
         const {getSeventh} = this;
         // IF sixth HAS A SECOND CHAR "#", ONLY RETURN THE FIRST CHAR (LETTER NAME)
@@ -78,6 +94,8 @@ class Chord {
     }
     // USE SIXTH FOR THIRTEENTH
     getThirteenth = () => this.getSixth();
+    // MAKE MINOR THIRTEENTH MAJOR IN MINOR CHORDS:  C E G Ab  => C E G A
+    getMajorThirteenth = () => this.getMajorSixth();
 }
 
 //  The value property of an HTML option element can only be a string !!!
@@ -269,14 +287,25 @@ function displayChordTones() {
     // ADD OPTIONAL 6,7,9,11,13 BASED ON type => chordScale
     let sixthValue = getOptSixth();
     if (sixthValue === "6") {
-        chordTones += " " + chordObj.getSixth();
+        if (getType() === "minor") {
+            // MAKE 6TH MAJOR FOR MINOR CHORDS !!!
+            chordTones += " " + chordObj.getMajorSixth();
+        } else {
+            chordTones += " " + chordObj.getSixth();
+        }
     }
     chordTonesDisplay.innerText = chordTones;
 
     let seventhValue = getOptSeventh();
     if (seventhValue === "7") {
-        chordTones += " " + chordObj.getSeventh();
-    }
+        if (getType() === "dominant") {
+            chordTones = chordTones;
+        } else if (getType() === "diminished") {
+            chordTones += " " + chordObj.getMajorSixth();
+        } else {
+            chordTones += " " + chordObj.getSeventh();
+        }
+    } 
     chordTonesDisplay.innerText = chordTones;
 
     let ninthValue = getOptNinth();
@@ -301,25 +330,27 @@ function displayChordTones() {
         chordTones += " " + chordObj.getSharpEleventh();
     } else if (eleventhValue === "add11" && getType() === "minor") {
         chordTones += " " + chordObj.getEleventh();
-    }
+    } else if (eleventhValue === "11" && getType() === "dominant") {
+        chordTones +=  " " + chordObj.getNinth() + " " + chordObj.getEleventh();
+    } else if (eleventhValue === "add11" && getType() === "dominant") {
+        chordTones += " " + chordObj.getEleventh();
+    } 
 
     let thirteenthValue = getOptThirteenth();
     if (thirteenthValue === "13" && getType() === "major") {
         chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth() + " " + chordObj.getSharpEleventh() + " " + chordObj.getThirteenth();
-        // NATURAL 11 WITH MINOR !!!
+        // MAJOR 13 WITH MINOR !!!
     } else if (thirteenthValue === "13" && getType() === "minor") {
-        chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth() + " " + chordObj.getEleventh() + " " + chordObj.getThirteenth();
+        chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth() + " " + chordObj.getEleventh() + " " + chordObj.getMajorThirteenth();
     } else if (thirteenthValue === "add13" && getType() === "major") {
         chordTones += " " +  chordObj.getThirteenth();
     } else if (thirteenthValue === "add13" && getType() === "minor") {
+        chordTones += " " + chordObj.getMajorThirteenth();
+    } else if (thirteenthValue === "13" && getType() === "dominant") {
+        chordTones +=  " " + chordObj.getNinth() + " " + chordObj.getEleventh() + " " + chordObj.getThirteenth();
+    } else if (thirteenthValue === "add13" && getType() === "dominant") {
         chordTones += " " + chordObj.getThirteenth();
     }
-
-
-
-
-
-
     chordTonesDisplay.innerText = chordTones;
     return chordTones;
 }
@@ -510,12 +541,14 @@ const chromaticScale = [
 function getChordToneSounds() {
     // SPLIT CHORD NOTES INTO ARRAY ["C", "E", "G", "Bb"]
     const chordNotesArr = displayChordTones().split(" ");
-    // !!! REPLACE SPECIAL CHAR "#" WITH "s" FOR SHARP AS HOWLER WILL NOT LOAD MP3'S WITH SPEC CHARACTER IN FILENAME !!! 
-    // ["Cs", "Es", "Gs"]
+    // !!! REPLACE ALL SPECIAL CHARS "#" WITH "s" FOR SHARP AS HOWLER WILL NOT LOAD MP3'S WITH SPEC CHARACTER IN FILENAME !!! 
+    // ["C#", "E#", "G##"]  =>   ["Cs", "Es", "Gss"]
     for (let i = 0; i < chordNotesArr.length; i++) {
-            chordNotesArr[i] = chordNotesArr[i].replace("#", "s");
-           }
-        // EMPTY ARRAY FOR SOUNDS WITH PATHS AND EXTENSION
+        let reSharp = /#/gi;
+        chordNotesArr[i] = chordNotesArr[i].replace(reSharp , "s");
+    }
+    console.log(chordNotesArr);
+    // EMPTY ARRAY FOR SOUNDS WITH PATHS AND EXTENSION
     const soundsArr = [];
      // KEEP TRACK OF ACTUAL MINIMUM INDEX (OUTSIDE OF LOOP!!!), INITIALISE WITH A VALUE OF 0 AND ACCUMULATE IN INNER LOOP
     let minIdx = 0;
