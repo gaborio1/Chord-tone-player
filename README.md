@@ -5,8 +5,10 @@ Audio production software used in this program:
         Reverb: ChromaVerb
 
 functions to add:
-  transpose option
+  play some sound when page loads
+ ✔️ transpose option
   arpeggiate chords
+ ✔️ individually display and play chord notes
 
 
 bugs:

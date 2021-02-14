@@ -143,6 +143,12 @@ function getOptThirteenth() {
     let chordThirteenth = thirteenthSelect.options[thirteenthSelect.selectedIndex].value;
     return chordThirteenth;
 }
+// GET REGISTER
+function getRegister() {
+    const registerSelect = document.getElementById("register");
+    let register = registerSelect.options[registerSelect.selectedIndex].value;
+    return register;
+}
 // DISP CHORD NAME BASED OFF OF name, accidental AND type
 // CHANGE type VALUE TO SYMBOLS
 function displayChordName() {
@@ -535,8 +541,9 @@ function displayChordScale() {
 
 // SHARP-FLAT COMBINED CHROMATIC SCALE E2-B4 
 // "s"="sharp" AND "b"="flat"
-const chromaticScale = [
-    "E2", "FEs2", "FsGb2", "G2", "GsAb2", "A2", "AsBb2", "BCb2", "C3", "CsDb3", "D3", "DsEb3", "E3", "FEs3", "FsGb3", "G3", "GsAb3", "A3", "AsBb3", "BCb3", "C4", "CsDb4", "D4", "DsEb4", "E4", "FEs4", "FsGb4", "G4", "GsAb4", "A4", "AsBb4", "BCb4"];
+const chromaticScale = ["E1", "FEs1", "FsGb1", "G1", "GsAb1", "A1", "AsBb1", "BCb1", "C2", "CsDb2", "D2", "DsEb2",
+    "E2", "FEs2", "FsGb2", "G2", "GsAb2", "A2", "AsBb2", "BCb2", "C3", "CsDb3", "D3", "DsEb3", "E3", "FEs3", "FsGb3", "G3", "GsAb3", "A3", "AsBb3", "BCb3", "C4", "CsDb4", "D4", "DsEb4", "E4", "FEs4", "FsGb4", "G4", "GsAb4", "A4", "AsBb4", "BCb4", 
+    "C5", "CsDb5", "D5", "DsEb5", "E5", "FEs5", "FsGb5", "G5", "GsAb5", "A5", "AsBb5", "BCb5", "C6", "CsDb6", "D6"];
 
 function getChordToneSounds() {
     // SPLIT CHORD NOTES INTO ARRAY ["C", "E", "G", "Bb"]
@@ -552,10 +559,24 @@ function getChordToneSounds() {
     const soundsArr = [];
      // KEEP TRACK OF ACTUAL MINIMUM INDEX (OUTSIDE OF LOOP!!!), INITIALISE WITH A VALUE OF 0 AND ACCUMULATE IN INNER LOOP
     let minIdx = 0;
+    // THIS IS WHERE LOOP SHOULD START DEPENDING ON SELECTED REGISTER
+    let registerIdx = 0;
+    switch (getRegister()) {
+        case "bass" :
+            registerIdx = 0
+            break;
+        case "guitar" :
+            registerIdx = 12
+            break;
+        case "guitarUp" :
+            registerIdx = 24
+            break;
+    }
+    console.log(registerIdx);
     // FIND EACH NOTE OF chordNotesArr [C,E,G] IN chromaticScale 
     chordNotesArr.forEach((chordTone) => {
        
-        for (let i = 0; i < chromaticScale.length; i++) {
+        for (let i = registerIdx; i < chromaticScale.length; i++) {
             if (chordTone.length === 1 && chromaticScale[i].charAt(0) === chordTone && i >= minIdx) {
                 soundsArr.push("sounds/" + chromaticScale[i].concat(".mp3"));
                 minIdx = i;
@@ -612,7 +633,7 @@ function getChordToneSounds() {
     return soundsArr;
 }
 
-// THIS IS GOING TO PLAY ACTUAL SOUND FILES
+// PLAY ACTUAL SOUND FILES AT ONCE
 function playChordTones() {
     const soundFiles = getChordToneSounds();
     console.log("soundFiles: " + soundFiles);
@@ -626,8 +647,10 @@ function playChordTones() {
     }
 }
 
+// CREATE A RESPONSIVE DIV FOR EACH CHORD DEGREE 
 function displayAndPlay() {
     const soundFiles = getChordToneSounds();
+    // NEED ACTUAL NOTE NAMES WITHOUT PATH AND EXTENSION
     const chordTones = displayChordTones().split(" ");
     soundFiles.forEach((soundFile, i) => {
         soundFiles[i] = new Howl({
@@ -636,7 +659,10 @@ function displayAndPlay() {
         })
     
         let elem = document.createElement("button");
-        elem.class = "btn";
+        // ??? THIS IS NOT WORKING !!!
+        // elem.class = "btn";
+        // INSTEAD:
+        elem.classList.add("btn");
         elem.id = `playBtn${i}`;
         elem.addEventListener('mouseover', () => soundFiles[i].play());
         elem.innerText = `Degree ${i + 1}: ${chordTones[i]}`    

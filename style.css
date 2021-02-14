@@ -9,15 +9,10 @@
 }
 
 .btn {
-    color: coral;
-    background-color: blue;
-    display: block;
-}
-
-button {
-    color: rgb(19, 72, 85);
+    color: rgb(19, 72, 85);    
     background-color: rgb(141, 215, 245);
     display: block;
     border: 1px solid black;
     margin: 2px;
 }
+
