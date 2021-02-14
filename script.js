@@ -589,7 +589,7 @@ function getChordToneSounds() {
         }
         return minIdx;
     })
-
+    
     // FIND OCTAVEDIGIT AND CHANGE IF NECESSARY WITH REGEX
     // const octaveDigit = /(\d)(?=\.)/;
     // for (let i = 1; i < soundsArr.length; i++) {
@@ -692,6 +692,22 @@ playChordTonesButton.addEventListener("click", function(evt) {
     evt.preventDefault();
     handlePlayChordTones();
 })
+
+// PLAY INTRO WHEN PAGE LOADS
+function playIntro() {
+    console.log("hello");
+     const sound = new Howl({
+        src: ['sounds/intro2.mp3']
+      });
+      sound.play();
+}
+
+window.addEventListener("load", function() {
+        // alert('Page is loaded');
+        playIntro();
+      });
+
+
 
 // HOWLER JS AUDIO TEST PLAYS WAV FILE
 // const sound = new Howl({
