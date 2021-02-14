@@ -616,49 +616,41 @@ function getChordToneSounds() {
 function playChordTones() {
     const soundFiles = getChordToneSounds();
     console.log("soundFiles: " + soundFiles);
+    // PLAY ALL NOTES AT ONCE
     for (const soundFile of soundFiles) {
-        // console.log(soundFile);
         const sound = new Howl({
-            src: [soundFile]
+            src: [soundFile],
+            volume: 0.4
         });
         sound.play();
     }
+}
 
-    // var sound = new Howl({
-    //     src: ["sounds/C4.mp3", "sounds/E3.mp3", "sounds/G3.mp3"],
-    //     autoplay: true,
-    //     loop: false,
-    //     volume: 0.5,
-    //     onend: function() {
-    //       console.log('Finished!');
-    //     }
-    //   });
-
-    // var sound1 = new Howl({
-    //     src: [soundFiles[0]],
-    //     preload: true
-    //   });
-    // var sound2 = new Howl({
-    //     src: [soundFiles[1]],
-    //     preload: true
-    //   });
-    // var sound3 = new Howl({
-    //     src: [soundFiles[2]],
-    //     preload: true
-    //   });
-
-    //   var sound4 = new Howl({
-    //     src: ['sounds/FsGb2.mp3'],
-    //     preload: true
-    //   });
-    //   sound1.play()
-    //   sound2.play()
-    //   sound3.play()
-    // sound4.play()
+function displayAndPlay() {
+    const soundFiles = getChordToneSounds();
+    const chordTones = displayChordTones().split(" ");
+    soundFiles.forEach((soundFile, i) => {
+        soundFiles[i] = new Howl({
+            src: [soundFile],
+            volume: 0.6
+        })
+    
+        let elem = document.createElement("button");
+        elem.class = "btn";
+        elem.id = `playBtn${i}`;
+        elem.addEventListener('mouseover', () => soundFiles[i].play());
+        elem.innerText = `Degree ${i + 1}: ${chordTones[i]}`    
+        document.body.append(elem);
+    
+    })
 }
 
 function handlePlay() {
     playChordTones();
+}
+
+function handlePlayChordTones() {
+    displayAndPlay();
 }
 
 // LISTEN FOR CLICK ON PLAY
@@ -666,6 +658,13 @@ const playButton = document.getElementById("play");
 playButton.addEventListener("click", function(evt) {
     evt.preventDefault();
     handlePlay();
+})
+
+// LISTEN FOR CLICK ON DISPLAY AND  PLAY
+const playChordTonesButton = document.getElementById("displayAndPlay");
+playChordTonesButton.addEventListener("click", function(evt) {
+    evt.preventDefault();
+    handlePlayChordTones();
 })
 
 // HOWLER JS AUDIO TEST PLAYS WAV FILE

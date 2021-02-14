@@ -4,6 +4,11 @@ Audio production software used in this program:
         Dynamics: Compressor, Channel EQ
         Reverb: ChromaVerb
 
+functions to add:
+  transpose option
+  arpeggiate chords
+
+
 bugs:
     augmented with optional 7th ???
   ✔️ diminished 7 - make 7th = major 6th 
