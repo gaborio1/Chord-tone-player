@@ -25,5 +25,8 @@ bugs:
   ✔️ make minor6 6th major6th and 13th major13th
     fix double sharp in augmented C# E# G##
     fix double flat in diminished Eb Gb Bbb
+    disble select options for invalid chord types
+  ✔️ 6/7
+  ✔️ +7
 
 

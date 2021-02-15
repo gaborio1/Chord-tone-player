@@ -177,10 +177,18 @@ function displayChordName() {
             }
             break;
         case "augmented" :
-            typeSymbol = "+";
+            if (getOptSeventh()) {
+                typeSymbol = "+7 (7#5)";
+            } else {
+                typeSymbol = "+";
+            }
             break;
         case "diminished" :
-            typeSymbol = "0";
+            if (getOptSeventh()) {
+                typeSymbol = "07";
+            } else {
+                typeSymbol = "0";
+            }
             break;
         case "sus2" :
             typeSymbol = "sus2"
@@ -201,7 +209,7 @@ function displayChordName() {
     let type = getType();
     // ADD OPTIONAL 6,7,9,11,13 TO SYMBOL
     let sixthValue = getOptSixth();
-    if (sixthValue === "6") {
+    if (sixthValue === "6" && !getOptSeventh()) {
         if (type === "major") {
             typeSymbol += "6";
         } else if (type === "minor") {
@@ -212,7 +220,7 @@ function displayChordName() {
     }
 
     let seventhValue = getOptSeventh();
-    if (seventhValue === "7") {
+    if (seventhValue === "7" && !getOptSixth()) {
         if (type === "major") {
             typeSymbol += "M7";
         } else if (type === "minor") {
@@ -220,6 +228,10 @@ function displayChordName() {
         } else {
             console.log("not major or minor, FIX THIS!");
         }
+    }
+    // 6/7
+    if (getOptSixth() && getOptSeventh()) {
+        typeSymbol += " 6/7";
     }
 
     let ninthValue = getOptNinth();
@@ -289,6 +301,11 @@ function displayChordTones() {
     const chordObj = new Chord(getName(), getAccidental(), getType(), getOptSeventh());
     // this.test FROM CONSTRUCTOR
     console.log(chordObj.test());
+
+    const c1 = new Chord(getName(), getAccidental(), getType(), getOptSeventh());
+    console.dir(" c1 chordObj: " + c1);
+
+    
     const chordTonesDisplay = document.getElementById("chordTones");
     let chordTones = "";
     switch (getType()) {
@@ -336,6 +353,8 @@ function displayChordTones() {
             chordTones = chordTones;
         } else if (getType() === "diminished") {
             chordTones += " " + chordObj.getMajorSixth();
+        } else if (getType() === "augmented") {
+            chordTones += " " + chordObj.getMinorSeventh();
         } else {
             chordTones += " " + chordObj.getSeventh();
         }
@@ -670,7 +689,7 @@ function displayAndPlay() {
     const soundFiles = getChordToneSounds();
     // NEED ACTUAL NOTE NAMES WITHOUT PATH AND EXTENSION
     const chordTones = displayChordTones().split(" ");
-    const audioContainer = document.getElementById("audioContainer");
+    const audioContainer = document.getElementById("audio-container");
     // REMOVE EXISTING DIVS IF ANY TO CLEAR CONTENT IN AUDIOCONTAINER
     while (audioContainer.firstChild) {
         audioContainer.removeChild(audioContainer.firstChild);
