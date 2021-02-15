@@ -15,6 +15,7 @@ functions to add:
  ✔️ lydian
 
 bugs:
+   ✔️ remove existing chord degree divs before appinding new ones 
     augmented with optional 7th ???
   ✔️ diminished 7 - make 7th = major 6th 
   ✔️ dominant(7) 9 get rid of 7th

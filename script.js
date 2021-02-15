@@ -389,20 +389,6 @@ function displayChordTones() {
     return chordTones;
 }
 
-// EVT HANDLER
-function handleClick() {
-    displayChordName();
-    displayChordTones();
-    displayChordScale();
-}
-
-// LISTEN FOR CLICK
-const buttonTest = document.getElementById("buttonEvtList");
-buttonTest.addEventListener("click", function(evt) {
-    evt.preventDefault();
-    handleClick();
-})
-
 // CHORD OBJECT TEST
 // const c1 = new Chord("c", "", "major");
 // const c2 = new Chord("a#", "major");
@@ -684,6 +670,11 @@ function displayAndPlay() {
     const soundFiles = getChordToneSounds();
     // NEED ACTUAL NOTE NAMES WITHOUT PATH AND EXTENSION
     const chordTones = displayChordTones().split(" ");
+    const audioContainer = document.getElementById("audioContainer");
+    // REMOVE EXISTING DIVS IF ANY TO CLEAR CONTENT IN AUDIOCONTAINER
+    while (audioContainer.firstChild) {
+        audioContainer.removeChild(audioContainer.firstChild);
+      }
     soundFiles.forEach((soundFile, i) => {
         soundFiles[i] = new Howl({
             src: [soundFile],
@@ -695,45 +686,52 @@ function displayAndPlay() {
         // elem.class = "btn";
         // INSTEAD:
         elem.classList.add("btn");
-        elem.id = `playBtn${i}`;
+        elem.id = `play-btn${i}`;
         elem.addEventListener('mouseover', () => soundFiles[i].play());
         elem.innerText = `Degree ${i + 1}: ${chordTones[i]}`    
-        document.body.append(elem);
+        audioContainer.appendChild(elem);
+        // document.body.append(elem);
     
     })
 }
 
-function handlePlay() {
+// EVENT HANDLERS ON BUTTONS
+function handleShowChordTones() {
+    displayChordName();
+    displayChordTones();
+    displayChordScale();
+}
+function handlePlayChord() {
     playChordTones();
 }
-
-function handlePlayChordTones() {
+function handlePlayIndividual() {
     displayAndPlay();
 }
-
-// LISTEN FOR CLICK ON PLAY
-const playButton = document.getElementById("play");
+// EVENT LISTENERS ON BUTTONS
+const showChordTonesBtn = document.getElementById("chord-tones-btn");
+showChordTonesBtn.addEventListener("click", function(evt) {
+    evt.preventDefault();
+    handleShowChordTones();
+})
+const playButton = document.getElementById("play-chord-btn");
 playButton.addEventListener("click", function(evt) {
     evt.preventDefault();
-    handlePlay();
+    handlePlayChord();
 })
-
-// LISTEN FOR CLICK ON DISPLAY AND  PLAY
-const playChordTonesButton = document.getElementById("displayAndPlay");
-playChordTonesButton.addEventListener("click", function(evt) {
+const playIndividualButton = document.getElementById("play-individual-btn");
+playIndividualButton.addEventListener("click", function(evt) {
     evt.preventDefault();
-    handlePlayChordTones();
+    handlePlayIndividual();
 })
 
 // PLAY INTRO WHEN PAGE LOADS
-function playIntro() {
-     const sound = new Howl({
-        src: ['sounds/intro2.mp3']
-      });
-      sound.play();
-}
+// function playIntro() {
+//      const sound = new Howl({
+//         src: ['sounds/intro2.mp3']
+//       });
+//       sound.play();
+// }
 
-// PLAY INTRO ONLOAD
 // window.addEventListener("load", function() {
 //     console.log("page is loaded");
 //         playIntro();
