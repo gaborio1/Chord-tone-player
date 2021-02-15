@@ -20,104 +20,108 @@ class Chord {
     }
     // FIND AND RETURN APPROPRIATE SCALE DEGREE FROM DIATONIC SCALE
     getRoot = () => getDiatonicScale(this.name, this.accidental, this.type)[0];
+    getFlatSecond = () => {
+        const {getSecond} = this;
+        // IF second HAS A SECOND CHAR "#", ONLY RETURN THE FIRST CHAR (LETTER NAME)
+        let secondChar = getSecond().charAt(1);
+        switch (secondChar) {
+            case "#":
+                return getSecond().charAt(0);
+            default:
+                return getSecond().concat("b");
+        }
+    }
+    getSecond = () => getDiatonicScale(this.name, this.accidental, this.type)[1];
     getThird = () => getDiatonicScale(this.name, this.accidental, this.type)[2];
-    // FLATTEN FIFTH 
+    getFourth = () => getDiatonicScale(this.name, this.accidental, this.type)[3];
+    getSharpFourth = () => {
+        const {getFourth} = this;
+        let secondChar = getFourth().charAt(1);
+        switch (secondChar) {
+            case "b":
+                return getFourth().charAt(0);
+            default:
+                return getFourth().concat("#");
+        }
+    }
     getFlatFifth = () => {
         const {getFifth} = this;
-        // IF fifth HAS A SECOND CHAR "#", ONLY RETURN THE FIRST CHAR (LETTER NAME)
         let secondChar = getFifth().charAt(1);
         switch (secondChar) {
             case "#":
                 return getFifth().charAt(0);
-                break;
             default:
                 return getFifth().concat("b");
         }
     }
     getFifth = () => getDiatonicScale(this.name, this.accidental, this.type)[4];
-    // SHARPEN FIFTH
     getSharpFifth = () => {
         const {getFifth} = this;
-        // IF fifth HAS A SECOND CHAR "b", ONLY RETURN THE FIRST CHAR (LETTER NAME)
         let secondChar = getFifth().charAt(1);
         switch (secondChar) {
             case "b":
                 return getFifth().charAt(0);
-                break;
             default:
                 return getFifth().concat("#");
         }
     }
-    
     // MINOR6 IN MINOR AND MAJOR6 IN MAJOR !!!
     getSixth = () => getDiatonicScale(this.name, this.accidental, this.type)[5];
-
     // MAKE MINOR SIXTH MAJOR IN MINOR CHORDS:  C E G Ab  => C E G A
     getMajorSixth = () => {
         const {getSixth} = this;
-        // IF fifth HAS A SECOND CHAR "#", ONLY RETURN THE FIRST CHAR (LETTER NAME)
         let secondChar = getSixth().charAt(1);
         switch (secondChar) {
             case "b":
                 return getSixth().charAt(0);
-                break;
             default:
                 return getSixth().concat("#");
         }
-}
+    }
     getMinorSeventh = () => {
         const {getSeventh} = this;
-        // IF sixth HAS A SECOND CHAR "#", ONLY RETURN THE FIRST CHAR (LETTER NAME)
         let secondChar = getSeventh().charAt(1);
         switch (secondChar) {
             case "#":
                 return getSeventh().charAt(0);
-                break;
             default:
                 return getSeventh().concat("b");
         }
     }
     getSeventh = () => getDiatonicScale(this.name, this.accidental, this.type)[6];
-    getNinth = () => getDiatonicScale(this.name, this.accidental, this.type)[1];
-    getEleventh = () => getDiatonicScale(this.name, this.accidental, this.type)[3];
+    getNinth = () => this.getSecond();
+    getEleventh = () => this.getFourth();
     getSharpEleventh = () => {
         const {getEleventh} = this;
-        // IF eleventh HAS A SECOND CHAR "b", ONLY RETURN THE FIRST CHAR (LETTER NAME)
         let secondChar = getEleventh().charAt(1);
         switch (secondChar) {
             case "b":
                 return getEleventh().charAt(0);
-                break;
             default:
                 return getEleventh().concat("#");
         }
     }
-    // USE SIXTH FOR THIRTEENTH
     getThirteenth = () => this.getSixth();
     // MAKE MINOR THIRTEENTH MAJOR IN MINOR CHORDS:  C E G Ab  => C E G A
     getMajorThirteenth = () => this.getMajorSixth();
 }
 
-//  The value property of an HTML option element can only be a string !!!
-// GET NAME FROM DROPDOWN
+// GET OPTIONS FROM DROPDOWN
 function getName() {
     const nameSelect = document.getElementById("name");
     let chordName = nameSelect.options[nameSelect.selectedIndex].value;
     return chordName;
 }
-// GET TYPE FROM DROPDOWN
 function getType() {
     const typeSelect = document.getElementById("type");
     let chordType = typeSelect.options[typeSelect.selectedIndex].value;
     return chordType;
 }
-// GET ACCIDENTALS FROM DROPDOWN
 function getAccidental() {
     const accidentalSelect = document.getElementById("accidental");
     let chordAccidental = accidentalSelect.options[accidentalSelect.selectedIndex].value;
     return chordAccidental;
 }
-// GET OPTIONAL 6,7,11,13
 function getOptSixth() {
     const sixthSelect = document.getElementById("sixth");
     let chordSixth = sixthSelect.options[sixthSelect.selectedIndex].value;
@@ -143,7 +147,6 @@ function getOptThirteenth() {
     let chordThirteenth = thirteenthSelect.options[thirteenthSelect.selectedIndex].value;
     return chordThirteenth;
 }
-// GET REGISTER
 function getRegister() {
     const registerSelect = document.getElementById("register");
     let register = registerSelect.options[registerSelect.selectedIndex].value;
@@ -178,6 +181,18 @@ function displayChordName() {
             break;
         case "diminished" :
             typeSymbol = "0";
+            break;
+        case "sus2" :
+            typeSymbol = "sus2"
+            break;
+        case "sus4" :
+            typeSymbol = "sus4"
+            break;
+        case "phrygian" :
+            typeSymbol = " sus(b)2"
+            break;
+        case "lydian" :
+            typeSymbol = " sus(#)4"
             break;
         default:
             typeSymbol = "invalid type"
@@ -286,6 +301,19 @@ function displayChordTones() {
         case "dominant" :
             chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getFifth()} ${chordObj.getMinorSeventh()}`;
             break;
+        case "sus2" :
+            chordTones = `${chordObj.getRoot()} ${chordObj.getSecond()} ${chordObj.getFifth()}`;
+        break;
+        case "sus4" :
+            chordTones = `${chordObj.getRoot()} ${chordObj.getFourth()} ${chordObj.getFifth()}`;
+        break;
+        case "phrygian" :
+            chordTones = `${chordObj.getRoot()} ${chordObj.getFlatSecond()} ${chordObj.getFifth()}`;
+        break;
+        case "lydian" :
+            chordTones = `${chordObj.getRoot()} ${chordObj.getSharpFourth()} ${chordObj.getFifth()}`;
+        break;
+        // DEFAULT IS MAJOR OR MINOR
         default:
             chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getFifth()}`;
     }
@@ -384,7 +412,6 @@ buttonTest.addEventListener("click", function(evt) {
 const circleOfFifths = {
     // NATURAL NOTES
     degrees : ["c", "d", "e", "f", "g", "a", "b"],
-    // degrees : ["C", "D", "E", "F", "G", "A", "B"],
     // FIND TONIC  AND ITS INDEX WILL CORRESPOND TO ITS LAST ACCIDENTAL NOTE'S IDX IN sharps/flats
     majorSharpKeys : ["g", "d", "a", "e", "b", "f#", "c#"],
     majorFlatKeys : ["f", "bb", "eb", "ab", "db", "gb", "cb"],
@@ -406,10 +433,7 @@ function getNaturalScale(ton) {
     let subScale1 = circleOfFifths["degrees"].slice(tonicIdx);
     let subScale2 = circleOfFifths["degrees"].slice(0, tonicIdx);
     // MERGE SUBSCALES
-    // !!! IF I UPPERCASE HERE, ACCIDENTALS WILL NOT BE ADDED !!!
-    let naturalScale = subScale1.concat(subScale2)
-    // .map(note => note.toUpperCase())
-    ;
+    let naturalScale = subScale1.concat(subScale2);
     return naturalScale;
 }
 
@@ -426,7 +450,6 @@ function getDiatonicScale(name, accidental, type) {
     const message = document.getElementById("message");
 
     // !!! THESE WORK WITHOUT INITIALISING ???
-
     // let foundMajorKeys; NOW foundKeyCenters !!!
     // let foundMinorKeys; NOW foundKeyCenters !!!
     // let accidentalNotes = [];
@@ -434,7 +457,13 @@ function getDiatonicScale(name, accidental, type) {
 
     // BASED ON type, FIND THAT NOTE IN EITHER majorSharpKeys OR majorFlatKeys
     // IF MAJOR
-    if (type === "major" || type === "augmented" || type === "dominant") {
+    if (type === "major" || 
+        type === "augmented" || 
+        type === "dominant" || 
+        type === "sus2" || 
+        type === "sus4" || 
+        type === "phrygian" || 
+        type === "lydian") {
        
         // IF MAJOR SHARP
         if (circleOfFifths["majorSharpKeys"].indexOf(firstDegree) > -1) {
@@ -468,7 +497,14 @@ function getDiatonicScale(name, accidental, type) {
                 }
             }
         // IF C NATURAL MAJOR OR AUGMENTED
-        } else if (name === "c" && accidental === "" && (type === "major" || type === "augmented" || type === "dominant")) {
+        } else if (name === "c" && accidental === "" && 
+                (type === "major" || 
+                type === "augmented" || 
+                type === "dominant" || 
+                type === "sus2" || 
+                type === "sus4" || 
+                type === "phrygian" || 
+                type === "lydian")) {
             diatonicScale = naturalScale.slice();
             message.classList.add("hidden");
         } 
@@ -509,7 +545,6 @@ function getDiatonicScale(name, accidental, type) {
             }
         // IF A NATURAL MINOR
         } else if (name === "a" && accidental === "" && (type === "minor" || type === "diminished")) {
-            // console.log("c major");
             diatonicScale = naturalScale.slice();
             message.classList.add("hidden");
         } else {
@@ -532,8 +567,6 @@ function getDiatonicScale(name, accidental, type) {
 
 function displayChordScale() {
     let scale = getDiatonicScale(getName(), getAccidental(), getType());
-    // console.log(getName(), getAccidental(), getType())
-    // console.log(scale);
     document.getElementById("chordScale").innerText = scale;
 }
 
@@ -572,11 +605,10 @@ function getChordToneSounds() {
             registerIdx = 24
             break;
     }
-    console.log(registerIdx);
+    // console.log(registerIdx);
     // FIND EACH NOTE OF chordNotesArr [C,E,G] IN chromaticScale 
     chordNotesArr.forEach((chordTone) => {
-       
-        for (let i = registerIdx; i < chromaticScale.length; i++) {
+       for (let i = registerIdx; i < chromaticScale.length; i++) {
             if (chordTone.length === 1 && chromaticScale[i].charAt(0) === chordTone && i >= minIdx) {
                 soundsArr.push("sounds/" + chromaticScale[i].concat(".mp3"));
                 minIdx = i;
@@ -695,29 +727,14 @@ playChordTonesButton.addEventListener("click", function(evt) {
 
 // PLAY INTRO WHEN PAGE LOADS
 function playIntro() {
-    console.log("hello");
      const sound = new Howl({
         src: ['sounds/intro2.mp3']
       });
       sound.play();
 }
 
-window.addEventListener("load", function() {
-        // alert('Page is loaded');
-        playIntro();
-      });
-
-
-
-// HOWLER JS AUDIO TEST PLAYS WAV FILE
-// const sound = new Howl({
-//     src: ['sounds/soundTest.wav']
-//   });
-
-// function soundTest() {
-//     console.log("sound!");
-//     console.log(sound);
-//     // _src: "sounds/soundTest.wav"
-//     sound.play();
-// }
-
+// PLAY INTRO ONLOAD
+// window.addEventListener("load", function() {
+//     console.log("page is loaded");
+//         playIntro();
+//       });

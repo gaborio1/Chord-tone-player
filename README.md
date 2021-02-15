@@ -9,7 +9,10 @@ functions to add:
  ✔️ transpose option
   arpeggiate chords
  ✔️ individually display and play chord notes
-
+  sus2
+  sus4
+  phrygian
+  lydian
 
 bugs:
     augmented with optional 7th ???
