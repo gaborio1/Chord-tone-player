@@ -15,7 +15,7 @@ functions to add:
  ✔️ lydian
 
 bugs:
-   ✔️ remove existing chord degree divs before appinding new ones 
+   ✔️ remove existing chord degree divs before appending new ones 
     augmented with optional 7th ???
   ✔️ diminished 7 - make 7th = major 6th 
   ✔️ dominant(7) 9 get rid of 7th
@@ -25,7 +25,7 @@ bugs:
   ✔️ make minor6 6th major6th and 13th major13th
     fix double sharp in augmented C# E# G##
     fix double flat in diminished Eb Gb Bbb
-    disble select options for invalid chord types
+  ✔️ disable select options for impossible key signatures
   ✔️ 6/7
   ✔️ +7
 

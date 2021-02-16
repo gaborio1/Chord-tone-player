@@ -23,24 +23,27 @@
     <!--  The value property of an HTML option element can only be a string !!! -->
     <label for="name">Letter name:</label>
       <select name="name" id="name">
-        <option value="c">c</option>
-        <option value="d">d</option>
-        <option value="e">e</option>
-        <option value="f">f</option>
-        <option value="g">g</option>
-        <option value="a">a</option>
-        <option value="b">b</option>
+        <option class="note-name"></option>
+        <option value="c" class="note-name">c</option>
+        <option value="d" class="note-name">d</option>
+        <option value="e" class="note-name">e</option>
+        <option value="f" class="note-name">f</option>
+        <option value="g" class="note-name">g</option>
+        <option value="a" class="note-name">a</option>
+        <option value="b" class="note-name">b</option>
       </select>
       <br>
     <label for="accidental">Accidental:</label>
       <select name="accidental" id="accidental">
-        <option value="">natural</option>
-        <option value="#">sharp #</option>
-        <option value="b">flat b</option>
+        <option class="note-accidental"></option>
+        <option value="" class="note-accidental">natural</option>
+        <option value="#" class="note-accidental">sharp #</option>
+        <option value="b" class="note-accidental">flat b</option>
       </select>
       <br>
     <label for="type">Chord type:</label>
       <select name="type" id="type">
+        <option></option>
         <option value="major">major</option>
         <option value="minor">minor</option>
         <option value="dominant">dominant (7)</option>

@@ -152,6 +152,19 @@ function getRegister() {
     let register = registerSelect.options[registerSelect.selectedIndex].value;
     return register;
 }
+
+
+// function disableImpossibleKeys() {
+//     let name = getName();
+//     let accidental = getAccidental();
+//     if (name === "c" && accidental === "#") {
+//         console.log("hello from disable func");
+//     }
+// }
+// disableImpossibleKeys();
+
+
+
 // DISP CHORD NAME BASED OFF OF name, accidental AND type
 // CHANGE type VALUE TO SYMBOLS
 function displayChordName() {
@@ -742,6 +755,130 @@ playIndividualButton.addEventListener("click", function(evt) {
     evt.preventDefault();
     handlePlayIndividual();
 })
+
+
+
+// EVENT LISTENERS ON NAME/ACCIDENTAL DROPDOWN OPTIONS 
+let getNameChangeVal;
+let getAccidentalChangeVal;
+
+function getNameChange() {
+    const nameDropdown = document.getElementById("name");
+    nameDropdown.addEventListener('change', function() {
+    getNameChangeVal = this.value;
+    console.log(getNameChangeVal);
+//   WHAT IS FALSE ???
+}, false);
+
+}
+getNameChange();
+
+// arraySelects[i].options[selectedOption].disabled = true;
+
+function getAccidentalChange() {
+
+    const AccidentalDropdown = document.getElementById("accidental");
+    const typeOptions = document.getElementById("type");
+    const majorOpt = typeOptions.options[1];
+    const minorOpt = typeOptions.options[2];
+    const dominantOpt = typeOptions.options[3];
+    const augmentedOpt = typeOptions.options[4];
+    const diminishedOpt = typeOptions.options[5];
+    const susTwoOpt = typeOptions.options[6];
+    const susFourOpt = typeOptions.options[7];
+    const phrygianOpt = typeOptions.options[8];
+    const lydianOpt = typeOptions.options[9];
+
+    AccidentalDropdown.addEventListener('change', function() {
+    getAccidentalChangeVal = this.value;
+    console.log(getAccidentalChangeVal);
+    if (getNameChangeVal=== "b" && getAccidentalChangeVal === "#") {
+            // typeOptions.options[0].disabled = true;
+            majorOpt.disabled = true;
+            minorOpt.disabled = true;
+            dominantOpt.disabled = true;
+            augmentedOpt.disabled = true;
+            diminishedOpt.disabled = true;
+            susTwoOpt.disabled = true;
+            susFourOpt.disabled = true;
+            phrygianOpt.disabled = true;
+            lydianOpt.disabled = true;
+        } else if (getNameChangeVal=== "d" && getAccidentalChangeVal === "b") {
+            minorOpt.disabled = true;
+            diminishedOpt.disabled = true;
+            susTwoOpt.disabled = true;
+            susFourOpt.disabled = true;
+            phrygianOpt.disabled = true;
+            lydianOpt.disabled = true;
+        } else if (getNameChangeVal=== "d" && getAccidentalChangeVal === "#") {
+            majorOpt.disabled = true;
+            dominantOpt.disabled = true;
+            augmentedOpt.disabled = true;
+            susTwoOpt.disabled = true;
+            susFourOpt.disabled = true;
+            phrygianOpt.disabled = true;
+            lydianOpt.disabled = true;
+        } else if (getNameChangeVal=== "e" && getAccidentalChangeVal === "#") {
+            majorOpt.disabled = true;
+            minorOpt.disabled = true;
+            dominantOpt.disabled = true; 
+            augmentedOpt.disabled = true;
+            diminishedOpt.disabled = true;
+            susTwoOpt.disabled = true;
+            susFourOpt.disabled = true;
+            phrygianOpt.disabled = true;
+            lydianOpt.disabled = true;
+        } else if (getNameChangeVal=== "f" && getAccidentalChangeVal === "b") {
+            majorOpt.disabled = true;
+            minorOpt.disabled = true;
+            dominantOpt.disabled = true;
+            augmentedOpt.disabled = true;
+            diminishedOpt.disabled = true;
+            susTwoOpt.disabled = true;
+            susFourOpt.disabled = true;
+            phrygianOpt.disabled = true;
+            lydianOpt.disabled = true;
+        } else if (getNameChangeVal=== "g" && getAccidentalChangeVal === "b") {
+            minorOpt.disabled = true; 
+            diminishedOpt.disabled = true; 
+            susTwoOpt.disabled = true;
+            susFourOpt.disabled = true;
+            phrygianOpt.disabled = true;
+            lydianOpt.disabled = true;      
+        } else if (getNameChangeVal=== "g" && getAccidentalChangeVal === "#") {
+            majorOpt.disabled = true;
+            dominantOpt.disabled = true;  
+            augmentedOpt.disabled = true;
+            susTwoOpt.disabled = true;
+            susFourOpt.disabled = true;
+            phrygianOpt.disabled = true;
+            lydianOpt.disabled = true;
+        } else if (getNameChangeVal=== "a" && getAccidentalChangeVal === "#") {
+            majorOpt.disabled = true;  
+            dominantOpt.disabled = true;
+            augmentedOpt.disabled = true;
+            susTwoOpt.disabled = true;
+            susFourOpt.disabled = true;
+            phrygianOpt.disabled = true;
+            lydianOpt.disabled = true;
+        } else if (getNameChangeVal=== "c" && getAccidentalChangeVal === "b") {
+            minorOpt.disabled = true;
+            diminishedOpt.disabled = true;
+            susTwoOpt.disabled = true;
+            susFourOpt.disabled = true;
+            phrygianOpt.disabled = true;
+            lydianOpt.disabled = true;        
+        } 
+}, false);
+}
+getAccidentalChange();
+
+// if (getNameChange() === "d" && getAccidentalChange() === "#") {
+//     console.log("hellllooooo");
+// }
+
+
+
 
 // PLAY INTRO WHEN PAGE LOADS
 // function playIntro() {
