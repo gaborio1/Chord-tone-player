@@ -756,139 +756,278 @@ playIndividualButton.addEventListener("click", function(evt) {
     handlePlayIndividual();
 })
 
+// WHEN PAGE LOADS, ONLY NAME SELECTION IS ENABLED. ENABLE DROPDOWNS IN SEQUENCE: ONCE ONE IS SELECTED, ENABLE NEXT THEN ATER TYPE IS SELECTED, ENABLE ALL EXTENSIONS 6, 7, 9, 11, 13
 
-
-// EVENT LISTENERS ON NAME/ACCIDENTAL DROPDOWN OPTIONS 
+// INITIALISE VARS TO TRACK WHAT'S SELECTED AS NAME AND ACCIDENTAL
 let getNameChangeVal;
 let getAccidentalChangeVal;
 
+// EVENT LISTENERS ON NAME/ACCIDENTAL/TYPE DROPDOWN OPTIONS:
+
+// GET SELECTED NAME AND ENABLE ACCIDENTAL OPTIONS ONCE NAME IS SELECTED
 function getNameChange() {
     const nameDropdown = document.getElementById("name");
     nameDropdown.addEventListener('change', function() {
     getNameChangeVal = this.value;
-    console.log(getNameChangeVal);
+    accidentalEnable();
 //   WHAT IS FALSE ???
-}, false);
-
+    }, false);
 }
 getNameChange();
 
-// arraySelects[i].options[selectedOption].disabled = true;
-
+// GET SELECTED ACCIDENTAL AND ENABLE TYPE OPTIONS ACCIDENTAL IS SELECTED
 function getAccidentalChange() {
-
-    const AccidentalDropdown = document.getElementById("accidental");
-    const typeOptions = document.getElementById("type");
-    const majorOpt = typeOptions.options[1];
-    const minorOpt = typeOptions.options[2];
-    const dominantOpt = typeOptions.options[3];
-    const augmentedOpt = typeOptions.options[4];
-    const diminishedOpt = typeOptions.options[5];
-    const susTwoOpt = typeOptions.options[6];
-    const susFourOpt = typeOptions.options[7];
-    const phrygianOpt = typeOptions.options[8];
-    const lydianOpt = typeOptions.options[9];
-
-    AccidentalDropdown.addEventListener('change', function() {
+    const accidentalDropdown = document.getElementById("accidental");
+    accidentalDropdown.addEventListener('change', function() {
     getAccidentalChangeVal = this.value;
-    console.log(getAccidentalChangeVal);
-    if (getNameChangeVal=== "b" && getAccidentalChangeVal === "#") {
-            // typeOptions.options[0].disabled = true;
-            majorOpt.disabled = true;
-            minorOpt.disabled = true;
-            dominantOpt.disabled = true;
-            augmentedOpt.disabled = true;
-            diminishedOpt.disabled = true;
-            susTwoOpt.disabled = true;
-            susFourOpt.disabled = true;
-            phrygianOpt.disabled = true;
-            lydianOpt.disabled = true;
-        } else if (getNameChangeVal=== "d" && getAccidentalChangeVal === "b") {
-            minorOpt.disabled = true;
-            diminishedOpt.disabled = true;
-            susTwoOpt.disabled = true;
-            susFourOpt.disabled = true;
-            phrygianOpt.disabled = true;
-            lydianOpt.disabled = true;
-        } else if (getNameChangeVal=== "d" && getAccidentalChangeVal === "#") {
-            majorOpt.disabled = true;
-            dominantOpt.disabled = true;
-            augmentedOpt.disabled = true;
-            susTwoOpt.disabled = true;
-            susFourOpt.disabled = true;
-            phrygianOpt.disabled = true;
-            lydianOpt.disabled = true;
-        } else if (getNameChangeVal=== "e" && getAccidentalChangeVal === "#") {
-            majorOpt.disabled = true;
-            minorOpt.disabled = true;
-            dominantOpt.disabled = true; 
-            augmentedOpt.disabled = true;
-            diminishedOpt.disabled = true;
-            susTwoOpt.disabled = true;
-            susFourOpt.disabled = true;
-            phrygianOpt.disabled = true;
-            lydianOpt.disabled = true;
-        } else if (getNameChangeVal=== "f" && getAccidentalChangeVal === "b") {
-            majorOpt.disabled = true;
-            minorOpt.disabled = true;
-            dominantOpt.disabled = true;
-            augmentedOpt.disabled = true;
-            diminishedOpt.disabled = true;
-            susTwoOpt.disabled = true;
-            susFourOpt.disabled = true;
-            phrygianOpt.disabled = true;
-            lydianOpt.disabled = true;
-        } else if (getNameChangeVal=== "g" && getAccidentalChangeVal === "b") {
-            minorOpt.disabled = true; 
-            diminishedOpt.disabled = true; 
-            susTwoOpt.disabled = true;
-            susFourOpt.disabled = true;
-            phrygianOpt.disabled = true;
-            lydianOpt.disabled = true;      
-        } else if (getNameChangeVal=== "g" && getAccidentalChangeVal === "#") {
-            majorOpt.disabled = true;
-            dominantOpt.disabled = true;  
-            augmentedOpt.disabled = true;
-            susTwoOpt.disabled = true;
-            susFourOpt.disabled = true;
-            phrygianOpt.disabled = true;
-            lydianOpt.disabled = true;
-        } else if (getNameChangeVal=== "a" && getAccidentalChangeVal === "#") {
-            majorOpt.disabled = true;  
-            dominantOpt.disabled = true;
-            augmentedOpt.disabled = true;
-            susTwoOpt.disabled = true;
-            susFourOpt.disabled = true;
-            phrygianOpt.disabled = true;
-            lydianOpt.disabled = true;
-        } else if (getNameChangeVal=== "c" && getAccidentalChangeVal === "b") {
-            minorOpt.disabled = true;
-            diminishedOpt.disabled = true;
-            susTwoOpt.disabled = true;
-            susFourOpt.disabled = true;
-            phrygianOpt.disabled = true;
-            lydianOpt.disabled = true;        
-        } 
-}, false);
+    typeEnable();
+    }, false);
 }
 getAccidentalChange();
 
-// if (getNameChange() === "d" && getAccidentalChange() === "#") {
-//     console.log("hellllooooo");
-// }
+// GET SELECTED TYPE AND ENABLE EXTENSIONS 6, 7, 9, 11, 13
+function getTypeChange() {
+    const typeDropdown = document.getElementById("type");
+    typeDropdown.addEventListener('change', function() {
+    getTypeChangeVal = this.value;
+    enableExtensionOptions();
+    }, false);
+}
+getTypeChange();
 
+// arraySelects[i].options[selectedOption].disabled = true;
 
+// GRAB ALL DROPDOWNS AND THEIR OPTIONS
+const accidentalOptions = document.getElementById("accidental");
+const naturalOpt = accidentalOptions.options[1];
+const sharpOpt = accidentalOptions.options[2];
+const flatOpt = accidentalOptions.options[3];
 
+const typeOptions = document.getElementById("type");
+const majorOpt = typeOptions.options[1];
+const minorOpt = typeOptions.options[2];
+const dominantOpt = typeOptions.options[3];
+const augmentedOpt = typeOptions.options[4];
+const diminishedOpt = typeOptions.options[5];
+const susTwoOpt = typeOptions.options[6];
+const susFourOpt = typeOptions.options[7];
+const phrygianOpt = typeOptions.options[8];
+const lydianOpt = typeOptions.options[9];
+
+const sixthOptions = document.getElementById("sixth");
+const sixthOpt = sixthOptions[1];
+
+const seventhOptions = document.getElementById("seventh");
+const seventhOpt = seventhOptions.options[1];
+
+const ninthOptions = document.getElementById("ninth");
+const ninthOpt = ninthOptions.options[1];
+const addNinthOpt = ninthOptions.options[2];
+
+const eleventhOptions = document.getElementById("eleventh");
+const eleventhOpt = eleventhOptions.options[1];
+const addEleventhOpt = eleventhOptions.options[2];
+
+const thirteenthOptions = document.getElementById("thirteenth");
+const thirteenthOpt = thirteenthOptions.options[1];
+const addThirteenthOpt = thirteenthOptions.options[2];
+
+// DISABLE / ENABLE OPTIONS
+function accidentalDisable() {
+    accidentalOptions.options[0].disabled = true;
+    naturalOpt.disabled = true;
+    sharpOpt.disabled = true;
+    flatOpt.disabled = true;
+}
+
+function accidentalEnable() {
+    accidentalOptions.options[0].disabled = false;
+    naturalOpt.disabled = false;
+    sharpOpt.disabled = false;
+    flatOpt.disabled = false;
+}
+
+function typeDisable() {
+    typeOptions.options[0].disabled = true;
+    majorOpt.disabled = true;
+    minorOpt.disabled = true;
+    dominantOpt.disabled = true;
+    augmentedOpt.disabled = true;
+    diminishedOpt.disabled = true;
+    susTwoOpt.disabled = true;
+    susFourOpt.disabled = true;
+    phrygianOpt.disabled = true;
+    lydianOpt.disabled = true;
+}
+
+// ONLY ENABLE VALID KEY SIGNATURES !!!
+function typeEnable() {
+    if (getNameChangeVal=== "b" && getAccidentalChangeVal === "#") {
+        console.log("impossible key");
+        message.classList.remove("hidden");
+    } else if (getNameChangeVal=== "d" && getAccidentalChangeVal === "b") {
+        majorOpt.disabled = false;
+
+        dominantOpt.disabled = false;
+        augmentedOpt.disabled = false;
+        // diminishedOpt.disabled = false;
+        susTwoOpt.disabled = false;
+        susFourOpt.disabled = false;
+        phrygianOpt.disabled = false;
+        lydianOpt.disabled = false;
+    } else if (getNameChangeVal=== "d" && getAccidentalChangeVal === "#") {
+        minorOpt.disabled = false;
+
+        // augmentedOpt.disabled = false;
+        diminishedOpt.disabled = false;
+        susTwoOpt.disabled = false;
+        susFourOpt.disabled = false;
+        phrygianOpt.disabled = false;
+        lydianOpt.disabled = false;
+    } else if (getNameChangeVal=== "e" && getAccidentalChangeVal === "#") {
+        console.log("impossible key");
+        message.classList.remove("hidden");
+    } else if (getNameChangeVal=== "f" && getAccidentalChangeVal === "b") {
+        console.log("impossible key");
+        message.classList.remove("hidden");
+    } else if (getNameChangeVal=== "g" && getAccidentalChangeVal === "b") {
+        majorOpt.disabled = false;
+
+        dominantOpt.disabled = false;
+        augmentedOpt.disabled = false;
+        // diminishedOpt.disabled = false;
+        susTwoOpt.disabled = false;
+        susFourOpt.disabled = false;
+        phrygianOpt.disabled = false;
+        lydianOpt.disabled = false;
+    } else if (getNameChangeVal=== "g" && getAccidentalChangeVal === "#") {
+        minorOpt.disabled = false;
+
+        // augmentedOpt.disabled = false;
+        diminishedOpt.disabled = false;
+        susTwoOpt.disabled = false;
+        susFourOpt.disabled = false;
+        phrygianOpt.disabled = false;
+        lydianOpt.disabled = false;
+    } else if (getNameChangeVal=== "a" && getAccidentalChangeVal === "#") {
+        minorOpt.disabled = false;
+
+        // augmentedOpt.disabled = false;
+        diminishedOpt.disabled = false;
+        susTwoOpt.disabled = false;
+        susFourOpt.disabled = false;
+        phrygianOpt.disabled = false;
+        lydianOpt.disabled = false;
+    } else if (getNameChangeVal=== "c" && getAccidentalChangeVal === "b") {
+        majorOpt.disabled = false;
+
+        dominantOpt.disabled = false;
+        augmentedOpt.disabled = false;
+        // diminishedOpt.disabled = false;
+        susTwoOpt.disabled = false;
+        susFourOpt.disabled = false;
+        phrygianOpt.disabled = false;
+        lydianOpt.disabled = false;
+    // VALID KEY, ENABLE ALL TYPES
+    } else {
+        // typeOptions.options[0].disabled = false;
+        majorOpt.disabled = false;
+        minorOpt.disabled = false;
+        dominantOpt.disabled = false;
+        augmentedOpt.disabled = false;
+        diminishedOpt.disabled = false;
+        susTwoOpt.disabled = false;
+        susFourOpt.disabled = false;
+        phrygianOpt.disabled = false;
+        lydianOpt.disabled = false;
+    }
+}
+
+function sixthDisable() {
+    sixthOptions.options[0].disabled = true;
+    sixthOpt.disabled = true;
+}
+
+function sixthEnable() {
+    sixthOptions.options[0].disabled = false;
+    sixthOpt.disabled = false;
+}
+function seventhDisable() {
+    seventhOptions.options[0].disabled = true;
+    seventhOpt.disabled = true;
+}
+
+function seventhEnable() {
+    seventhOptions.options[0].disabled = false;
+    seventhOpt.disabled =false;
+}
+
+function ninthDisable() {
+    ninthOptions.options[0].disabled = true;
+    ninthOpt.disabled = true;
+    addNinthOpt.disabled = true;
+}
+
+function ninthEnable() {
+    ninthOptions.options[0].disabled = false;
+    ninthOpt.disabled =false;
+    addNinthOpt.disabled = false;
+}
+
+function eleventhDisable() {
+    eleventhOptions.options[0].disabled = true;
+    eleventhOpt.disabled = true;
+    addEleventhOpt.disabled = true;
+}
+
+function eleventhEnable() {
+    eleventhOptions.options[0].disabled = false;
+    eleventhOpt.disabled = false;
+    addEleventhOpt.disabled = false;
+}
+
+function thirteenthDisable() {
+    thirteenthOptions.options[0].disabled = true;
+    thirteenthOpt.disabled = true;
+    addThirteenthOpt.disabled = true;
+}
+
+function thirteenthEnable() {
+    thirteenthOptions.options[0].disabled = false;
+    thirteenthOpt.disabled = false;
+    addThirteenthOpt.disabled = false;
+}
+
+// DISABLE ALL
+function disableSelectOptions() {
+    accidentalDisable();
+    typeDisable();
+    sixthDisable();
+    seventhDisable();
+    ninthDisable();
+    eleventhDisable();
+    thirteenthDisable();
+}
+
+// ENABLE 6, 7, 9, 11, 13 OPTIONS
+function enableExtensionOptions() {
+    sixthEnable();
+    seventhEnable();
+    ninthEnable();
+    eleventhEnable();
+    thirteenthEnable();
+}
 
 // PLAY INTRO WHEN PAGE LOADS
-// function playIntro() {
-//      const sound = new Howl({
-//         src: ['sounds/intro2.mp3']
-//       });
-//       sound.play();
-// }
+function playIntro() {
+     const sound = new Howl({
+        src: ['sounds/intro2.mp3']
+      });
+      sound.play();
+}
 
-// window.addEventListener("load", function() {
-//     console.log("page is loaded");
-//         playIntro();
-//       });
+window.addEventListener("load", function() {
+    console.log("page is loaded");
+        playIntro();
+        disableSelectOptions();
+      });

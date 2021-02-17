@@ -13,6 +13,7 @@ functions to add:
  ✔️ sus4
  ✔️ phrygian
  ✔️ lydian
+ "new chord" button to reset / clear dropdowns
 
 bugs:
    ✔️ remove existing chord degree divs before appending new ones 
@@ -25,7 +26,7 @@ bugs:
   ✔️ make minor6 6th major6th and 13th major13th
     fix double sharp in augmented C# E# G##
     fix double flat in diminished Eb Gb Bbb
-  ✔️ disable select options for impossible key signatures
+   REFACTOR disable select options for impossible key signatures 
   ✔️ 6/7
   ✔️ +7
 
