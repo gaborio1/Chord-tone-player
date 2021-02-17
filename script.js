@@ -727,6 +727,12 @@ function displayAndPlay() {
     })
 }
 
+// REFRESH PAGE FOR NEW CHORD
+function refreshPage() {
+    location.reload();
+    // THIS ALSO WORKS
+    // location.reload(true);
+}
 // EVENT HANDLERS ON BUTTONS
 function handleShowChordTones() {
     displayChordName();
@@ -738,6 +744,9 @@ function handlePlayChord() {
 }
 function handlePlayIndividual() {
     displayAndPlay();
+}
+function handleNewChord() {
+    refreshPage();
 }
 // EVENT LISTENERS ON BUTTONS
 const showChordTonesBtn = document.getElementById("chord-tones-btn");
@@ -754,6 +763,10 @@ const playIndividualButton = document.getElementById("play-individual-btn");
 playIndividualButton.addEventListener("click", function(evt) {
     evt.preventDefault();
     handlePlayIndividual();
+})
+const newChordButton = document.getElementById("new-chord-btn");
+newChordButton.addEventListener("click", function(evt) {
+    handleNewChord();
 })
 
 // WHEN PAGE LOADS, ONLY NAME SELECTION IS ENABLED. ENABLE DROPDOWNS IN SEQUENCE: ONCE ONE IS SELECTED, ENABLE NEXT THEN ATER TYPE IS SELECTED, ENABLE ALL EXTENSIONS 6, 7, 9, 11, 13
@@ -1028,6 +1041,6 @@ function playIntro() {
 
 window.addEventListener("load", function() {
     console.log("page is loaded");
-        playIntro();
+        // playIntro();
         disableSelectOptions();
       });

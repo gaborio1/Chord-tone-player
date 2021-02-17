@@ -56,6 +56,7 @@
         <option value="invalid type" disabled>invalid type</option>
       </select>
       <br>
+      <p>Extensions:</p>
     <label for="sixth">6th:</label>
       <select name="sixth" id="sixth">
         <option value=""></option>
@@ -89,6 +90,11 @@
       <br>
         <!-- <button type="button" onclick="displayData()">Get chord tones-onclick</button> -->
     <button id="chord-tones-btn">Show chord tones</button>
+    <p id="message" class="hidden">Theoretical chord! More than 7 #'s or b's!</p>
+    <br>
+    <p >Chord name: <span id="chordNameType"></span></p>
+    <p >Chord tones: <span id="chordTones"></span></p>
+    <p >Chord scale: <span id="chordScale"></span></p>
     <label for="register">Register:</label>
       <select name="register" id="register">
         <option value="guitar">Guitar</option>
@@ -99,10 +105,7 @@
     <!-- HOWLER JS AUDIO TEST -->
     <button id="play-chord-btn">Play chord</button>
     <button id="play-individual-btn">Play arpeggio</button>
-    <p >Chord scale: <span id="chordScale"></span></p>
-    <p >Chord name: <span id="chordNameType"></span></p>
-    <p >Chord tones: <span id="chordTones"></span></p>
-    <p id="message" class="hidden">Theoretical chord! More than 7 #'s or b's!</p>
+    <button id="new-chord-btn">New chord</button>
     <div id="audio-container"></div>
     <script src="script.js"></script>
   </body>

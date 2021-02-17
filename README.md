@@ -5,6 +5,7 @@ Audio production software used in this program:
         Reverb: ChromaVerb
 
 functions to add:
+  add instructions
  ✔️ play some sound when page loads
  ✔️ transpose option
   arpeggiate chords
@@ -13,7 +14,7 @@ functions to add:
  ✔️ sus4
  ✔️ phrygian
  ✔️ lydian
- "new chord" button to reset / clear dropdowns
+ ✔️ "new chord" button to reset / clear dropdowns
 
 bugs:
    ✔️ remove existing chord degree divs before appending new ones 
