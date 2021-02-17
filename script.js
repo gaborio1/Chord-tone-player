@@ -775,35 +775,47 @@ newChordButton.addEventListener("click", function(evt) {
 let getNameChangeVal;
 let getAccidentalChangeVal;
 
+// SELECT PARAGRAPHS TO SHOW / HIDE INSTRUCTIONS
+const nameInstruction = document.getElementById("name-instruction");
+const accidentalInstruction = document.getElementById("accidental-instruction");
+const typeInstruction = document.getElementById("type-instruction");
+const extensionInstruction = document.getElementById("extension-instruction");
+
 // EVENT LISTENERS ON NAME/ACCIDENTAL/TYPE DROPDOWN OPTIONS:
 
-// GET SELECTED NAME AND ENABLE ACCIDENTAL OPTIONS ONCE NAME IS SELECTED
+// GET SELECTED NAME, ENABLE ACCIDENTAL OPTIONS, SHOW INSTR ONCE NAME IS SELECTED
 function getNameChange() {
     const nameDropdown = document.getElementById("name");
     nameDropdown.addEventListener('change', function() {
     getNameChangeVal = this.value;
     accidentalEnable();
+    nameInstruction.classList.add("hidden");
+    accidentalInstruction.classList.remove("hidden");
 //   WHAT IS FALSE ???
     }, false);
 }
 getNameChange();
 
-// GET SELECTED ACCIDENTAL AND ENABLE TYPE OPTIONS ACCIDENTAL IS SELECTED
+// GET SELECTED ACCIDENTAL, ENABLE TYPE OPTIONS, SHOW INSTR ONCE ACCIDENTAL IS SELECTED
 function getAccidentalChange() {
     const accidentalDropdown = document.getElementById("accidental");
     accidentalDropdown.addEventListener('change', function() {
     getAccidentalChangeVal = this.value;
     typeEnable();
+    accidentalInstruction.classList.add("hidden");
+    typeInstruction.classList.remove("hidden");
     }, false);
 }
 getAccidentalChange();
 
-// GET SELECTED TYPE AND ENABLE EXTENSIONS 6, 7, 9, 11, 13
+// GET SELECTED TYPE, ENABLE EXTENSIONS 6, 7, 9, 11, 13 , SHOW INSTR
 function getTypeChange() {
     const typeDropdown = document.getElementById("type");
     typeDropdown.addEventListener('change', function() {
     getTypeChangeVal = this.value;
     enableExtensionOptions();
+    typeInstruction.classList.add("hidden");
+    extensionInstruction.classList.remove("hidden");
     }, false);
 }
 getTypeChange();

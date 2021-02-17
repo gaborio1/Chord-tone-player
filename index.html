@@ -32,6 +32,7 @@
         <option value="a" class="note-name">a</option>
         <option value="b" class="note-name">b</option>
       </select>
+      <p class="instruction" id="name-instruction">Select name!</p>
       <br>
     <label for="accidental">Accidental:</label>
       <select name="accidental" id="accidental">
@@ -40,6 +41,7 @@
         <option value="#" class="note-accidental">sharp #</option>
         <option value="b" class="note-accidental">flat b</option>
       </select>
+      <p class="instruction hidden" id="accidental-instruction">Select accidental!</p>
       <br>
     <label for="type">Chord type:</label>
       <select name="type" id="type">
@@ -55,8 +57,10 @@
         <option value="lydian">lydian</option>
         <option value="invalid type" disabled>invalid type</option>
       </select>
+      <p class="instruction hidden" id="type-instruction">Select type!</p>
       <br>
-      <p>Extensions:</p>
+      <p class="">Extensions: <span class="instruction hidden" id="extension-instruction">Optional!</span></p>
+      <!-- <p class="instruction hidden" id="extension-instruction">Optional!</p> -->
     <label for="sixth">6th:</label>
       <select name="sixth" id="sixth">
         <option value=""></option>
