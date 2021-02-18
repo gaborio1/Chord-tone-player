@@ -740,6 +740,8 @@ function handleShowChordTones() {
     displayChordScale();
     enableRegister();
     enablePlayArpNewButtons();
+    hideExtensionInstruction();
+    // extensionInstruction.classList.add("hidden");
 }
 function handlePlayChord() {
     playChordTones();
@@ -799,12 +801,12 @@ function getNameChange() {
     if (!isNameSelected) {
         accidentalEnable();
         isNameSelected = true;
-        nameInstruction.classList.add("hidden");
-        accidentalInstruction.classList.remove("hidden");
+        hideNameInstruction();
+        showAccidentalInstruction();
     } else if (isNameSelected && !accidentalInstruction.classList.contains("hidden")) {
-        accidentalInstruction.classList.remove("hidden");
+        showAccidentalInstruction();
     } else {
-        accidentalInstruction.classList.add("hidden");
+        hideAccidentalInstruction();
     }
     
 //   WHAT IS FALSE ???
@@ -819,10 +821,11 @@ function getAccidentalChange() {
     getAccidentalChangeVal = this.value;
     typeEnable();
     if (!accidentalInstruction.classList.contains("hidden") && accidentalOptions.selectedIndex > 0) {
-        accidentalInstruction.classList.add("hidden");
+        hideAccidentalInstruction();
     }
-    accidentalInstruction.classList.add("hidden");
-    typeInstruction.classList.remove("hidden");
+    hideAccidentalInstruction();
+    showTypeExtension();
+    // typeInstruction.classList.remove("hidden");
     }, false);
 }
 getAccidentalChange();
@@ -833,8 +836,8 @@ function getTypeChange() {
     typeDropdown.addEventListener('change', function() {
     getTypeChangeVal = this.value;
     enableExtensionOptions();
-    typeInstruction.classList.add("hidden");
-    extensionInstruction.classList.remove("hidden");
+    hideTypeExtension();
+    showExtensionInstruction();
     enableShowChordButton();
     }, false);
 }
@@ -994,6 +997,35 @@ function typeEnable() {
     }
 }
 
+function hideNameInstruction() {
+    nameInstruction.classList.add("hidden");
+}
+
+function showAccidentalInstruction() {
+    accidentalInstruction.classList.remove("hidden");
+}
+
+function hideAccidentalInstruction() {
+    accidentalInstruction.classList.add("hidden");
+}
+
+function showTypeExtension() {
+    typeInstruction.classList.remove("hidden");
+}
+
+function hideTypeExtension() {
+    typeInstruction.classList.add("hidden");
+}
+
+function showExtensionInstruction() {
+    extensionInstruction.classList.remove("hidden");
+}
+
+function hideExtensionInstruction() {
+    extensionInstruction.classList.add("hidden");
+}
+
+
 function sixthDisable() {
     sixthOptions.options[0].disabled = true;
     sixthOpt.disabled = true;
@@ -1095,6 +1127,6 @@ function playIntro() {
 
 window.addEventListener("load", function() {
     console.log("page is loaded");
-        playIntro();
+        // playIntro();
         disableSelectOptions();
       });
