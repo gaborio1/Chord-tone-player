@@ -738,6 +738,8 @@ function handleShowChordTones() {
     displayChordName();
     displayChordTones();
     displayChordScale();
+    enableRegister();
+    enablePlayArpNewButtons();
 }
 function handlePlayChord() {
     playChordTones();
@@ -777,9 +779,15 @@ let getAccidentalChangeVal;
 
 // SELECT PARAGRAPHS TO SHOW / HIDE INSTRUCTIONS
 const nameInstruction = document.getElementById("name-instruction");
+let isNameSelected = false;
 const accidentalInstruction = document.getElementById("accidental-instruction");
+// NOT USED
+// let isAccidentalSelected = false;
 const typeInstruction = document.getElementById("type-instruction");
+// NOT USED
+// let isTypeSelected = false;
 const extensionInstruction = document.getElementById("extension-instruction");
+
 
 // EVENT LISTENERS ON NAME/ACCIDENTAL/TYPE DROPDOWN OPTIONS:
 
@@ -788,9 +796,17 @@ function getNameChange() {
     const nameDropdown = document.getElementById("name");
     nameDropdown.addEventListener('change', function() {
     getNameChangeVal = this.value;
-    accidentalEnable();
-    nameInstruction.classList.add("hidden");
-    accidentalInstruction.classList.remove("hidden");
+    if (!isNameSelected) {
+        accidentalEnable();
+        isNameSelected = true;
+        nameInstruction.classList.add("hidden");
+        accidentalInstruction.classList.remove("hidden");
+    } else if (isNameSelected && !accidentalInstruction.classList.contains("hidden")) {
+        accidentalInstruction.classList.remove("hidden");
+    } else {
+        accidentalInstruction.classList.add("hidden");
+    }
+    
 //   WHAT IS FALSE ???
     }, false);
 }
@@ -802,6 +818,9 @@ function getAccidentalChange() {
     accidentalDropdown.addEventListener('change', function() {
     getAccidentalChangeVal = this.value;
     typeEnable();
+    if (!accidentalInstruction.classList.contains("hidden") && accidentalOptions.selectedIndex > 0) {
+        accidentalInstruction.classList.add("hidden");
+    }
     accidentalInstruction.classList.add("hidden");
     typeInstruction.classList.remove("hidden");
     }, false);
@@ -816,6 +835,7 @@ function getTypeChange() {
     enableExtensionOptions();
     typeInstruction.classList.add("hidden");
     extensionInstruction.classList.remove("hidden");
+    enableShowChordButton();
     }, false);
 }
 getTypeChange();
@@ -856,6 +876,12 @@ const addEleventhOpt = eleventhOptions.options[2];
 const thirteenthOptions = document.getElementById("thirteenth");
 const thirteenthOpt = thirteenthOptions.options[1];
 const addThirteenthOpt = thirteenthOptions.options[2];
+
+const registerOptions = document.getElementById("register");
+// guitarOpt IS NOT DISABLED BY DEFAULT
+const guitarOpt = registerOptions.options[0];
+const bassOpt = registerOptions.options[1];
+const guitarUpOpt = registerOptions.options[2];
 
 // DISABLE / ENABLE OPTIONS
 function accidentalDisable() {
@@ -1023,6 +1049,22 @@ function thirteenthEnable() {
     addThirteenthOpt.disabled = false;
 }
 
+function enablePlayArpNewButtons() {
+    playButton.disabled = false;
+    playIndividualButton.disabled = false;
+    newChordButton.disabled = false;
+}
+
+function enableRegister() {
+    // guitarOpt IS NOT DISABLED BY DEFAULT
+    // guitarOpt.disabled = false;
+    bassOpt.disabled = false;
+    guitarUpOpt.disabled = false;
+}
+
+function enableShowChordButton() {
+    showChordTonesBtn.disabled = false;
+}
 // DISABLE ALL
 function disableSelectOptions() {
     accidentalDisable();
@@ -1053,6 +1095,6 @@ function playIntro() {
 
 window.addEventListener("load", function() {
     console.log("page is loaded");
-        // playIntro();
+        playIntro();
         disableSelectOptions();
       });
