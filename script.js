@@ -792,7 +792,7 @@ newChordButton.addEventListener("click", function(evt) {
 // WHEN PAGE LOADS, ONLY NAME SELECTION IS ENABLED. ENABLE DROPDOWNS IN SEQUENCE: ONCE ONE IS SELECTED, ENABLE NEXT THEN ATER TYPE IS SELECTED, ENABLE ALL EXTENSIONS 6, 7, 9, 11, 13
 
 // INITIALISE VARS TO TRACK WHAT'S SELECTED AS NAME AND ACCIDENTAL
-let getNameChangeVal;
+let NameChangeVal;
 let getAccidentalChangeVal;
 
 // SELECT PARAGRAPHS TO SHOW / HIDE INSTRUCTIONS
@@ -814,7 +814,7 @@ let isNameSelected = false;
 function getNameChange() {
     const nameDropdown = document.getElementById("name");
     nameDropdown.addEventListener('change', function() {
-    getNameChangeVal = this.value;
+    NameChangeVal = this.value;
     if (!isNameSelected) {
         isNameSelected = true;
         accidentalEnable();
@@ -830,17 +830,30 @@ function getNameChange() {
 }
 getNameChange();
 
+let isImpossibleKey = false;
+
 // GET SELECTED ACCIDENTAL, ENABLE TYPE OPTIONS, SHOW INSTR ONCE ACCIDENTAL IS SELECTED
 function getAccidentalChange() {
     const accidentalDropdown = document.getElementById("accidental");
     accidentalDropdown.addEventListener('change', function() {
     getAccidentalChangeVal = this.value;
+
+    isImpossibleKey = ((NameChangeVal === "b" && getAccidentalChangeVal ===  "#") ||
+    (NameChangeVal === "e" && getAccidentalChangeVal ===  "#") ||
+    (NameChangeVal === "f" && getAccidentalChangeVal ===  "b"));
+    console.log(isImpossibleKey);
+
     typeEnable();
     if (!accidentalInstruction.classList.contains("hidden") && accidentalOptions.selectedIndex > 0) {
         hideAccidentalInstruction();
-    }
+    } 
     hideAccidentalInstruction();
-    showTypeExtension();
+    // showTypeInstruction();
+    if (isImpossibleKey) {
+        showAccidentalInstruction();
+        hideTypeInstruction
+    }
+    // showTypeInstruction();
     }, false);
 }
 getAccidentalChange();
@@ -851,7 +864,7 @@ function getTypeChange() {
     typeDropdown.addEventListener('change', function() {
     getTypeChangeVal = this.value;
     enableExtensionOptions();
-    hideTypeExtension();
+    hideTypeInstruction();
     showExtensionInstruction();
     enableShowChordButton();
     }, false);
@@ -861,6 +874,18 @@ getTypeChange();
 // arraySelects[i].options[selectedOption].disabled = true;
 
 // GRAB ALL DROPDOWNS AND THEIR OPTIONS
+
+// CURRENTLY NOT IN USE:
+// const nameOptions = document.getElementById("name");
+// const cOpt = nameOptions.options[1]; 
+// const dOpt = nameOptions.options[2]; 
+// const eOpt = nameOptions.options[3]; 
+// const fOpt = nameOptions.options[4]; 
+// const gOpt = nameOptions.options[5]; 
+// const aOpt = nameOptions.options[6]; 
+// const bOpt = nameOptions.options[7]; 
+
+
 const accidentalOptions = document.getElementById("accidental");
 const naturalOpt = accidentalOptions.options[1];
 const sharpOpt = accidentalOptions.options[2];
@@ -909,12 +934,53 @@ function accidentalDisable() {
     flatOpt.disabled = true;
 }
 
+// ONLY ENABLE POSSIBLE ACCIDENTALS
 function accidentalEnable() {
-    accidentalOptions.options[0].disabled = false;
-    naturalOpt.disabled = false;
-    sharpOpt.disabled = false;
-    flatOpt.disabled = false;
+    switch (NameChangeVal) {
+        case "c" :
+            naturalOpt.disabled = false;
+            sharpOpt.disabled = false;
+            flatOpt.disabled = false;
+            break;
+        case "d" :
+            naturalOpt.disabled = false;
+            sharpOpt.disabled = false;
+            flatOpt.disabled = false;
+            break;
+        case "e" :
+            naturalOpt.disabled = false;
+            // sharpOpt.disabled = false;
+            flatOpt.disabled = false;
+            break;
+        case "f" :
+            naturalOpt.disabled = false;
+            sharpOpt.disabled = false;
+            // flatOpt.disabled = false;
+            break;
+        case "g" :
+            naturalOpt.disabled = false;
+            sharpOpt.disabled = false;
+            flatOpt.disabled = false;
+            break;
+        case "a" :
+            naturalOpt.disabled = false;
+            sharpOpt.disabled = false;
+            flatOpt.disabled = false;
+            break;
+        case "b" :
+            naturalOpt.disabled = false;
+            // sharpOpt.disabled = false;
+            flatOpt.disabled = false;
+            break;
+    }
 }
+// OLD ACCIDENTAL ENABLE:
+// function accidentalEnable() {
+//     accidentalOptions.options[0].disabled = false;
+//     naturalOpt.disabled = false;
+//     sharpOpt.disabled = false;
+//     flatOpt.disabled = false;
+// }
 
 function typeDisable() {
     typeOptions.options[0].disabled = true;
@@ -930,6 +996,13 @@ function typeDisable() {
 }
 
 // FUMCTIONS FOR typeEnable()
+
+// NO KEY IN B#
+function disableBSharpTypes() {
+    showInvalidKeyMessage();
+}
+
+// NO MINOR IN Db
 function enableDFlatTypes() {
     majorOpt.disabled = false;
     dominantOpt.disabled = false;
@@ -941,6 +1014,7 @@ function enableDFlatTypes() {
     lydianOpt.disabled = false;
 }
 
+// NO MAJOR IN D#
 function enableDSharpTypes() {
     minorOpt.disabled = false;
     // augmentedOpt.disabled = false;
@@ -951,6 +1025,17 @@ function enableDSharpTypes() {
     lydianOpt.disabled = false;
 }
 
+// NO KEY IN E#
+function disableESharpTypes() {
+    showInvalidKeyMessage();
+}
+
+// NO KEY IN Fb
+function disableFFlatTypes() {
+    showInvalidKeyMessage();
+}
+
+// NO MINOR IN Gb
 function enableGFlatTypes() {
     majorOpt.disabled = false;
     dominantOpt.disabled = false;
@@ -962,6 +1047,7 @@ function enableGFlatTypes() {
     lydianOpt.disabled = false;
 }
 
+// NO MAJOR IN G#
 function enableGSharpTypes() {
     minorOpt.disabled = false;
     // augmentedOpt.disabled = false;
@@ -972,6 +1058,7 @@ function enableGSharpTypes() {
     lydianOpt.disabled = false;
 }
 
+// NO MAJOR IN A#
 function enableASharpTypes() {
     minorOpt.disabled = false;
     // augmentedOpt.disabled = false;
@@ -982,6 +1069,7 @@ function enableASharpTypes() {
     lydianOpt.disabled = false;    
 }
 
+// NO MINOR IN Cb
 function enableCFlatTypes() {
     majorOpt.disabled = false;
     dominantOpt.disabled = false;
@@ -993,6 +1081,7 @@ function enableCFlatTypes() {
     lydianOpt.disabled = false;   
 }
 
+// BOTH MAJOR AND MINOR (FOR EXAMPLE F#, D ETC...)
 function enableAllTypes() {
     // typeOptions.options[0].disabled = false;
     majorOpt.disabled = false;
@@ -1007,33 +1096,34 @@ function enableAllTypes() {
 }
 
 // ONLY ENABLE CHORD TYPES FOR VALID KEY SIGNATURES !!!
+// THIS DOES NOT HANDLE INSTRUCTIONS, ONLY THE TYPE SELECTION !!!
 function typeEnable() {
     
-    if (getNameChangeVal=== "b" && getAccidentalChangeVal === "#") {
-        showInvalidKeyMessage();
+    if (NameChangeVal=== "b" && getAccidentalChangeVal === "#") {
+        disableBSharpTypes();
     }
-     else if (getNameChangeVal=== "d" && getAccidentalChangeVal === "b") {
+     else if (NameChangeVal=== "d" && getAccidentalChangeVal === "b") {
         enableDFlatTypes();
     }
-     else if (getNameChangeVal=== "d" && getAccidentalChangeVal === "#") {
+     else if (NameChangeVal=== "d" && getAccidentalChangeVal === "#") {
         enableDSharpTypes()
     }
-     else if (getNameChangeVal=== "e" && getAccidentalChangeVal === "#") {
-        showInvalidKeyMessage();
+     else if (NameChangeVal=== "e" && getAccidentalChangeVal === "#") {
+        disableESharpTypes();
     }
-     else if (getNameChangeVal=== "f" && getAccidentalChangeVal === "b") {
-        showInvalidKeyMessage();
+     else if (NameChangeVal=== "f" && getAccidentalChangeVal === "b") {
+        disableFFlatTypes();
     }
-     else if (getNameChangeVal=== "g" && getAccidentalChangeVal === "b") {
+     else if (NameChangeVal=== "g" && getAccidentalChangeVal === "b") {
         enableGFlatTypes();
     }
-     else if (getNameChangeVal=== "g" && getAccidentalChangeVal === "#") {
+     else if (NameChangeVal=== "g" && getAccidentalChangeVal === "#") {
         enableGSharpTypes();
     }
-     else if (getNameChangeVal=== "a" && getAccidentalChangeVal === "#") {
+     else if (NameChangeVal=== "a" && getAccidentalChangeVal === "#") {
         enableASharpTypes();
     } 
-    else if (getNameChangeVal=== "c" && getAccidentalChangeVal === "b") {
+    else if (NameChangeVal=== "c" && getAccidentalChangeVal === "b") {
         enableCFlatTypes();
     // ENABLE ALL TYPES
     }
@@ -1063,11 +1153,11 @@ function hideAccidentalInstruction() {
     accidentalInstruction.classList.add("hidden");
 }
 
-function showTypeExtension() {
+function showTypeInstruction() {
     typeInstruction.classList.remove("hidden");
 }
 
-function hideTypeExtension() {
+function hideTypeInstruction() {
     typeInstruction.classList.add("hidden");
 }
 
@@ -1181,6 +1271,6 @@ function playIntro() {
 
 window.addEventListener("load", function() {
     console.log("page is loaded");
-        playIntro();
+        // playIntro();
         disableSelectOptions();
       });
