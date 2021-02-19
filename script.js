@@ -610,6 +610,7 @@ const soundNames = [
 
 let chordNotesArr = [];
 
+// THESE 2 ARE USED IN getChordToneSounds f
 function makeChordNotesArr() {
     // SPLIT CHORD NOTES INTO ARRAY ["C", "E", "G", "Bb"]
     chordNotesArr = displayChordTones().split(" ");
@@ -623,14 +624,9 @@ function makeChordNotesArr() {
     return chordNotesArr;
 }
 
-function getChordToneSounds() {
-    makeChordNotesArr();
-    // EMPTY ARRAY FOR SOUNDS WITH PATHS AND EXTENSION
-    const soundsArr = [];
-     // KEEP TRACK OF ACTUAL MINIMUM INDEX (OUTSIDE OF LOOP!!!), INITIALISE WITH A VALUE OF 0 AND ACCUMULATE IN INNER LOOP
-    let minIdx = 0;
+function calcRegisterIdx() {
     // THIS IS WHERE LOOP SHOULD START DEPENDING ON SELECTED REGISTER
-    let registerIdx = 0;
+    let registerIdx;
     switch (getRegister()) {
         case "bass" :
             registerIdx = 0
@@ -642,31 +638,37 @@ function getChordToneSounds() {
             registerIdx = 24
             break;
     }
-    // console.log(registerIdx);
+    return registerIdx;
+}
+
+function getChordToneSounds() {
+    makeChordNotesArr();
+    // EMPTY ARRAY FOR SOUNDS WITH PATHS AND EXTENSION
+    const soundsArr = [];
+     // KEEP TRACK OF ACTUAL MINIMUM INDEX (OUTSIDE OF LOOP!!!), INITIALISE WITH A VALUE OF 0 AND ACCUMULATE IN INNER LOOP
+    let minIdx = 0;
     // FIND EACH NOTE OF chordNotesArr [C,E,G] IN chromaticScale 
     chordNotesArr.forEach((chordTone) => {
-        for (let i = registerIdx; i < soundNames.length; i++) {
+        for (let i = calcRegisterIdx(); i < soundNames.length; i++) {
 
-            let isCtLenghtOne = chordTone.length === 1;
-            let isCtFirstChar = soundNames[i].charAt(0) === chordTone;
-            let isIGrThanMinIdx = i >= minIdx;
-
-            let isCtLenghtTwo = chordTone.length === 2;
-            let isCtFoundInSn = soundNames[i].includes(chordTone);
+            let condA = chordTone.length === 1;
+            let condB = soundNames[i].charAt(0) === chordTone;
+            let condC = i >= minIdx;
+            let condD = chordTone.length === 2;
+            let condE = soundNames[i].includes(chordTone);
             // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            let isSnLengthMinThree = soundNames[i].length < 8;
+            let condF = soundNames[i].length < 8;
+            let condG = chordTone.length === 3;
 
-            let isCtLenghtThree = chordTone.length === 3;
-
-            if (isCtLenghtOne && isCtFirstChar && isIGrThanMinIdx) {
+            if (condA && condB && condC) {
                 soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
                 break;
-            } else if (isCtLenghtTwo && isCtFoundInSn && isSnLengthMinThree && isIGrThanMinIdx) {
+            } else if (condD && condE && condF && condC) {
                 soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
                 break;
-            } else if (isCtLenghtThree && isCtFoundInSn && isIGrThanMinIdx) {
+            } else if (condG && condE && condC) {
                 soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
                 break;
@@ -688,37 +690,9 @@ function getChordToneSounds() {
     // }
     // console.log(soundsArr);
 
-    // FIND OCTAVEDIGIT AND TRANSPOSE INDIVIDUAL NOTES IF NECESSARY (THIS IS EASIER THAN USING REGEX)
-    // for (let i = 1; i < soundsArr.length; i++) {
-    //     const octaveDigit = soundsArr[i].charAt(soundsArr[i].length - 5);
-    //     // console.log(typeof(octaveDigit));
-    //     console.log(soundsArr[i] + ", octave: " + octaveDigit);
-    //     // IF CURRENT OCTAVE IS SMALLER THAN PREVIOUS, TRANSPOSE IT UP BY 1
-    //     if (soundsArr[i].charAt(soundsArr[i].length - 5) < soundsArr[i - 1].charAt(soundsArr[i - 1].length - 5)) {
-    //         console.log("wrong octave");
-    //         console.log("current octave: " + soundsArr[i].charAt(soundsArr[i].length - 5));
-    //         console.log("previous octave: " + soundsArr[i - 1].charAt(soundsArr[i - 1].length - 5));
-    //         // INCREMENT OCTAVEDIGIT BY 1
-    //         let octaveDigitNum = parseInt(octaveDigit, 10);
-    //         octaveDigitNum += 1;
-    //         soundsArr[i] = soundsArr[i].replace(soundsArr[i].charAt(soundsArr[i].length - 5), octaveDigitNum.toString());
-    //     }
-    // }
-    // // ALSO, TRANSPOSE NOTES THAT ARE BEYOND THE OCTAVE (9,11,13)
-    // if (soundsArr.length > 3  && (displayChordName().indexOf("9") !== -1 || displayChordName().indexOf("11")!== -1)) {
-    //     console.log("9 or 11 !!!");
-    //     for (let i = 3; i < soundsArr.length; i++) {
-    //         const octaveDigit = soundsArr[i].charAt(soundsArr[i].length - 5);
-    //         let octaveDigitNum = parseInt(octaveDigit, 10);
-    //         octaveDigitNum += 1;
-    //         soundsArr[i] = soundsArr[i].replace(soundsArr[i].charAt(soundsArr[i].length - 5), octaveDigitNum.toString());
-    //     }
-    // }
     console.log("soundsArr updated octave: " + soundsArr);
     return soundsArr;
 }
-
-
 
 // PLAY ACTUAL SOUND FILES AT ONCE
 function playChordTones() {
@@ -735,7 +709,7 @@ function playChordTones() {
 }
 
 // CREATE A RESPONSIVE DIV FOR EACH CHORD DEGREE 
-function displayAndPlay() {
+function makeSoundDivs() {
     const soundFiles = getChordToneSounds();
     // NEED ACTUAL NOTE NAMES WITHOUT PATH AND EXTENSION
     const chordTones = displayChordTones().split(" ");
@@ -781,7 +755,7 @@ function handlePlayChord() {
     playChordTones();
 }
 function handlePlayIndividual() {
-    displayAndPlay();
+    makeSoundDivs();
 }
 function handleNewChord() {
     refreshPage();
@@ -876,7 +850,7 @@ function getAccidentalChange() {
         showAccidentalInstruction();
         hideTypeInstruction
     }
-    // showTypeInstruction();
+    showTypeInstruction();
     }, false);
 }
 getAccidentalChange();
