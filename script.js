@@ -345,16 +345,16 @@ function displayChordTones() {
             break;
         case "sus2" :
             chordTones = `${chordObj.getRoot()} ${chordObj.getSecond()} ${chordObj.getFifth()}`;
-        break;
+            break;
         case "sus4" :
             chordTones = `${chordObj.getRoot()} ${chordObj.getFourth()} ${chordObj.getFifth()}`;
-        break;
+            break;
         case "phrygian" :
             chordTones = `${chordObj.getRoot()} ${chordObj.getFlatSecond()} ${chordObj.getFifth()}`;
-        break;
+            break;
         case "lydian" :
             chordTones = `${chordObj.getRoot()} ${chordObj.getSharpFourth()} ${chordObj.getFifth()}`;
-        break;
+            break;
         // DEFAULT IS MAJOR OR MINOR
         default:
             chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getFifth()}`;
@@ -614,8 +614,8 @@ function getChordToneSounds() {
     // !!! REPLACE ALL SPECIAL CHARS "#" WITH "s" FOR SHARP AS HOWLER WILL NOT LOAD MP3'S WITH SPEC CHARACTER IN FILENAME !!! 
     // ["C#", "E#", "G##"]  =>   ["Cs", "Es", "Gss"]
     for (let i = 0; i < chordNotesArr.length; i++) {
-        let reSharp = /#/gi;
-        chordNotesArr[i] = chordNotesArr[i].replace(reSharp , "s");
+        let sharpRe = /#/gi;
+        chordNotesArr[i] = chordNotesArr[i].replace(sharpRe , "s");
     }
     console.log(chordNotesArr);
     // EMPTY ARRAY FOR SOUNDS WITH PATHS AND EXTENSION
@@ -643,7 +643,7 @@ function getChordToneSounds() {
                 soundsArr.push("sounds/" + chromaticScale[i].concat(".mp3"));
                 minIdx = i;
                 break;
-            } else if (chordTone.length > 1 && chromaticScale[i].includes(chordTone ) && i >= minIdx) {
+            } else if (chordTone.length === 2 && chromaticScale[i].includes(chordTone ) && i >= minIdx) {
                 soundsArr.push("sounds/" + chromaticScale[i].concat(".mp3"));
                 minIdx = i;
                 break;
@@ -792,8 +792,8 @@ newChordButton.addEventListener("click", function(evt) {
 // WHEN PAGE LOADS, ONLY NAME SELECTION IS ENABLED. ENABLE DROPDOWNS IN SEQUENCE: ONCE ONE IS SELECTED, ENABLE NEXT THEN ATER TYPE IS SELECTED, ENABLE ALL EXTENSIONS 6, 7, 9, 11, 13
 
 // INITIALISE VARS TO TRACK WHAT'S SELECTED AS NAME AND ACCIDENTAL
-let NameChangeVal;
-let getAccidentalChangeVal;
+let nameChangeVal;
+let accidentalChangeVal;
 
 // SELECT PARAGRAPHS TO SHOW / HIDE INSTRUCTIONS
 const nameInstruction = document.getElementById("name-instruction");
@@ -814,7 +814,7 @@ let isNameSelected = false;
 function getNameChange() {
     const nameDropdown = document.getElementById("name");
     nameDropdown.addEventListener('change', function() {
-    NameChangeVal = this.value;
+    nameChangeVal = this.value;
     if (!isNameSelected) {
         isNameSelected = true;
         accidentalEnable();
@@ -836,11 +836,11 @@ let isImpossibleKey = false;
 function getAccidentalChange() {
     const accidentalDropdown = document.getElementById("accidental");
     accidentalDropdown.addEventListener('change', function() {
-    getAccidentalChangeVal = this.value;
+    accidentalChangeVal = this.value;
 
-    isImpossibleKey = ((NameChangeVal === "b" && getAccidentalChangeVal ===  "#") ||
-    (NameChangeVal === "e" && getAccidentalChangeVal ===  "#") ||
-    (NameChangeVal === "f" && getAccidentalChangeVal ===  "b"));
+    isImpossibleKey = ((nameChangeVal === "b" && accidentalChangeVal ===  "#") ||
+    (nameChangeVal === "e" && accidentalChangeVal ===  "#") ||
+    (nameChangeVal === "f" && accidentalChangeVal ===  "b"));
     console.log(isImpossibleKey);
 
     typeEnable();
@@ -936,18 +936,17 @@ function accidentalDisable() {
 
 // ONLY ENABLE POSSIBLE ACCIDENTALS
 function accidentalEnable() {
-    switch (NameChangeVal) {
+    switch (nameChangeVal) {
         case "c" :
-            naturalOpt.disabled = false;
-            sharpOpt.disabled = false;
-            flatOpt.disabled = false;
-            break;
         case "d" :
+        case "g" :
+        case "a" :    
             naturalOpt.disabled = false;
             sharpOpt.disabled = false;
             flatOpt.disabled = false;
             break;
         case "e" :
+        case "b" :    
             naturalOpt.disabled = false;
             // sharpOpt.disabled = false;
             flatOpt.disabled = false;
@@ -957,30 +956,8 @@ function accidentalEnable() {
             sharpOpt.disabled = false;
             // flatOpt.disabled = false;
             break;
-        case "g" :
-            naturalOpt.disabled = false;
-            sharpOpt.disabled = false;
-            flatOpt.disabled = false;
-            break;
-        case "a" :
-            naturalOpt.disabled = false;
-            sharpOpt.disabled = false;
-            flatOpt.disabled = false;
-            break;
-        case "b" :
-            naturalOpt.disabled = false;
-            // sharpOpt.disabled = false;
-            flatOpt.disabled = false;
-            break;
     }
 }
-// OLD ACCIDENTAL ENABLE:
-// function accidentalEnable() {
-//     accidentalOptions.options[0].disabled = false;
-//     naturalOpt.disabled = false;
-//     sharpOpt.disabled = false;
-//     flatOpt.disabled = false;
-// }
 
 function typeDisable() {
     typeOptions.options[0].disabled = true;
@@ -1099,31 +1076,31 @@ function enableAllTypes() {
 // THIS DOES NOT HANDLE INSTRUCTIONS, ONLY THE TYPE SELECTION !!!
 function typeEnable() {
     
-    if (NameChangeVal=== "b" && getAccidentalChangeVal === "#") {
+    if (nameChangeVal=== "b" && accidentalChangeVal === "#") {
         disableBSharpTypes();
     }
-     else if (NameChangeVal=== "d" && getAccidentalChangeVal === "b") {
+     else if (nameChangeVal=== "d" && accidentalChangeVal === "b") {
         enableDFlatTypes();
     }
-     else if (NameChangeVal=== "d" && getAccidentalChangeVal === "#") {
+     else if (nameChangeVal=== "d" && accidentalChangeVal === "#") {
         enableDSharpTypes()
     }
-     else if (NameChangeVal=== "e" && getAccidentalChangeVal === "#") {
+     else if (nameChangeVal=== "e" && accidentalChangeVal === "#") {
         disableESharpTypes();
     }
-     else if (NameChangeVal=== "f" && getAccidentalChangeVal === "b") {
+     else if (nameChangeVal=== "f" && accidentalChangeVal === "b") {
         disableFFlatTypes();
     }
-     else if (NameChangeVal=== "g" && getAccidentalChangeVal === "b") {
+     else if (nameChangeVal=== "g" && accidentalChangeVal === "b") {
         enableGFlatTypes();
     }
-     else if (NameChangeVal=== "g" && getAccidentalChangeVal === "#") {
+     else if (nameChangeVal=== "g" && accidentalChangeVal === "#") {
         enableGSharpTypes();
     }
-     else if (NameChangeVal=== "a" && getAccidentalChangeVal === "#") {
+     else if (nameChangeVal=== "a" && accidentalChangeVal === "#") {
         enableASharpTypes();
     } 
-    else if (NameChangeVal=== "c" && getAccidentalChangeVal === "b") {
+    else if (nameChangeVal=== "c" && accidentalChangeVal === "b") {
         enableCFlatTypes();
     // ENABLE ALL TYPES
     }
