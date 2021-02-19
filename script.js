@@ -31,9 +31,11 @@ class Chord {
                 return getSecond().concat("b");
         }
     }
+
     getSecond = () => getDiatonicScale(this.name, this.accidental, this.type)[1];
     getThird = () => getDiatonicScale(this.name, this.accidental, this.type)[2];
     getFourth = () => getDiatonicScale(this.name, this.accidental, this.type)[3];
+
     getSharpFourth = () => {
         const {getFourth} = this;
         let secondChar = getFourth().charAt(1);
@@ -44,6 +46,7 @@ class Chord {
                 return getFourth().concat("#");
         }
     }
+
     getFlatFifth = () => {
         const {getFifth} = this;
         let secondChar = getFifth().charAt(1);
@@ -54,7 +57,9 @@ class Chord {
                 return getFifth().concat("b");
         }
     }
+
     getFifth = () => getDiatonicScale(this.name, this.accidental, this.type)[4];
+
     getSharpFifth = () => {
         const {getFifth} = this;
         let secondChar = getFifth().charAt(1);
@@ -65,8 +70,10 @@ class Chord {
                 return getFifth().concat("#");
         }
     }
+
     // MINOR6 IN MINOR AND MAJOR6 IN MAJOR !!!
     getSixth = () => getDiatonicScale(this.name, this.accidental, this.type)[5];
+
     // MAKE MINOR SIXTH MAJOR IN MINOR CHORDS:  C E G Ab  => C E G A
     getMajorSixth = () => {
         const {getSixth} = this;
@@ -78,6 +85,7 @@ class Chord {
                 return getSixth().concat("#");
         }
     }
+
     getMinorSeventh = () => {
         const {getSeventh} = this;
         let secondChar = getSeventh().charAt(1);
@@ -88,6 +96,7 @@ class Chord {
                 return getSeventh().concat("b");
         }
     }
+
     getSeventh = () => getDiatonicScale(this.name, this.accidental, this.type)[6];
     getNinth = () => this.getSecond();
     getEleventh = () => this.getFourth();
@@ -101,73 +110,72 @@ class Chord {
                 return getEleventh().concat("#");
         }
     }
+
     getThirteenth = () => this.getSixth();
     // MAKE MINOR THIRTEENTH MAJOR IN MINOR CHORDS:  C E G Ab  => C E G A
     getMajorThirteenth = () => this.getMajorSixth();
 }
 
 // GET OPTIONS FROM DROPDOWN
+
 function getName() {
     const nameSelect = document.getElementById("name");
     let chordName = nameSelect.options[nameSelect.selectedIndex].value;
     return chordName;
 }
+
 function getType() {
     const typeSelect = document.getElementById("type");
     let chordType = typeSelect.options[typeSelect.selectedIndex].value;
     return chordType;
 }
+
 function getAccidental() {
     const accidentalSelect = document.getElementById("accidental");
     let chordAccidental = accidentalSelect.options[accidentalSelect.selectedIndex].value;
     return chordAccidental;
 }
+
 function getOptSixth() {
     const sixthSelect = document.getElementById("sixth");
     let chordSixth = sixthSelect.options[sixthSelect.selectedIndex].value;
     return chordSixth;
 }
+
 function getOptSeventh() {
     const seventhSelect = document.getElementById("seventh");
     let chordSeventh = seventhSelect.options[seventhSelect.selectedIndex].value;
     return chordSeventh;
 }
+
 function getOptNinth() {
     const ninthSelect = document.getElementById("ninth");
     let chordNinth = ninthSelect.options[ninthSelect.selectedIndex].value;
     return chordNinth;
 }
+
 function getOptEleventh() {
     const eleventhSelect = document.getElementById("eleventh");
     let chordEleventh = eleventhSelect.options[eleventhSelect.selectedIndex].value;
     return chordEleventh;
 }
+
 function getOptThirteenth() {
     const thirteenthSelect = document.getElementById("thirteenth");
     let chordThirteenth = thirteenthSelect.options[thirteenthSelect.selectedIndex].value;
     return chordThirteenth;
 }
+
 function getRegister() {
     const registerSelect = document.getElementById("register");
     let register = registerSelect.options[registerSelect.selectedIndex].value;
     return register;
 }
 
-
-// function disableImpossibleKeys() {
-//     let name = getName();
-//     let accidental = getAccidental();
-//     if (name === "c" && accidental === "#") {
-//         console.log("hello from disable func");
-//     }
-// }
-// disableImpossibleKeys();
-
-
-
 // DISP CHORD NAME BASED OFF OF name, accidental AND type
 // CHANGE type VALUE TO SYMBOLS
 function displayChordName() {
+    const chordNameTypeSpan = document.getElementById("chordNameType");
     let chordNameType;
     let typeSymbol;
     switch (getType()) {
@@ -305,7 +313,7 @@ function displayChordName() {
     }
 
     chordNameType = `${getName().toUpperCase()}${getAccidental()}${typeSymbol}`;
-    document.getElementById("chordNameType").innerText = chordNameType;
+    chordNameTypeSpan.innerText = chordNameType;
     return chordNameType;
 }
 
@@ -314,13 +322,17 @@ function displayChordTones() {
     const chordObj = new Chord(getName(), getAccidental(), getType(), getOptSeventh());
     // this.test FROM CONSTRUCTOR
     console.log(chordObj.test());
+    // const c1 = new Chord(getName(), getAccidental(), getType(), getOptSeventh());
+    // console.dir(" c1 chordObj: " + c1);
 
-    const c1 = new Chord(getName(), getAccidental(), getType(), getOptSeventh());
-    console.dir(" c1 chordObj: " + c1);
-
-    
-    const chordTonesDisplay = document.getElementById("chordTones");
+    const chordTonesSpan = document.getElementById("chordTones");
     let chordTones = "";
+    let sixthValue = getOptSixth();
+    let seventhValue = getOptSeventh();
+    let ninthValue = getOptNinth();
+    let eleventhValue = getOptEleventh();
+    let thirteenthValue = getOptThirteenth();
+
     switch (getType()) {
         case "diminished" :
             chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getFlatFifth()}`;
@@ -349,7 +361,7 @@ function displayChordTones() {
     }
     // DUPICATED CODE let sixthValue = getOptSixth(); DISPLAYCHORDNAME() ALSO USES SAME VARIABLES !!!
     // ADD OPTIONAL 6,7,9,11,13 BASED ON type => chordScale
-    let sixthValue = getOptSixth();
+    
     if (sixthValue === "6") {
         if (getType() === "minor") {
             // MAKE 6TH MAJOR FOR MINOR CHORDS !!!
@@ -358,9 +370,7 @@ function displayChordTones() {
             chordTones += " " + chordObj.getSixth();
         }
     }
-    chordTonesDisplay.innerText = chordTones;
 
-    let seventhValue = getOptSeventh();
     if (seventhValue === "7") {
         if (getType() === "dominant") {
             chordTones = chordTones;
@@ -372,9 +382,7 @@ function displayChordTones() {
             chordTones += " " + chordObj.getSeventh();
         }
     } 
-    chordTonesDisplay.innerText = chordTones;
 
-    let ninthValue = getOptNinth();
     if (ninthValue === "9") {
         if (getType() === "dominant") {
             chordTones += " " + chordObj.getNinth();
@@ -385,7 +393,6 @@ function displayChordTones() {
         chordTones += " " + chordObj.getNinth();
     }
 
-    let eleventhValue = getOptEleventh();
     // SHARP 11 WITH MAJOR !!!
     if (eleventhValue === "11" && getType() === "major") {
         chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth() + " " + chordObj.getSharpEleventh();
@@ -402,7 +409,6 @@ function displayChordTones() {
         chordTones += " " + chordObj.getEleventh();
     } 
 
-    let thirteenthValue = getOptThirteenth();
     if (thirteenthValue === "13" && getType() === "major") {
         chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth() + " " + chordObj.getSharpEleventh() + " " + chordObj.getThirteenth();
         // MAJOR 13 WITH MINOR !!!
@@ -417,7 +423,7 @@ function displayChordTones() {
     } else if (thirteenthValue === "add13" && getType() === "dominant") {
         chordTones += " " + chordObj.getThirteenth();
     }
-    chordTonesDisplay.innerText = chordTones;
+    chordTonesSpan.innerText = chordTones;
     return chordTones;
 }
 
@@ -455,6 +461,9 @@ function getNaturalScale(ton) {
     return naturalScale;
 }
 
+ // INVALID CHORD MESSAGE WITH HIDDEN CLASS
+ const invalidKeyMessage = document.getElementById("invalid-key-message");
+
 // BUILD DIATONIC SCALE (MAJOR OR MINOR)
 function getDiatonicScale(name, accidental, type) {  
     let naturalScale = getNaturalScale(name);
@@ -464,9 +473,6 @@ function getDiatonicScale(name, accidental, type) {
     firstDegree += accidental;
     // EMPTY ARRAY FOR RESULT
     let diatonicScale = [];
-    // INVALID CHORD MESSAGE WITH HIDDEN CLASS
-    const message = document.getElementById("message");
-
     // !!! THESE WORK WITHOUT INITIALISING ???
     // let foundMajorKeys; NOW foundKeyCenters !!!
     // let foundMinorKeys; NOW foundKeyCenters !!!
@@ -497,7 +503,7 @@ function getDiatonicScale(name, accidental, type) {
                 if (accidentalNotes.indexOf(el) > -1) {
                     diatonicScale.push(el.concat("#"));
                 } else diatonicScale.push(el);
-                message.classList.add("hidden");
+                hideInvalidKeyMessage();
             }
 
         //  IF MAJOR FLAT
@@ -511,9 +517,10 @@ function getDiatonicScale(name, accidental, type) {
                     diatonicScale.push(el.concat("b"));
                 } else {
                     diatonicScale.push(el);
-                    message.classList.add("hidden");
+                    hideInvalidKeyMessage();
                 }
             }
+
         // IF C NATURAL MAJOR OR AUGMENTED
         } else if (name === "c" && accidental === "" && 
                 (type === "major" || 
@@ -524,12 +531,11 @@ function getDiatonicScale(name, accidental, type) {
                 type === "phrygian" || 
                 type === "lydian")) {
             diatonicScale = naturalScale.slice();
-            message.classList.add("hidden");
+            hideInvalidKeyMessage();
         } 
         // HANDLE THEORETICAL KEY SIGNATURES 
         else {
-            // DISPLAY MESSAGE
-            message.classList.remove("hidden");
+            showInvalidKeyMessage();
         }
 
     // IF MINOR
@@ -545,7 +551,7 @@ function getDiatonicScale(name, accidental, type) {
                      diatonicScale.push(el.concat("#"));
                  } else {
                     diatonicScale.push(el);
-                    message.classList.add("hidden");
+                    hideInvalidKeyMessage();
                  }
              }
         // IF MINOR FLAT
@@ -558,15 +564,15 @@ function getDiatonicScale(name, accidental, type) {
                     diatonicScale.push(el.concat("b"));
                 } else {
                     diatonicScale.push(el);
-                    message.classList.add("hidden");
+                    hideInvalidKeyMessage();
                 }
             }
         // IF A NATURAL MINOR
         } else if (name === "a" && accidental === "" && (type === "minor" || type === "diminished")) {
             diatonicScale = naturalScale.slice();
-            message.classList.add("hidden");
+            hideInvalidKeyMessage();
         } else {
-            message.classList.remove("hidden");
+            showInvalidKeyMessage();
         }
     } 
     // IF DOMINANT
@@ -583,18 +589,24 @@ function getDiatonicScale(name, accidental, type) {
 // getDiatonicScale("e","", "minor");
 // getDiatonicScale("g","", "minor");
 
+const chordScaleSpan = document.getElementById("chordScale");
+
 function displayChordScale() {
     let scale = getDiatonicScale(getName(), getAccidental(), getType());
-    document.getElementById("chordScale").innerText = scale;
+    chordScaleSpan.innerText = scale;
 }
 
 // PLAY CHORD 
 
 // SHARP-FLAT COMBINED CHROMATIC SCALE E2-B4 
 // "s"="sharp" AND "b"="flat"
-const chromaticScale = ["E1", "FEs1", "FsGb1", "G1", "GsAb1", "A1", "AsBb1", "BCb1", "C2", "CsDb2", "D2", "DsEb2",
-    "E2", "FEs2", "FsGb2", "G2", "GsAb2", "A2", "AsBb2", "BCb2", "C3", "CsDb3", "D3", "DsEb3", "E3", "FEs3", "FsGb3", "G3", "GsAb3", "A3", "AsBb3", "BCb3", "C4", "CsDb4", "D4", "DsEb4", "E4", "FEs4", "FsGb4", "G4", "GsAb4", "A4", "AsBb4", "BCb4", 
-    "C5", "CsDb5", "D5", "DsEb5", "E5", "FEs5", "FsGb5", "G5", "GsAb5", "A5", "AsBb5", "BCb5", "C6", "CsDb6", "D6"];
+const chromaticScale = [
+    "E1", "FEs1", "FsGb1", "G1", "GsAb1", "A1", "AsBb1", "BCb1", "C2", "CsDb2", "D2", "DsEb2",
+    "E2", "FEs2", "FsGb2", "G2", "GsAb2", "A2", "AsBb2", "BCb2", "C3", "CsDb3", "D3", "DsEb3", 
+    "E3", "FEs3", "FsGb3", "G3", "GsAb3", "A3", "AsBb3", "BCb3", "C4", "CsDb4", "D4", "DsEb4", 
+    "E4", "FEs4", "FsGb4", "G4", "GsAb4", "A4", "AsBb4", "BCb4", "C5", "CsDb5", "D5", "DsEb5", 
+    "E5", "FEs5", "FsGb5", "G5", "GsAb5", "A5", "AsBb5", "BCb5", "C6", "CsDb6", "D6"
+];
 
 function getChordToneSounds() {
     // SPLIT CHORD NOTES INTO ARRAY ["C", "E", "G", "Bb"]
@@ -683,6 +695,8 @@ function getChordToneSounds() {
     return soundsArr;
 }
 
+
+
 // PLAY ACTUAL SOUND FILES AT ONCE
 function playChordTones() {
     const soundFiles = getChordToneSounds();
@@ -712,7 +726,6 @@ function displayAndPlay() {
             src: [soundFile],
             volume: 0.6
         })
-    
         let elem = document.createElement("button");
         // ??? THIS IS NOT WORKING !!!
         // elem.class = "btn";
@@ -723,7 +736,6 @@ function displayAndPlay() {
         elem.innerText = `Degree ${i + 1}: ${chordTones[i]}`    
         audioContainer.appendChild(elem);
         // document.body.append(elem);
-    
     })
 }
 
@@ -741,7 +753,6 @@ function handleShowChordTones() {
     enableRegister();
     enablePlayArpNewButtons();
     hideExtensionInstruction();
-    // extensionInstruction.classList.add("hidden");
 }
 function handlePlayChord() {
     playChordTones();
@@ -752,23 +763,28 @@ function handlePlayIndividual() {
 function handleNewChord() {
     refreshPage();
 }
+
 // EVENT LISTENERS ON BUTTONS
 const showChordTonesBtn = document.getElementById("chord-tones-btn");
+const playButton = document.getElementById("play-chord-btn");
+const playIndividualButton = document.getElementById("play-individual-btn");
+const newChordButton = document.getElementById("new-chord-btn");
+
 showChordTonesBtn.addEventListener("click", function(evt) {
     evt.preventDefault();
     handleShowChordTones();
 })
-const playButton = document.getElementById("play-chord-btn");
+
 playButton.addEventListener("click", function(evt) {
     evt.preventDefault();
     handlePlayChord();
 })
-const playIndividualButton = document.getElementById("play-individual-btn");
+
 playIndividualButton.addEventListener("click", function(evt) {
     evt.preventDefault();
     handlePlayIndividual();
 })
-const newChordButton = document.getElementById("new-chord-btn");
+
 newChordButton.addEventListener("click", function(evt) {
     handleNewChord();
 })
@@ -781,15 +797,16 @@ let getAccidentalChangeVal;
 
 // SELECT PARAGRAPHS TO SHOW / HIDE INSTRUCTIONS
 const nameInstruction = document.getElementById("name-instruction");
-let isNameSelected = false;
 const accidentalInstruction = document.getElementById("accidental-instruction");
-// NOT USED
-// let isAccidentalSelected = false;
 const typeInstruction = document.getElementById("type-instruction");
-// NOT USED
-// let isTypeSelected = false;
 const extensionInstruction = document.getElementById("extension-instruction");
 
+// BOOLEANS
+let isNameSelected = false;
+// NOT USED
+// let isAccidentalSelected = false;
+// NOT USED
+// let isTypeSelected = false;
 
 // EVENT LISTENERS ON NAME/ACCIDENTAL/TYPE DROPDOWN OPTIONS:
 
@@ -799,8 +816,8 @@ function getNameChange() {
     nameDropdown.addEventListener('change', function() {
     getNameChangeVal = this.value;
     if (!isNameSelected) {
-        accidentalEnable();
         isNameSelected = true;
+        accidentalEnable();
         hideNameInstruction();
         showAccidentalInstruction();
     } else if (isNameSelected && !accidentalInstruction.classList.contains("hidden")) {
@@ -808,8 +825,7 @@ function getNameChange() {
     } else {
         hideAccidentalInstruction();
     }
-    
-//   WHAT IS FALSE ???
+    //   WHAT IS FALSE ???
     }, false);
 }
 getNameChange();
@@ -825,7 +841,6 @@ function getAccidentalChange() {
     }
     hideAccidentalInstruction();
     showTypeExtension();
-    // typeInstruction.classList.remove("hidden");
     }, false);
 }
 getAccidentalChange();
@@ -914,87 +929,126 @@ function typeDisable() {
     lydianOpt.disabled = true;
 }
 
-// ONLY ENABLE VALID KEY SIGNATURES !!!
+// FUMCTIONS FOR typeEnable()
+function enableDFlatTypes() {
+    majorOpt.disabled = false;
+    dominantOpt.disabled = false;
+    augmentedOpt.disabled = false;
+    // diminishedOpt.disabled = false;
+    susTwoOpt.disabled = false;
+    susFourOpt.disabled = false;
+    phrygianOpt.disabled = false;
+    lydianOpt.disabled = false;
+}
+
+function enableDSharpTypes() {
+    minorOpt.disabled = false;
+    // augmentedOpt.disabled = false;
+    diminishedOpt.disabled = false;
+    susTwoOpt.disabled = false;
+    susFourOpt.disabled = false;
+    phrygianOpt.disabled = false;
+    lydianOpt.disabled = false;
+}
+
+function enableGFlatTypes() {
+    majorOpt.disabled = false;
+    dominantOpt.disabled = false;
+    augmentedOpt.disabled = false;
+    // diminishedOpt.disabled = false;
+    susTwoOpt.disabled = false;
+    susFourOpt.disabled = false;
+    phrygianOpt.disabled = false;
+    lydianOpt.disabled = false;
+}
+
+function enableGSharpTypes() {
+    minorOpt.disabled = false;
+    // augmentedOpt.disabled = false;
+    diminishedOpt.disabled = false;
+    susTwoOpt.disabled = false;
+    susFourOpt.disabled = false;
+    phrygianOpt.disabled = false;
+    lydianOpt.disabled = false;
+}
+
+function enableASharpTypes() {
+    minorOpt.disabled = false;
+    // augmentedOpt.disabled = false;
+    diminishedOpt.disabled = false;
+    susTwoOpt.disabled = false;
+    susFourOpt.disabled = false;
+    phrygianOpt.disabled = false;
+    lydianOpt.disabled = false;    
+}
+
+function enableCFlatTypes() {
+    majorOpt.disabled = false;
+    dominantOpt.disabled = false;
+    augmentedOpt.disabled = false;
+    // diminishedOpt.disabled = false;
+    susTwoOpt.disabled = false;
+    susFourOpt.disabled = false;
+    phrygianOpt.disabled = false;
+    lydianOpt.disabled = false;   
+}
+
+function enableAllTypes() {
+    // typeOptions.options[0].disabled = false;
+    majorOpt.disabled = false;
+    minorOpt.disabled = false;
+    dominantOpt.disabled = false;
+    augmentedOpt.disabled = false;
+    diminishedOpt.disabled = false;
+    susTwoOpt.disabled = false;
+    susFourOpt.disabled = false;
+    phrygianOpt.disabled = false;
+    lydianOpt.disabled = false;
+}
+
+// ONLY ENABLE CHORD TYPES FOR VALID KEY SIGNATURES !!!
 function typeEnable() {
+    
     if (getNameChangeVal=== "b" && getAccidentalChangeVal === "#") {
-        console.log("impossible key");
-        message.classList.remove("hidden");
-    } else if (getNameChangeVal=== "d" && getAccidentalChangeVal === "b") {
-        majorOpt.disabled = false;
-
-        dominantOpt.disabled = false;
-        augmentedOpt.disabled = false;
-        // diminishedOpt.disabled = false;
-        susTwoOpt.disabled = false;
-        susFourOpt.disabled = false;
-        phrygianOpt.disabled = false;
-        lydianOpt.disabled = false;
-    } else if (getNameChangeVal=== "d" && getAccidentalChangeVal === "#") {
-        minorOpt.disabled = false;
-
-        // augmentedOpt.disabled = false;
-        diminishedOpt.disabled = false;
-        susTwoOpt.disabled = false;
-        susFourOpt.disabled = false;
-        phrygianOpt.disabled = false;
-        lydianOpt.disabled = false;
-    } else if (getNameChangeVal=== "e" && getAccidentalChangeVal === "#") {
-        console.log("impossible key");
-        message.classList.remove("hidden");
-    } else if (getNameChangeVal=== "f" && getAccidentalChangeVal === "b") {
-        console.log("impossible key");
-        message.classList.remove("hidden");
-    } else if (getNameChangeVal=== "g" && getAccidentalChangeVal === "b") {
-        majorOpt.disabled = false;
-
-        dominantOpt.disabled = false;
-        augmentedOpt.disabled = false;
-        // diminishedOpt.disabled = false;
-        susTwoOpt.disabled = false;
-        susFourOpt.disabled = false;
-        phrygianOpt.disabled = false;
-        lydianOpt.disabled = false;
-    } else if (getNameChangeVal=== "g" && getAccidentalChangeVal === "#") {
-        minorOpt.disabled = false;
-
-        // augmentedOpt.disabled = false;
-        diminishedOpt.disabled = false;
-        susTwoOpt.disabled = false;
-        susFourOpt.disabled = false;
-        phrygianOpt.disabled = false;
-        lydianOpt.disabled = false;
-    } else if (getNameChangeVal=== "a" && getAccidentalChangeVal === "#") {
-        minorOpt.disabled = false;
-
-        // augmentedOpt.disabled = false;
-        diminishedOpt.disabled = false;
-        susTwoOpt.disabled = false;
-        susFourOpt.disabled = false;
-        phrygianOpt.disabled = false;
-        lydianOpt.disabled = false;
-    } else if (getNameChangeVal=== "c" && getAccidentalChangeVal === "b") {
-        majorOpt.disabled = false;
-
-        dominantOpt.disabled = false;
-        augmentedOpt.disabled = false;
-        // diminishedOpt.disabled = false;
-        susTwoOpt.disabled = false;
-        susFourOpt.disabled = false;
-        phrygianOpt.disabled = false;
-        lydianOpt.disabled = false;
-    // VALID KEY, ENABLE ALL TYPES
-    } else {
-        // typeOptions.options[0].disabled = false;
-        majorOpt.disabled = false;
-        minorOpt.disabled = false;
-        dominantOpt.disabled = false;
-        augmentedOpt.disabled = false;
-        diminishedOpt.disabled = false;
-        susTwoOpt.disabled = false;
-        susFourOpt.disabled = false;
-        phrygianOpt.disabled = false;
-        lydianOpt.disabled = false;
+        showInvalidKeyMessage();
     }
+     else if (getNameChangeVal=== "d" && getAccidentalChangeVal === "b") {
+        enableDFlatTypes();
+    }
+     else if (getNameChangeVal=== "d" && getAccidentalChangeVal === "#") {
+        enableDSharpTypes()
+    }
+     else if (getNameChangeVal=== "e" && getAccidentalChangeVal === "#") {
+        showInvalidKeyMessage();
+    }
+     else if (getNameChangeVal=== "f" && getAccidentalChangeVal === "b") {
+        showInvalidKeyMessage();
+    }
+     else if (getNameChangeVal=== "g" && getAccidentalChangeVal === "b") {
+        enableGFlatTypes();
+    }
+     else if (getNameChangeVal=== "g" && getAccidentalChangeVal === "#") {
+        enableGSharpTypes();
+    }
+     else if (getNameChangeVal=== "a" && getAccidentalChangeVal === "#") {
+        enableASharpTypes();
+    } 
+    else if (getNameChangeVal=== "c" && getAccidentalChangeVal === "b") {
+        enableCFlatTypes();
+    // ENABLE ALL TYPES
+    }
+     else {
+        enableAllTypes();
+    }
+}
+
+
+function showInvalidKeyMessage() {
+    invalidKeyMessage.classList.remove("hidden");
+}
+
+function hideInvalidKeyMessage() {
+    invalidKeyMessage.classList.add("hidden");
 }
 
 function hideNameInstruction() {
@@ -1127,6 +1181,6 @@ function playIntro() {
 
 window.addEventListener("load", function() {
     console.log("page is loaded");
-        // playIntro();
+        playIntro();
         disableSelectOptions();
       });
