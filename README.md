@@ -26,8 +26,8 @@ bugs:
   ✔️ dominant(7) 11 chord name/chord tones 
   ✔️  dominant(7) 13 chord name/chord tones 
   ✔️ make minor6 6th major6th and 13th major13th
-    fix double sharp in augmented C# E# G##
-    fix double flat in diminished Eb Gb Bbb
+  IN PROGRESS: fix double sharp in augmented C# E# G##
+  IN PROGRESS: fix double flat in diminished Eb Gb Bbb
    REFACTOR disable select options for impossible key signatures 
   ✔️ 6/7
   ✔️ +7

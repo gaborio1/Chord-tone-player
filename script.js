@@ -600,17 +600,19 @@ function displayChordScale() {
 
 // SHARP-FLAT COMBINED CHROMATIC SCALE E2-B4 
 // "s"="sharp" AND "b"="flat"
-const chromaticScale = [
-    "E1", "FEs1", "FsGb1", "G1", "GsAb1", "A1", "AsBb1", "BCb1", "C2", "CsDb2", "D2", "DsEb2",
-    "E2", "FEs2", "FsGb2", "G2", "GsAb2", "A2", "AsBb2", "BCb2", "C3", "CsDb3", "D3", "DsEb3", 
-    "E3", "FEs3", "FsGb3", "G3", "GsAb3", "A3", "AsBb3", "BCb3", "C4", "CsDb4", "D4", "DsEb4", 
-    "E4", "FEs4", "FsGb4", "G4", "GsAb4", "A4", "AsBb4", "BCb4", "C5", "CsDb5", "D5", "DsEb5", 
-    "E5", "FEs5", "FsGb5", "G5", "GsAb5", "A5", "AsBb5", "BCb5", "C6", "CsDb6", "D6"
+const soundNames = [
+    "E1", "FEs1", "FsGb1", "GFss1", "GsAb1", "AGssBbb1", "AsBb1", "BCb1", "C2", "CsDb2", "DCssEbb2", "DsEb2",
+    "E2", "FEs2", "FsGb2", "GFss2", "GsAb2", "AGssBbb2", "AsBb2", "BCb2", "C3", "CsDb3", "DCssEbb3", "DsEb3", 
+    "E3", "FEs3", "FsGb3", "GFss3", "GsAb3", "AGssBbb3", "AsBb3", "BCb3", "C4", "CsDb4", "DCssEbb4", "DsEb4", 
+    "E4", "FEs4", "FsGb4", "GFss4", "GsAb4", "AGssBbb4", "AsBb4", "BCb4", "C5", "CsDb5", "DCssEbb5", "DsEb5", 
+    "E5", "FEs5", "FsGb5", "GFss5", "GsAb5", "AGssBbb5", "AsBb5", "BCb5", "C6", "CsDb6", "DCssEbb6"
 ];
 
-function getChordToneSounds() {
+let chordNotesArr = [];
+
+function makeChordNotesArr() {
     // SPLIT CHORD NOTES INTO ARRAY ["C", "E", "G", "Bb"]
-    const chordNotesArr = displayChordTones().split(" ");
+    chordNotesArr = displayChordTones().split(" ");
     // !!! REPLACE ALL SPECIAL CHARS "#" WITH "s" FOR SHARP AS HOWLER WILL NOT LOAD MP3'S WITH SPEC CHARACTER IN FILENAME !!! 
     // ["C#", "E#", "G##"]  =>   ["Cs", "Es", "Gss"]
     for (let i = 0; i < chordNotesArr.length; i++) {
@@ -618,6 +620,11 @@ function getChordToneSounds() {
         chordNotesArr[i] = chordNotesArr[i].replace(sharpRe , "s");
     }
     console.log(chordNotesArr);
+    return chordNotesArr;
+}
+
+function getChordToneSounds() {
+    makeChordNotesArr();
     // EMPTY ARRAY FOR SOUNDS WITH PATHS AND EXTENSION
     const soundsArr = [];
      // KEEP TRACK OF ACTUAL MINIMUM INDEX (OUTSIDE OF LOOP!!!), INITIALISE WITH A VALUE OF 0 AND ACCUMULATE IN INNER LOOP
@@ -638,20 +645,36 @@ function getChordToneSounds() {
     // console.log(registerIdx);
     // FIND EACH NOTE OF chordNotesArr [C,E,G] IN chromaticScale 
     chordNotesArr.forEach((chordTone) => {
-       for (let i = registerIdx; i < chromaticScale.length; i++) {
-            if (chordTone.length === 1 && chromaticScale[i].charAt(0) === chordTone && i >= minIdx) {
-                soundsArr.push("sounds/" + chromaticScale[i].concat(".mp3"));
+        for (let i = registerIdx; i < soundNames.length; i++) {
+
+            let isCtLenghtOne = chordTone.length === 1;
+            let isCtFirstChar = soundNames[i].charAt(0) === chordTone;
+            let isIGrThanMinIdx = i >= minIdx;
+
+            let isCtLenghtTwo = chordTone.length === 2;
+            let isCtFoundInSn = soundNames[i].includes(chordTone);
+            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            let isSnLengthMinThree = soundNames[i].length < 8;
+
+            let isCtLenghtThree = chordTone.length === 3;
+
+            if (isCtLenghtOne && isCtFirstChar && isIGrThanMinIdx) {
+                soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
                 break;
-            } else if (chordTone.length === 2 && chromaticScale[i].includes(chordTone ) && i >= minIdx) {
-                soundsArr.push("sounds/" + chromaticScale[i].concat(".mp3"));
+            } else if (isCtLenghtTwo && isCtFoundInSn && isSnLengthMinThree && isIGrThanMinIdx) {
+                soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
+                minIdx = i;
+                break;
+            } else if (isCtLenghtThree && isCtFoundInSn && isIGrThanMinIdx) {
+                soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
                 break;
             }
         }
         return minIdx;
     })
-    
+
     // FIND OCTAVEDIGIT AND CHANGE IF NECESSARY WITH REGEX
     // const octaveDigit = /(\d)(?=\.)/;
     // for (let i = 1; i < soundsArr.length; i++) {
@@ -1248,6 +1271,6 @@ function playIntro() {
 
 window.addEventListener("load", function() {
     console.log("page is loaded");
-        // playIntro();
+        playIntro();
         disableSelectOptions();
       });
