@@ -229,30 +229,35 @@ function displayChordName() {
 
     let type = getType();
     // ADD OPTIONAL 6,7,9,11,13 TO SYMBOL
-    let sixthValue = getOptSixth();
-    if (sixthValue === "6" && !getOptSeventh()) {
+    if (getOptSixth() && !getOptSeventh()) {
         if (type === "major") {
             typeSymbol += "6";
         } else if (type === "minor") {
             typeSymbol += "6";
-        } else {
-            console.log("not major or minor, FIX THIS!");
+        } else if (type === "dominant") {
+            typeSymbol += "/6";
         }
     }
 
-    let seventhValue = getOptSeventh();
-    if (seventhValue === "7" && !getOptSixth()) {
+    if (getOptSeventh() && !getOptSixth()) {
         if (type === "major") {
             typeSymbol += "M7";
         } else if (type === "minor") {
             typeSymbol += "7";
         } else {
-            console.log("not major or minor, FIX THIS!");
+            console.log("another type you have to fix");
         }
     }
     // 6/7
     if (getOptSixth() && getOptSeventh()) {
-        typeSymbol += " 6/7";
+        if (type === "minor") {
+            typeSymbol += "7/6";
+        } else if (type === "major") {
+            typeSymbol += "M7/6"
+        } else {
+            console.log("another type you have to fix")
+        }
+        
     }
 
     let ninthValue = getOptNinth();
@@ -264,7 +269,7 @@ function displayChordName() {
         } else if (type === "dominant") {
             typeSymbol += "";
         } else {
-            console.log("not major or minor, FIX THIS!");
+            console.log("another type you have to fix");
         }
     } else if (ninthValue === "add9") {
         if (type === "dominant") {
@@ -283,7 +288,7 @@ function displayChordName() {
         } else if (type === "dominant") {
             typeSymbol += "";
         } else {
-            console.log("not major or minor, FIX THIS!");
+            console.log("another type you have to fix");
         }
     } else if (eleventhValue === "add11") {
         if (type === "dominant") {
@@ -302,7 +307,7 @@ function displayChordName() {
         } else if (type === "dominant") {
             typeSymbol += "";
         } else {
-            console.log("not major or minor, FIX THIS!");
+            console.log("another type you have to fix");
         }
     } else if (thirteenthValue === "add13") {
         if (type === "dominant") {
@@ -694,18 +699,74 @@ function getChordToneSounds() {
     return soundsArr;
 }
 
-// PLAY ACTUAL SOUND FILES AT ONCE
+// PLAY CHORD NOTES TOGETHER
 function playChordTones() {
     const soundFiles = getChordToneSounds();
     console.log("soundFiles: " + soundFiles);
-    // PLAY ALL NOTES AT ONCE
-    for (const soundFile of soundFiles) {
+    setTimeout(() => {
+        for (const soundFile of soundFiles) {
+            const sound = new Howl({
+                src: [soundFile],
+                volume: 0.4
+            });
+            sound.play();
+        }
+      }, 500)
+    
+}
+
+// ARPEGGIATE CHORD 
+function arpeggiateChord() {
+    const soundFiles = getChordToneSounds();
+    setTimeout(() => {
         const sound = new Howl({
-            src: [soundFile],
-            volume: 0.4
+            src: [soundFiles[0]],
+            volume: 0.3
         });
         sound.play();
-    }
+    }, 500)
+    setTimeout(() => {
+        const sound = new Howl({
+            src: [soundFiles[1]],
+            volume: 0.33
+        });
+        sound.play();
+    }, 700)
+    setTimeout(() => {
+        const sound = new Howl({
+            src: [soundFiles[2]],
+            volume: 0.36
+        });
+        sound.play();
+    }, 900)
+    setTimeout(() => {
+        const sound = new Howl({
+            src: [soundFiles[3]],
+            volume: 0.39
+        });
+        sound.play();
+    }, 1100)
+    setTimeout(() => {
+        const sound = new Howl({
+            src: [soundFiles[4]],
+            volume: 0.42
+        });
+        sound.play();
+    }, 1300)
+    setTimeout(() => {
+        const sound = new Howl({
+            src: [soundFiles[5]],
+            volume: 0.45
+        });
+        sound.play();
+    }, 1500)
+    setTimeout(() => {
+        const sound = new Howl({
+            src: [soundFiles[6]],
+            volume: 0.48
+        });
+        sound.play();
+    }, 1700)
 }
 
 // CREATE A RESPONSIVE DIV FOR EACH CHORD DEGREE 
@@ -748,12 +809,17 @@ function handleShowChordTones() {
     displayChordTones();
     displayChordScale();
     enableRegister();
-    enablePlayArpNewButtons();
+    enableAllSoundAndNewButtons();
     hideExtensionInstruction();
 }
 function handlePlayChord() {
     playChordTones();
 }
+
+function handleArpeggiate() {
+    arpeggiateChord();
+}
+
 function handlePlayIndividual() {
     makeSoundDivs();
 }
@@ -764,6 +830,7 @@ function handleNewChord() {
 // EVENT LISTENERS ON BUTTONS
 const showChordTonesBtn = document.getElementById("chord-tones-btn");
 const playButton = document.getElementById("play-chord-btn");
+const arpeggiateButton = document.getElementById("arpeggiate-chord-btn");
 const playIndividualButton = document.getElementById("play-individual-btn");
 const newChordButton = document.getElementById("new-chord-btn");
 
@@ -775,6 +842,11 @@ showChordTonesBtn.addEventListener("click", function(evt) {
 playButton.addEventListener("click", function(evt) {
     evt.preventDefault();
     handlePlayChord();
+})
+
+arpeggiateButton.addEventListener("click", function(evt) {
+    evt.preventDefault();
+    handleArpeggiate();
 })
 
 playIndividualButton.addEventListener("click", function(evt) {
@@ -848,7 +920,8 @@ function getAccidentalChange() {
     // showTypeInstruction();
     if (isImpossibleKey) {
         showAccidentalInstruction();
-        hideTypeInstruction
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        hideTypeInstruction();
     }
     showTypeInstruction();
     }, false);
@@ -1199,10 +1272,11 @@ function thirteenthEnable() {
     addThirteenthOpt.disabled = false;
 }
 
-function enablePlayArpNewButtons() {
+function enableAllSoundAndNewButtons() {
     playButton.disabled = false;
     playIndividualButton.disabled = false;
     newChordButton.disabled = false;
+    arpeggiateButton.disabled = false;
 }
 
 function enableRegister() {
@@ -1237,10 +1311,12 @@ function enableExtensionOptions() {
 
 // PLAY INTRO WHEN PAGE LOADS
 function playIntro() {
-     const sound = new Howl({
-        src: ['sounds/intro2.mp3']
-      });
-      sound.play();
+    setTimeout(() => {
+        const sound = new Howl({
+            src: ['sounds/intro2.mp3']
+          });
+          sound.play();      
+    }, 600)
 }
 
 window.addEventListener("load", function() {

@@ -8,7 +8,7 @@ functions to add:
  ✔️ add instructions
  ✔️ play some sound when page loads
  ✔️ transpose option
-  arpeggiate chords
+ ✔️ arpeggiate chords
  ✔️ individually display and play chord notes
  ✔️ sus2
  ✔️ sus4
@@ -29,7 +29,7 @@ bugs:
   IN PROGRESS: fix double sharp in augmented C# E# G##
   IN PROGRESS: fix double flat in diminished Eb Gb Bbb
    REFACTOR disable select options for impossible key signatures 
-  ✔️ 6/7
-  ✔️ +7
+  ✔️ 7/6 m7/6 M7/6
+  ✔️ +7 07
 
 
