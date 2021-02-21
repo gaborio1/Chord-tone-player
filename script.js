@@ -1335,6 +1335,6 @@ function playIntro() {
 
 window.addEventListener("load", function() {
     console.log("page is loaded");
-        playIntro();
+        // playIntro();
         disableSelectOptions();
       });

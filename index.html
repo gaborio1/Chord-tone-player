@@ -12,99 +12,129 @@
   </head>
 
   <body>
-    <h1>Chord Tone Player</h1>
-    <!-- <form action="#"> -->
-    <!--  The value property of an HTML option element can only be a string !!! -->
-    <label for="name">Letter name:</label>
-      <select name="name" id="name">
-        <option class="note-name"></option>
-        <option value="c" class="note-name">c</option>
-        <option value="d" class="note-name">d</option>
-        <option value="e" class="note-name">e</option>
-        <option value="f" class="note-name">f</option>
-        <option value="g" class="note-name">g</option>
-        <option value="a" class="note-name">a</option>
-        <option value="b" class="note-name">b</option>
-      </select>
-      <p class="instruction" id="name-instruction">Select name!</p>
-      <br>
-    <label for="accidental">Accidental:</label>
-      <select name="accidental" id="accidental">
-        <option class="note-accidental"></option>
-        <option value="" class="note-accidental">natural</option>
-        <option value="#" class="note-accidental">sharp #</option>
-        <option value="b" class="note-accidental">flat b</option>
-      </select>
-      <p class="instruction hidden" id="accidental-instruction">Select accidental!</p>
-      <br>
-    <label for="type">Chord type:</label>
-      <select name="type" id="type">
-        <option></option>
-        <option value="major">major</option>
-        <option value="minor">minor</option>
-        <option value="dominant">dominant (7)</option>
-        <option value="augmented">augmented</option>
-        <option value="diminished">diminished</option>
-        <option value="sus2">sus2</option>
-        <option value="sus4">sus4</option>
-        <option value="phrygian">phrygian</option>
-        <option value="lydian">lydian</option>
-        <option value="invalid type" disabled>invalid type</option>
-      </select>
-      <p class="instruction hidden" id="type-instruction">Select type!</p>
-      <br>
-      <p class="">Extensions: <span class="instruction hidden" id="extension-instruction">Optional!</span></p>
-      <!-- <p class="instruction hidden" id="extension-instruction">Optional!</p> -->
-    <label for="sixth">6th:</label>
-      <select name="sixth" id="sixth">
-        <option value=""></option>
-        <option value="6">6</option>
-      </select>
-    <label for="seventh">7th:</label>
-      <select name="seventh" id="seventh">
-        <option value=""></option>
-        <option value="7">7</option>
-      </select>
-      <br>
-    <label for="ninth">9th:</label>
-      <select name="ninth" id="ninth">
-        <option value=""></option>
-        <option value="9">9</option>
-        <option value="add9">add9</option>
-      </select>
-    <label for="eleventh">11th:</label>
-      <select name="eleventh" id="eleventh">
-        <option value=""></option>
-        <option value="11">11</option>
-        <option value="add11">add11</option>
-      </select>
-      <br>
-    <label for="thirteenth">13th:</label>
-      <select name="thirteenth" id="thirteenth">
-        <option value=""></option>
-        <option value="13">13</option>
-        <option value="add13">add13</option>
-      </select>
-      <br>
-        <!-- <button type="button" onclick="displayData()">Get chord tones-onclick</button> -->
-    <button id="chord-tones-btn" disabled>Show chord tones</button>
-    <p id="invalid-key-message" class="hidden">Theoretical key!</p>
-    <br>
-    <p >Chord name: <span id="chordNameType"></span></p>
-    <p >Chord tones: <span id="chordTones"></span></p>
-    <p >Chord scale: <span id="chordScale"></span></p>
-    <label for="register">Transpose up/down an octave:</label>
-      <select name="register" id="register">
-        <option value="guitar">Guitar</option>
-        <option value="bass" disabled>Bass</option>
-        <option value="guitarUp" disabled>Guitar +12</option>
-      </select>
-      <br>
-    <button id="play-chord-btn" disabled>Play chord</button>
-    <button id="arpeggiate-chord-btn" disabled>Arpeggiate</button>
-    <button id="play-individual-btn" disabled>Individual notes</button>
-    <button id="new-chord-btn" disabled>New chord</button>
-    <div id="audio-container"></div>
-    <script src="script.js"></script>
+    <div id="main">
+      <div id="player" class="glass">
+      <!-- <form action="#"> -->
+      <!--  The value property of an HTML option element can only be a string !!! -->
+        <div id="sidebar">
+          <div id="title-container">
+            <h1 id="title">Chord Tone Player</h1>
+          </div>
+          <div id="sidebar-controls-container">
+            <div id="transpose-select-container">
+              <label for="register">Transpose up/down an octave:</label>
+              <select name="register" id="register">
+                <option value="guitar">Guitar</option>
+                <option value="bass" disabled>Bass</option>
+                <option value="guitarUp" disabled>Guitar +12</option>
+              </select>
+            </div>
+            <div id="new-chord-btn-container">
+              <button id="new-chord-btn" disabled>New chord</button>
+            </div>  
+          </div>
+          <div id="logo-container">
+            <div id="logo">Logo goes here</div>
+          </div>
+        </div>
+        <br>
+        <div id="control-panel">
+          <div class="card" id="triad-select">
+            <label for="name">Letter name:</label>
+            <select name="name" id="name">
+              <option class="note-name"></option>
+              <option value="c" class="note-name">c</option>
+              <option value="d" class="note-name">d</option>
+              <option value="e" class="note-name">e</option>
+              <option value="f" class="note-name">f</option>
+              <option value="g" class="note-name">g</option>
+              <option value="a" class="note-name">a</option>
+              <option value="b" class="note-name">b</option>
+            </select>
+            <p class="instruction" id="name-instruction">Select name!</p>
+            <br>
+            <label for="accidental">Accidental:</label>
+            <select name="accidental" id="accidental">
+              <option class="note-accidental"></option>
+              <option value="" class="note-accidental">natural</option>
+              <option value="#" class="note-accidental">sharp #</option>
+              <option value="b" class="note-accidental">flat b</option>
+            </select>
+            <p class="instruction hidden" id="accidental-instruction">Select accidental!</p>
+            <br>
+            <label for="type">Chord type:</label>
+            <select name="type" id="type">
+              <option></option>
+              <option value="major">major</option>
+              <option value="minor">minor</option>
+              <option value="dominant">dominant (7)</option>
+              <option value="augmented">augmented</option>
+              <option value="diminished">diminished</option>
+              <option value="sus2">sus2</option>
+              <option value="sus4">sus4</option>
+              <option value="phrygian">phrygian</option>
+              <option value="lydian">lydian</option>
+              <option value="invalid type" disabled>invalid type</option>
+            </select>
+            <p class="instruction hidden" id="type-instruction">Select type!</p>
+          </div>
+          <br>
+          <div class="card" id="extension-select">
+            <p class="">Extensions: <span class="instruction hidden" id="extension-instruction">Optional!</span></p>
+            <!-- <p class="instruction hidden" id="extension-instruction">Optional!</p> -->
+            <label for="sixth">6th:</label>
+            <select name="sixth" id="sixth">
+              <option value=""></option>
+              <option value="6">6</option>
+            </select>
+            <label for="seventh">7th:</label>
+            <select name="seventh" id="seventh">
+              <option value=""></option>
+              <option value="7">7</option>
+            </select>
+            <br>
+            <label for="ninth">9th:</label>
+            <select name="ninth" id="ninth">
+              <option value=""></option>
+              <option value="9">9</option>
+              <option value="add9">add9</option>
+            </select>
+            <label for="eleventh">11th:</label>
+            <select name="eleventh" id="eleventh">
+              <option value=""></option>
+              <option value="11">11</option>
+              <option value="add11">add11</option>
+            </select>
+            <br>
+            <label for="thirteenth">13th:</label>
+              <select name="thirteenth" id="thirteenth">
+                <option value=""></option>
+                <option value="13">13</option>
+                <option value="add13">add13</option>
+            </select>
+          </div>
+          <br>
+          <!-- <button type="button" onclick="displayData()">Get chord tones-onclick</button> -->
+          <div class="card" id="display-chord">
+            <button id="chord-tones-btn" disabled>Show chord tones</button>
+            <p id="invalid-key-message" class="hidden">Theoretical key!</p>
+            <br>
+            <p >Chord name: <span id="chordNameType"></span></p>
+            <p >Chord tones: <span id="chordTones"></span></p>
+            <p >Chord scale: <span id="chordScale"></span></p>
+          </div>
+          <br>
+          <div class="card" id="play-options">
+            <button id="play-chord-btn" disabled>Play chord</button>
+            <button id="arpeggiate-chord-btn" disabled>Arpeggiate</button>
+            <button id="play-individual-btn" disabled>Individual notes</button>
+            <div id="audio-container"></div>
+          </div>
+        </div>
+        <br>
+      <!-- <h1 id="g">Maci ❤️ Bogar</h1> -->
+      <!-- <h1 id="g">❤️ Hello szia, Tomi vagyok ❤️ </h1> -->
+      <script src="script.js"></script>
+    </div>
   </body>
 </html>

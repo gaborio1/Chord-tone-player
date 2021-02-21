@@ -19,3 +19,68 @@
     border: 1px solid black;
     margin: 2px;
 }
+
+#main {
+    min-height: 100vh;
+    /* https://uigradients.com/#AquaMarine */
+    background: linear-gradient(to right top ,#1A2980, #26D0CE);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#player {
+    display: flex;
+}
+
+#sidebar {
+    flex: 2;
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#title {
+    /* height: 40%; */
+    font-size: 4rem;
+}
+
+#sidebar-controls-container {
+    border: 1px solid white;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+#logo-container {
+    height: 30%;
+}
+
+#control-panel {
+    flex: 5;
+}
+
+.glass {
+    background: white;
+    min-height: 80vh;
+    max-height: 90vh;
+    width: 60%;
+    /* max-width: 1000px; */
+    border-radius: .5em;
+    /* background: linear-gradient(to right bottom, cornsilk, #26D0CE); */
+    background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9));
+    /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
+    /* background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.6)); */
+}
+
+.card {
+    background: rgba(26, 41, 128, 0.2);
+    width: 80%;
+    margin: 0px auto;
+    border-radius: .5em;
+}
+
+/* #g {
+    margin-left: 40px;
+} */
