@@ -18,6 +18,16 @@ functions to add:
  ✔️ dinamically show and hide options/buttons based on selections made
 
 bugs:
+  DUE TO THE LARGE NUMBER OF POSSIBLE COMBINATIONS BOTH IN CHORD TONES AND CHORD NAMES,
+  ONLY SOME OF THE LESS FREQUENTLY USED CHORD NAMES ARE DISPLAYED CORRECTLY AT THE MOMENT.
+  HOWEVER, CHORD TONES ARE DISPLAYED CORRECTLY IN EVERY CHORD.
+
+  LIST OF CHORD NAMES THAT HAS BEEN FIXED SO FAR:
+    M7/6  m7/6  7/6 
+    +7  07
+    M9/6  m9/6  9/6
+    6add9 m6add9   
+
    ✔️ remove existing chord degree divs before appending new ones 
     augmented with optional 7th ???
   ✔️ diminished 7 - make 7th = major 6th 
@@ -29,7 +39,4 @@ bugs:
   IN PROGRESS: fix double sharp in augmented C# E# G##
   IN PROGRESS: fix double flat in diminished Eb Gb Bbb
    REFACTOR disable select options for impossible key signatures 
-  ✔️ 7/6 m7/6 M7/6
-  ✔️ +7 07
-
 

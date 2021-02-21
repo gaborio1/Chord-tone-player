@@ -257,23 +257,37 @@ function displayChordName() {
         } else {
             console.log("another type you have to fix")
         }
-        
     }
 
     let ninthValue = getOptNinth();
     if (ninthValue === "9") {
         if (type === "major") {
-            typeSymbol += "M9";
+            if (getOptSixth()) {
+                typeSymbol = "M9/6"
+            } else {
+                typeSymbol = "M9";
+            }
         } else if (type === "minor") {
-            typeSymbol += "9";
+            if (getOptSixth()) {
+                typeSymbol = "m9/6"
+            } else {
+                typeSymbol += "9";
+            }
+            
         } else if (type === "dominant") {
             typeSymbol += "";
         } else {
             console.log("another type you have to fix");
         }
-    } else if (ninthValue === "add9") {
+    } 
+    
+    else if (ninthValue === "add9") {
         if (type === "dominant") {
-            typeSymbol = "9";
+            if (getOptSixth()) {
+                console.log("dom9 = dom add9 !!!");
+            } else {
+                typeSymbol = "9";
+            }
         } else {
             typeSymbol += " add9";
         }
