@@ -798,14 +798,15 @@ function makeSoundDivs() {
             src: [soundFile],
             volume: 0.6
         })
-        let elem = document.createElement("button");
+        let elem = document.createElement("div");
         // ??? THIS IS NOT WORKING !!!
         // elem.class = "btn";
         // INSTEAD:
-        elem.classList.add("btn");
-        elem.id = `play-btn${i}`;
+        elem.classList.add("sound-div");
+        elem.id = `sound-div${i}`;
         elem.addEventListener('mouseover', () => soundFiles[i].play());
-        elem.innerText = `Degree ${i + 1}: ${chordTones[i]}`    
+        // elem.innerText = `Deg.${i + 1}: ${chordTones[i]}`    
+        elem.innerText = chordTones[i];    
         audioContainer.appendChild(elem);
         // document.body.append(elem);
     })
@@ -1202,6 +1203,10 @@ function hideInvalidKeyMessage() {
     invalidKeyMessage.classList.add("hidden");
 }
 
+function showNameInstruction() {
+    nameInstruction.classList.remove("hidden");
+}
+
 function hideNameInstruction() {
     nameInstruction.classList.add("hidden");
 }
@@ -1335,6 +1340,10 @@ function playIntro() {
 
 window.addEventListener("load", function() {
     console.log("page is loaded");
-        // playIntro();
+        playIntro();
         disableSelectOptions();
+        setTimeout(() => {
+            showNameInstruction();
+        }, 1500)
+
       });

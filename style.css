@@ -5,25 +5,51 @@
 }
 
 .instruction {
+    /* width: 100%; */
     display: inline;
+    margin: 0px auto;
 }
 
 .hidden {
     display: none;
 }
 
-.btn {
-    color: rgb(19, 72, 85);    
-    background-color: rgb(141, 215, 245);
-    display: block;
-    border: 1px solid black;
+.sound-div {
+    width: 4rem;
+    color: black;    
+    /* background-color: rgba(86, 125, 143, 0.705); */
+    background-color: rgba(255, 99, 71, 0.5);
+    border-radius: .3rem;
+    /* display: block; */
+    padding: .3rem;
     margin: 2px;
+    text-align: center;
+}
+
+.sound-div:hover {
+    /* background-color: rgb(187, 79, 79); */
+    background-color: rgba(255, 99, 71, 0.8);
+}
+
+button {
+    width: 7.5rem;
+    border: none;
+    outline: none;
+    border-radius: .3rem;
+    padding: .4rem;
+    /* background-color: rgba(3, 94, 136, 0.5); */
+    background-color: rgba(86, 125, 143, 0.5);
+}
+
+button:hover {
+    background-color: rgba(86, 125, 143, 0.8);
 }
 
 #main {
     min-height: 100vh;
     /* https://uigradients.com/#AquaMarine */
-    background: linear-gradient(to right top ,#1A2980, #26D0CE);
+    /* background: linear-gradient(to right top ,#1A2980, #26D0CE); */
+    background: linear-gradient(to right top ,#51577c, #26D0CE);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,24 +61,42 @@
 
 #sidebar {
     flex: 2;
-    border: 1px solid white;
+    border-right: 1px solid white;
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    /* background: rgba(166, 189, 187, 0.349); */
+    background: rgba(255, 255, 255, 0.171);
 }
 
 #title {
     /* height: 40%; */
-    font-size: 3rem;
+    font-size: 2.5rem;
     text-transform: uppercase;
     padding: 1rem;
+    color: rgb(1, 92, 134);
 }
 
 #sidebar-controls-container {
-    border: 1px solid white;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
     height: 30%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#transpose-select-container {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+}
+
+#transpose-select-container select {
+    margin: 1rem auto;
 }
 
 #logo-container {
@@ -63,8 +107,10 @@
 }
 
 #logo {
+    height: 8rem;
     font-size: 1rem;
     border: 7px solid rgb(1, 92, 134);
+    border-bottom-left-radius: .8rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,13 +123,11 @@
     flex-direction: column;
     margin-left: 0.3rem;
     /* border: 2px solid rgb(187, 79, 79); */
-
 }
 
 #letter-d {
     /* border: 2px solid rgb(193, 204, 34); */
     font-size: 5rem;
-
 }
 
 #letter-m {
@@ -91,8 +135,6 @@
     border-bottom: 2px solid black;
     font-size: 2.5rem;
     margin-top: 0.3rem;
-
-
 }
 
 #word-nine {
@@ -103,33 +145,128 @@
 }
 
 #control-panel {
-    flex: 5;
-    /* display: flex; */
-    /* flex-direction: column;
-    justify-content: space-around; */
+    flex: 6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .glass {
-    background: white;
-    min-height: 80vh;
-    max-height: 90vh;
-    width: 60%;
-    /* max-width: 1000px; */
-    border-radius: .5em;
+    /* width: 60%; */
+    max-width: 800px;
+    /* min-height: 80vh; */
+    min-height: 600px;
+    border-radius: .5rem;
+    border: 2px solid rgba(9, 241, 241, 0.9);
+    box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.4);
     /* background: linear-gradient(to right bottom, cornsilk, #26D0CE); */
-    background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9));
     /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
-    /* background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.6)); */
+    /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
+    /* background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2)); */
+    background: rgba(255, 255, 255, 0.4);
 }
 
 .card {
-    background: rgba(26, 41, 128, 0.2);
-    width: 85%;
+    /* background: rgba(26, 41, 128, 0.2); */
+    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4));
+    /* width: 100%; */
     height: 20%;
-    margin: 15px 0px 0px 5%;
-    border-top-right-radius: .5em;
-    border-bottom-right-radius: .5em;
+    margin: 0px 0px 0px 5%;
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+    box-shadow: 3px 5px 15px rgba(122, 122, 122, 0.4);
+    display: flex;
 }
+
+
+.control-panel-row {
+    margin-left: 1.5rem;
+} 
+
+#triad-select .control-panel-row {
+    display: flex;
+} 
+
+#extension-select .control-panel-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+} 
+
+/* EXTENSIONS SPAN */
+#extension-select .control-panel-row:nth-child(1) {
+    /* border: 1px solid rgb(206, 15, 142); */
+    justify-content: left;
+} 
+
+#display-chord-text-rows p {
+    margin-bottom: .4rem;
+}
+
+#triad-select {
+    width: 60%;
+    margin-top: 1rem;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#extension-select {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: space-around;
+}
+
+#display-chord {
+    width: 80%;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#chord-tones-btn {
+    margin:10px auto;
+}
+
+#play-options {
+    width: 90%;
+    margin-bottom: 1rem;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#play-options-btn-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#audio-container {
+    display: flex;
+    justify-content: center;
+}
+
+select {
+    border: none;
+    width: fit-content;
+    height: 1.3rem;
+    border-radius: .2rem;
+    /* margin-left: .1rem; */
+    /* border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem; */
+    /* margin: 5px; */
+    outline: none;
+    color:rgba(255, 99, 71, 0.8);
+    background-color:rgba(222, 240, 241, 0.726);
+}
+
+#triad-select select {
+    margin-left: .25rem;
+}
+/* 
+#triad-select select {
+   
+} */
 
 /* #g {
     margin-left: 40px;
