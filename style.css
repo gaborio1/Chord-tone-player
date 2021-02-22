@@ -43,7 +43,9 @@
 
 #title {
     /* height: 40%; */
-    font-size: 4rem;
+    font-size: 3rem;
+    text-transform: uppercase;
+    padding: 1rem;
 }
 
 #sidebar-controls-container {
@@ -55,10 +57,56 @@
 
 #logo-container {
     height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#logo {
+    font-size: 1rem;
+    border: 7px solid rgb(1, 92, 134);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(0, 107, 156);
+    padding: 10px;
+}
+
+#m-nine {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.3rem;
+    /* border: 2px solid rgb(187, 79, 79); */
+
+}
+
+#letter-d {
+    /* border: 2px solid rgb(193, 204, 34); */
+    font-size: 5rem;
+
+}
+
+#letter-m {
+    /* border: 2px solid rgb(34, 122, 11); */
+    border-bottom: 2px solid black;
+    font-size: 2.5rem;
+    margin-top: 0.3rem;
+
+
+}
+
+#word-nine {
+    /* border: 2px solid rgb(207, 40, 207); */
+    margin-bottom: 1.1rem;
+    font-size: 1.2rem;
+    color: tomato;
 }
 
 #control-panel {
     flex: 5;
+    /* display: flex; */
+    /* flex-direction: column;
+    justify-content: space-around; */
 }
 
 .glass {
@@ -76,9 +124,11 @@
 
 .card {
     background: rgba(26, 41, 128, 0.2);
-    width: 80%;
-    margin: 0px auto;
-    border-radius: .5em;
+    width: 85%;
+    height: 20%;
+    margin: 15px 0px 0px 5%;
+    border-top-right-radius: .5em;
+    border-bottom-right-radius: .5em;
 }
 
 /* #g {
