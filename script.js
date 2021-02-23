@@ -1296,6 +1296,11 @@ function enableAllSoundAndNewButtons() {
     playIndividualButton.disabled = false;
     newChordButton.disabled = false;
     arpeggiateButton.disabled = false;
+    // MAKE BUTTONS HOVER-ABLE
+    newChordButton.classList.add("hover");
+    playButton.classList.add("hover");
+    arpeggiateButton.classList.add("hover");
+    playIndividualButton.classList.add("hover");
 }
 
 function enableRegister() {
@@ -1307,6 +1312,8 @@ function enableRegister() {
 
 function enableShowChordButton() {
     showChordTonesBtn.disabled = false;
+    // MAKE BUTTON HOVER-ABLE
+    showChordTonesBtn.classList.add("hover");
 }
 // DISABLE ALL
 function disableSelectOptions() {
@@ -1344,6 +1351,6 @@ window.addEventListener("load", function() {
         disableSelectOptions();
         setTimeout(() => {
             showNameInstruction();
-        }, 1500)
+        }, 2000)
 
       });
