@@ -16,6 +16,7 @@ functions to add:
  ✔️ lydian
  ✔️ "new chord" button to reset / clear dropdowns
  ✔️ dinamically show and hide options/buttons based on selections made
+ ✔️ animate buttons :hover
 
 bugs:
   DUE TO THE LARGE NUMBER OF POSSIBLE COMBINATIONS BOTH IN CHORD TONES AND CHORD NAMES,

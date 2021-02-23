@@ -1,53 +1,14 @@
+
+/* CSS RESET */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* body {
+body {
     font-family: 'Mukta Vaani', sans-serif;
     font-weight: 200;
-} */
-
-.instruction {
-    /* width: 100%; */
-    display: inline;
-    margin: 0px auto;
-}
-
-.hidden {
-    display: none;
-}
-
-.sound-div {
-    width: 4rem;
-    color: black;    
-    /* background-color: rgba(86, 125, 143, 0.705); */
-    background-color: rgba(255, 99, 71, 0.5);
-    border-radius: .3rem;
-    /* display: block; */
-    padding: .3rem;
-    margin: 2px;
-    text-align: center;
-}
-
-.sound-div:hover {
-    /* background-color: rgb(187, 79, 79); */
-    background-color: rgba(255, 99, 71, 0.8);
-}
-
-button {
-    width: 7.5rem;
-    border: none;
-    outline: none;
-    border-radius: .3rem;
-    padding: .4rem;
-    /* background-color: rgba(3, 94, 136, 0.5); */
-    background-color: rgba(86, 125, 143, 0.5);
-}
-
-button.hover:hover {
-    background-color: rgba(86, 125, 143, 0.8);
 }
 
 #main {
@@ -60,10 +21,27 @@ button.hover:hover {
     justify-content: center;
 }
 
+/* PLAYER */
 #player {
     display: flex;
+     /* width: 60%; */
+     max-width: 820px;
+     /* min-height: 80vh; */
+     min-height: 600px;
+     border-radius: .5rem;
 }
 
+.glass {
+    border: 2px solid rgba(9, 241, 241, 0.9);
+    box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.4);
+    /* background: linear-gradient(to right bottom, cornsilk, #26D0CE); */
+    /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
+    /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
+    /* background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2)); */
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* SIDEBAR */
 #sidebar {
     flex: 2;
     border-right: 1px solid white;
@@ -77,9 +55,11 @@ button.hover:hover {
 }
 
 #title {
-    /* height: 40%; */
-    font-size: 2.5rem;
+    /* CHROME DEFAULT FONTS */
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 3rem;
     text-transform: uppercase;
+    text-align: center;
     padding: 1rem;
     color: rgb(1, 92, 134);
 }
@@ -112,6 +92,8 @@ button.hover:hover {
 }
 
 #logo {
+    /* CHROME DEFAULT FONTS */
+    font-family: 'Times New Roman', Times, serif;
     height: 8rem;
     font-size: 1rem;
     border: 7px solid rgb(1, 92, 134);
@@ -133,6 +115,7 @@ button.hover:hover {
 #letter-d {
     /* border: 2px solid rgb(193, 204, 34); */
     font-size: 5rem;
+    /* font-weight: 500; */
 }
 
 #letter-m {
@@ -149,6 +132,7 @@ button.hover:hover {
     color: tomato;
 }
 
+/* CONTROL PANEL */
 #control-panel {
     flex: 6;
     display: flex;
@@ -156,31 +140,113 @@ button.hover:hover {
     justify-content: space-between;
 }
 
-.glass {
-    /* width: 60%; */
-    max-width: 800px;
-    /* min-height: 80vh; */
-    min-height: 600px;
-    border-radius: .5rem;
-    border: 2px solid rgba(9, 241, 241, 0.9);
-    box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.4);
-    /* background: linear-gradient(to right bottom, cornsilk, #26D0CE); */
-    /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
-    /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
-    /* background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2)); */
-    background: rgba(255, 255, 255, 0.4);
+/* CURRENTLY NOT IN USE */
+/* ORIGINAL BUTTON */
+/* button {
+    width: 7.5rem;
+    border: none;
+    outline: none;
+    border-radius: .3rem;
+    padding: .4rem;
+    background-color: rgba(86, 125, 143, 0.5);
+}
+
+button.hover:hover {
+    background-color: rgba(86, 125, 143, 0.8);
+} */
+/* END OF ORIGINAL BUTTON */
+
+/* ANIMATED BUTTON */
+.pre-animation-btn {
+    width: 7.5rem;
+    padding: .4rem;
+    text-align: center;
+    margin: .5rem;
+    background-color: rgba(86, 125, 143, 0.35);
+    border-radius: .3rem;
+}
+
+.animated-btn {
+    /* color: #FFF; */
+    color: black;
+    transition: all 0.8s;
+    position: relative;
+    width: 7.5rem;
+    padding: .4rem;
+    text-align: center;
+    margin: .5rem;
+  }
+
+  .animated-btn::before {
+    border-radius: .3rem;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(86, 125, 143, 0.45);
+    transition: all 0.5s;
+  }
+
+  .animated-btn:hover::before {
+    opacity: 0 ;
+    transform: scale(0.5,0.5);
+  }
+
+  .animated-btn::after {
+    border-radius: .3rem;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: all 0.5s;
+    /* border: 1px solid rgba(255,255,255,0.5); */
+    border: 1px solid rgba(255, 99, 71, 0.9);
+    transform: scale(1.2,1.2);
+  }
+
+  .animated-btn:hover::after {
+    background-color: rgba(255, 99, 71, 0.8);
+    opacity: .4;
+    transform: scale(1,1);
+  }
+
+  .animated-btn span {
+      font-weight: 300;
+  }
+/* END OF ANIMATED BUTTON */
+
+select {
+    border: none;
+    width: fit-content;
+    height: 1.3rem;
+    border-radius: .2rem;
+    outline: none;
+    color:rgba(255, 99, 71, 0.8);
+    background-color:rgba(222, 240, 241, 0.726);
+}
+
+#triad-select select {
+    margin-left: .25rem;
 }
 
 .card {
     /* background: rgba(26, 41, 128, 0.2); */
     background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4));
-    /* width: 100%; */
     height: 20%;
     margin: 0px 0px 0px 5%;
     border-top-right-radius: .5rem;
     border-bottom-right-radius: .5rem;
     box-shadow: 3px 5px 15px rgba(122, 122, 122, 0.4);
     display: flex;
+    /* THIS FIXES SHOW CHORD TONES CARD HEIGHT */
+    line-height: 1.1rem;
 }
 
 
@@ -191,6 +257,16 @@ button.hover:hover {
 #triad-select .control-panel-row {
     display: flex;
 } 
+
+.instruction {
+    /* width: 100%; */
+    display: inline;
+    margin: 0px auto;
+}
+
+.hidden {
+    display: none;
+}
 
 #extension-select .control-panel-row {
     display: flex;
@@ -225,6 +301,8 @@ button.hover:hover {
 
 #display-chord {
     width: 80%;
+    /* TEMPORARY FIX: SHOW CHORD BUTTON STICKS OUT OF CARD WITH GOOGLE FONTS */
+    /* height: fit-content; */
     flex-direction: column;
     justify-content: space-around;
 }
@@ -249,30 +327,22 @@ button.hover:hover {
 #audio-container {
     display: flex;
     justify-content: center;
+    /* TEMPORARY FIX: CARD GROWS IF 6 OR 7 SOUND DIVS */
+    width: 500px;
+    margin: 0px auto;
 }
 
-select {
-    border: none;
-    width: fit-content;
-    height: 1.3rem;
-    border-radius: .2rem;
-    /* margin-left: .1rem; */
-    /* border-top-right-radius: .3rem;
-    border-bottom-right-radius: .3rem; */
-    /* margin: 5px; */
-    outline: none;
-    color:rgba(255, 99, 71, 0.8);
-    background-color:rgba(222, 240, 241, 0.726);
+.sound-div {
+    width: 4.2rem;
+    color: black;    
+    background-color: rgba(255, 99, 71, 0.5);
+    border-radius: .3rem;
+    /* display: block; */
+    padding: .4rem;
+    margin: 2px;
+    text-align: center;
 }
 
-#triad-select select {
-    margin-left: .25rem;
+.sound-div:hover {
+    background-color: rgba(255, 99, 71, 0.8);
 }
-/* 
-#triad-select select {
-   
-} */
-
-/* #g {
-    margin-left: 40px;
-} */

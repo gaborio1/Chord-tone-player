@@ -6,10 +6,10 @@
     <title>Chord Tone Player</title>
     <meta name="description" content="">
     <meta name="author" content="">
-    
+
     <!-- GOOGLE FONTS -->
-    <!-- <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Mukta+Vaani:wght@200;500;800&display=swap" rel="stylesheet">  -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta+Vaani:wght@200;300&display=swap" rel="stylesheet">
 
     <!-- HOWLER JS MDN -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.js"></script>
@@ -36,7 +36,15 @@
               </select>
             </div>
             <div id="new-chord-btn-container">
-              <button id="new-chord-btn" disabled>New chord</button>
+              <!-- ORIGINAL BUTTON -->
+              <!-- <button id="new-chord-btn" disabled>New chord</button> -->
+
+              <!-- ANIMATED BUTTON  -->
+              <div id="new-chord-btn" class="pre-animation-btn enabled-with-show-btn">
+                <span>New chord</span>
+            </div>
+            <!-- END -->
+
             </div>  
           </div>
           <div id="logo-container">
@@ -148,7 +156,13 @@
           <br>
           <!-- <button type="button" onclick="displayData()">Get chord tones-onclick</button> -->
           <div class="card" id="display-chord">
-            <button id="chord-tones-btn" disabled>Show chord tones</button>
+            <!-- ORIGINAL BUTTON -->
+            <!-- <button id="chord-tones-btn" disabled>Show chord tones</button> -->
+
+            <!-- ANIMATED BUTTON  -->
+            <div id="chord-tones-btn" class="pre-animation-btn">
+              <span>Show chord</span>
+            </div>
             <p id="invalid-key-message" class="hidden">Theoretical key!</p>
             <div id="display-chord-text-rows" class="control-panel-row">
               <p>Chord name: <span id="chordNameType"></span></p>
@@ -159,9 +173,21 @@
           <br>
           <div class="card" id="play-options">
             <div id="play-options-btn-row">
-              <button id="play-chord-btn" disabled>Play chord</button>
-              <button id="arpeggiate-chord-btn" disabled>Arpeggiate</button>
-              <button id="play-individual-btn" disabled>Individual notes</button>
+              <!-- ORIGINAL BUTTONS -->
+              <!-- <button id="play-chord-btn" disabled>Play chord</button> -->
+              <!-- <button id="arpeggiate-chord-btn" disabled>Arpeggiate</button> -->
+              <!-- <button id="play-individual-btn" disabled>Individual notes</button> -->
+
+              <!-- ANIMATED BUTTONS -->
+              <div id="play-chord-btn" class="pre-animation-btn enabled-with-show-btn">
+                <span>Play chord</span>
+              </div>
+              <div id="arpeggiate-chord-btn" class="pre-animation-btn enabled-with-show-btn">
+                <span>Arpeggiate</span>
+              </div>
+              <div id="play-individual-btn" class="pre-animation-btn enabled-with-show-btn">
+                <span>Individual notes</span>
+              </div>
             </div>
             <div id="audio-container"></div>
           </div>

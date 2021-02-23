@@ -826,7 +826,13 @@ function handleShowChordTones() {
     enableRegister();
     enableAllSoundAndNewButtons();
     hideExtensionInstruction();
+    // ENABLE OTHER FOUR BUTTONS
+    addListenerPlayBtn();
+    addListenerArpeggiateBtn();
+    addListenerPlayIndividualBtn();
+    addListenerNewChordBtn();
 }
+
 function handlePlayChord() {
     playChordTones();
 }
@@ -849,29 +855,41 @@ const arpeggiateButton = document.getElementById("arpeggiate-chord-btn");
 const playIndividualButton = document.getElementById("play-individual-btn");
 const newChordButton = document.getElementById("new-chord-btn");
 
-showChordTonesBtn.addEventListener("click", function(evt) {
-    evt.preventDefault();
-    handleShowChordTones();
-})
+// WHEN CHORD TYPE SELECTION IS MADE ( IN getTypeChange() )
+function addListenerShowChordBtn() {
+    showChordTonesBtn.addEventListener("click", function(evt) {
+        evt.preventDefault();
+        handleShowChordTones();
+    })
+}
 
-playButton.addEventListener("click", function(evt) {
-    evt.preventDefault();
-    handlePlayChord();
-})
+// WHEN SHOW CHORD IS CLICKED ( IN handleShowChordTones() )
+function addListenerPlayBtn() {
+    playButton.addEventListener("click", function(evt) {
+        evt.preventDefault();
+        handlePlayChord();
+    })
+}
 
-arpeggiateButton.addEventListener("click", function(evt) {
-    evt.preventDefault();
-    handleArpeggiate();
-})
+function addListenerArpeggiateBtn() {
+    arpeggiateButton.addEventListener("click", function(evt) {
+        evt.preventDefault();
+        handleArpeggiate();
+    })
+}
 
-playIndividualButton.addEventListener("click", function(evt) {
-    evt.preventDefault();
-    handlePlayIndividual();
-})
+function addListenerPlayIndividualBtn() {
+    playIndividualButton.addEventListener("click", function(evt) {
+        evt.preventDefault();
+        handlePlayIndividual();
+    })
+}
 
-newChordButton.addEventListener("click", function(evt) {
-    handleNewChord();
-})
+function addListenerNewChordBtn() {
+    newChordButton.addEventListener("click", function(evt) {
+        handleNewChord();
+    })
+}
 
 // WHEN PAGE LOADS, ONLY NAME SELECTION IS ENABLED. ENABLE DROPDOWNS IN SEQUENCE: ONCE ONE IS SELECTED, ENABLE NEXT THEN ATER TYPE IS SELECTED, ENABLE ALL EXTENSIONS 6, 7, 9, 11, 13
 
@@ -947,11 +965,14 @@ getAccidentalChange();
 function getTypeChange() {
     const typeDropdown = document.getElementById("type");
     typeDropdown.addEventListener('change', function() {
-    getTypeChangeVal = this.value;
-    enableExtensionOptions();
-    hideTypeInstruction();
-    showExtensionInstruction();
-    enableShowChordButton();
+        getTypeChangeVal = this.value;
+        enableExtensionOptions();
+        hideTypeInstruction();
+        showExtensionInstruction();
+        enableShowChordButton();
+        // ENABLE SHOW CHORD BUTTON 
+        showChordTonesBtn.classList.add("animated-btn");
+        addListenerShowChordBtn()
     }, false);
 }
 getTypeChange();
@@ -1292,15 +1313,43 @@ function thirteenthEnable() {
 }
 
 function enableAllSoundAndNewButtons() {
-    playButton.disabled = false;
-    playIndividualButton.disabled = false;
-    newChordButton.disabled = false;
-    arpeggiateButton.disabled = false;
+    // NOT IN USE
+    // playButton.disabled = false;
+    // playIndividualButton.disabled = false;
+    // newChordButton.disabled = false;
+    // arpeggiateButton.disabled = false;
+    
     // MAKE BUTTONS HOVER-ABLE
-    newChordButton.classList.add("hover");
-    playButton.classList.add("hover");
-    arpeggiateButton.classList.add("hover");
-    playIndividualButton.classList.add("hover");
+    // newChordButton.classList.add("hover");
+    // playButton.classList.add("hover");
+    // arpeggiateButton.classList.add("hover");
+    // playIndividualButton.classList.add("hover");
+
+    //  ENABLE ANIMATED BUTTONS
+    newChordButton.classList.add("animated-btn");
+    playButton.classList.add("animated-btn");
+    arpeggiateButton.classList.add("animated-btn");
+    playIndividualButton.classList.add("animated-btn");
+        
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    // THESE 2 WORK FINE:
+    // newChordButton.classList.remove("pre-animation-btn");
+    // playButton.classList.remove("pre-animation-btn");
+
+    // // ??????   THESE 2 DON'T WORK ???????
+
+    // arpeggiateButton.classlist.remove("pre-animation-btn");
+    // playIndividualButton.classlist.remove("pre-animation-btn");
+   
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    // !!!!!    classlist.remove WORKS WITH A LOOP WTF???   !!!!!
+    elements = document.querySelectorAll(".enabled-with-show-btn");
+      // remove class from all chosen elements
+    for (let i=0; i<elements.length; i++) {
+      elements[i].classList.remove("pre-animation-btn");
+    }
 }
 
 function enableRegister() {
@@ -1311,9 +1360,13 @@ function enableRegister() {
 }
 
 function enableShowChordButton() {
-    showChordTonesBtn.disabled = false;
+    // NOT IN USE
+    // showChordTonesBtn.disabled = false;
+    // NOT IN USE
     // MAKE BUTTON HOVER-ABLE
-    showChordTonesBtn.classList.add("hover");
+    // showChordTonesBtn.classList.add("hover");
+    showChordTonesBtn.classList.add("animated-btn");
+    showChordTonesBtn.classList.remove("pre-animation-btn");
 }
 // DISABLE ALL
 function disableSelectOptions() {
