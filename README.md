@@ -18,6 +18,8 @@ functions to add:
  ✔️ dinamically show and hide options/buttons based on selections made
  ✔️ animate buttons :hover
  ✔️ animate cards, sidebar (slide in)
+ ✔️ add icons
+
 
 bugs:
   DUE TO THE LARGE NUMBER OF POSSIBLE COMBINATIONS BOTH IN CHORD TONES AND CHORD NAMES,

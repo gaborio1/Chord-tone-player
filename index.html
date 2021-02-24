@@ -9,7 +9,10 @@
 
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Mukta+Vaani:wght@200;300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta+Vaani:wght@200;300&display=swap" rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+    <script src="https://kit.fontawesome.com/5b05473718.js" crossorigin="anonymous"></script>
 
     <!-- HOWLER JS MDN -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.js"></script>
@@ -27,8 +30,7 @@
           </div>
           <div id="sidebar-controls-container">
             <div id="transpose-select-container">
-              <label for="register">Transpose up/down an octave:</label>
-              
+              <label for="register">Transpose up / down:</label>
               <select name="register" id="register">
                 <option value="guitar">Guitar</option>
                 <option value="bass" disabled>Bass</option>
@@ -36,14 +38,15 @@
               </select>
             </div>
             <div id="new-chord-btn-container">
+
               <!-- ORIGINAL BUTTON -->
               <!-- <button id="new-chord-btn" disabled>New chord</button> -->
 
               <!-- ANIMATED BUTTON  -->
               <div id="new-chord-btn" class="pre-animation-btn enabled-with-show-btn">
-                <span>New chord</span>
+                <span>New chord <i class="fas fa-redo-alt"></i></span>
             </div>
-            <!-- END -->
+            <!-- END OF ANIMATED BUTTON -->
 
             </div>  
           </div>
@@ -74,7 +77,7 @@
                 <option value="a" class="note-name">a</option>
                 <option value="b" class="note-name">b</option>
               </select>
-              <p class="instruction hidden" id="name-instruction">Select name!</p>
+              <p class="instruction hidden" id="name-instruction"><i class="fas fa-arrow-circle-left"></i> Select name!</p>
             </div>
             <div id="triad-select-second-row" class="control-panel-row">
               <label for="accidental">Accidental:</label>
@@ -84,7 +87,7 @@
                 <option value="#" class="note-accidental">sharp #</option>
                 <option value="b" class="note-accidental">flat b</option>
               </select>
-              <p class="instruction hidden" id="accidental-instruction">Select accidental!</p>
+              <p class="instruction hidden" id="accidental-instruction"><i class="fas fa-arrow-circle-left"></i> Select accidental!</p>
             </div>
             <div id="triad-select-third-row" class="control-panel-row">
               <label for="type">Chord type:</label>
@@ -101,13 +104,13 @@
                 <option value="lydian">lydian</option>
                 <option value="invalid type" disabled>invalid type</option>
               </select>
-              <p class="instruction hidden" id="type-instruction">Select type!</p>
+              <p class="instruction hidden" id="type-instruction"><i class="fas fa-arrow-circle-left"></i> Select type!</p>
             </div>
           </div>
           <br>
           <div class="card animating-width" id="extension-select" class="">
             <div class="control-panel-row">
-            <p class="">Extensions: <span class="instruction hidden" id="extension-instruction">Optional!</span></p>
+            <p class="">Extensions: <span class="instruction hidden" id="extension-instruction"><i class="fas fa-question-circle"></i> Optional!</span></p>
             </div>
             <!-- <p class="instruction hidden" id="extension-instruction">Optional!</p> -->
             <div id="extension-select-first-row" class="control-panel-row">
@@ -156,13 +159,16 @@
           <br>
           <!-- <button type="button" onclick="displayData()">Get chord tones-onclick</button> -->
           <div class="card animating-width" id="display-chord">
+
             <!-- ORIGINAL BUTTON -->
             <!-- <button id="chord-tones-btn" disabled>Show chord tones</button> -->
 
             <!-- ANIMATED BUTTON  -->
             <div id="chord-tones-btn" class="pre-animation-btn">
-              <span>Show chord</span>
+              <span>Show chord <i class="fas fa-info"></i></span>
             </div>
+            <!-- END OF ANIMATED BUTTON -->
+
             <p id="invalid-key-message" class="hidden">Theoretical key!</p>
             <div id="display-chord-text-rows" class="control-panel-row">
               <p>Chord name: <span id="chordNameType"></span></p>
@@ -173,6 +179,7 @@
           <br>
           <div class="card" id="play-options">
             <div id="play-options-btn-row">
+
               <!-- ORIGINAL BUTTONS -->
               <!-- <button id="play-chord-btn" disabled>Play chord</button> -->
               <!-- <button id="arpeggiate-chord-btn" disabled>Arpeggiate</button> -->
@@ -180,14 +187,16 @@
 
               <!-- ANIMATED BUTTONS -->
               <div id="play-chord-btn" class="pre-animation-btn enabled-with-show-btn">
-                <span>Play chord</span>
+                <span>Chord <i class="fas fa-play"></i></span>
               </div>
               <div id="arpeggiate-chord-btn" class="pre-animation-btn enabled-with-show-btn">
-                <span>Arpeggiate</span>
+                <span>Arpeggio <i class="fas fa-play"></i></span>
               </div>
               <div id="play-individual-btn" class="pre-animation-btn enabled-with-show-btn">
-                <span>Individual notes</span>
+                <span>Notes <i class="fas fa-music"></i></span>
               </div>
+              <!-- END OF ANIMATED BUTTONS -->
+
             </div>
             <div id="audio-container"></div>
           </div>
