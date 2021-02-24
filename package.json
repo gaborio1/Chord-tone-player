@@ -1,0 +1,29 @@
+{
+  "name": "chord-tone-player",
+  "version": "1.0.0",
+  "description": "Audio production software used in this program:     Apple Logic Pro v10.6.1         Built-in sampler preset: Steel string acoustic         Dynamics: Compressor, Channel EQ         Reverb: ChromaVerb",
+  "main": "script.js",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "build parcel src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaborio1/Chord-tone-player.git"
+  },
+  "author": "Gabor Nagy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gaborio1/Chord-tone-player/issues"
+  },
+  "homepage": "https://github.com/gaborio1/Chord-tone-player#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.32.8",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "babel-eslint": "^10.0.1",
+    "prettier": "^1.19.1"
+  }
+}
