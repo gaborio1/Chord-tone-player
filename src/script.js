@@ -1,4 +1,143 @@
-import Chord from './Chord'
+// import Chord from './classes/Chord'
+import circleOfFifths from './utils/circleOfFifths'
+import soundNames from './utils/soundNames'
+
+console.log(circleOfFifths)
+
+class Chord {
+  constructor(
+    name,
+    accidental,
+    type,
+    optSixth = '',
+    optSeventh = '',
+    optNinth = '',
+    optEleventh = '',
+    optThirteenth = ''
+  ) {
+    this.name = name
+    this.accidental = accidental
+    this.type = type
+    this.optSixth = optSixth
+    this.optSeventh = optSeventh
+    this.optNinth = optNinth
+    this.optEleventh = optEleventh
+    this.optThirteenth = optThirteenth
+    // this.root = getRoot();
+    // this.sixthSeventh = this.sixthSeventh;
+    this.test = function() {
+      const {
+        name,
+        type,
+        getRoot,
+        getThird,
+        getFifth,
+        getMinorSeventh,
+        optSeventh
+      } = this
+      // console.log(`Hello from: ${name}${accidental} ${type}, my notes: ${getRoot()}, ${getThird()}, ${getFifth()}`);
+      return `Hello from: ${name}${accidental} ${type} ${optSeventh}, my notes: ${getRoot()}, ${getThird()}, ${getFifth()}, ${this.getSeventh()}`
+    }
+  }
+  // FIND AND RETURN APPROPRIATE SCALE DEGREE FROM DIATONIC SCALE
+  getRoot = () => getDiatonicScale(this.name, this.accidental, this.type)[0]
+  getFlatSecond = () => {
+    const { getSecond } = this
+    // IF second HAS A SECOND CHAR "#", ONLY RETURN THE FIRST CHAR (LETTER NAME)
+    let secondChar = getSecond().charAt(1)
+    switch (secondChar) {
+      case '#':
+        return getSecond().charAt(0)
+      default:
+        return getSecond().concat('b')
+    }
+  }
+
+  getSecond = () => getDiatonicScale(this.name, this.accidental, this.type)[1]
+  getThird = () => getDiatonicScale(this.name, this.accidental, this.type)[2]
+  getFourth = () => getDiatonicScale(this.name, this.accidental, this.type)[3]
+
+  getSharpFourth = () => {
+    const { getFourth } = this
+    let secondChar = getFourth().charAt(1)
+    switch (secondChar) {
+      case 'b':
+        return getFourth().charAt(0)
+      default:
+        return getFourth().concat('#')
+    }
+  }
+
+  getFlatFifth = () => {
+    const { getFifth } = this
+    let secondChar = getFifth().charAt(1)
+    switch (secondChar) {
+      case '#':
+        return getFifth().charAt(0)
+      default:
+        return getFifth().concat('b')
+    }
+  }
+
+  getFifth = () => getDiatonicScale(this.name, this.accidental, this.type)[4]
+
+  getSharpFifth = () => {
+    const { getFifth } = this
+    let secondChar = getFifth().charAt(1)
+    switch (secondChar) {
+      case 'b':
+        return getFifth().charAt(0)
+      default:
+        return getFifth().concat('#')
+    }
+  }
+
+  // MINOR6 IN MINOR AND MAJOR6 IN MAJOR !!!
+  getSixth = () => getDiatonicScale(this.name, this.accidental, this.type)[5]
+
+  // MAKE MINOR SIXTH MAJOR IN MINOR CHORDS:  C E G Ab  => C E G A
+  getMajorSixth = () => {
+    const { getSixth } = this
+    let secondChar = getSixth().charAt(1)
+    switch (secondChar) {
+      case 'b':
+        return getSixth().charAt(0)
+      default:
+        return getSixth().concat('#')
+    }
+  }
+
+  getMinorSeventh = () => {
+    const { getSeventh } = this
+    let secondChar = getSeventh().charAt(1)
+    switch (secondChar) {
+      case '#':
+        return getSeventh().charAt(0)
+      default:
+        return getSeventh().concat('b')
+    }
+  }
+
+  getSeventh = () => getDiatonicScale(this.name, this.accidental, this.type)[6]
+  getNinth = () => this.getSecond()
+  getEleventh = () => this.getFourth()
+  getSharpEleventh = () => {
+    const { getEleventh } = this
+    let secondChar = getEleventh().charAt(1)
+    switch (secondChar) {
+      case 'b':
+        return getEleventh().charAt(0)
+      default:
+        return getEleventh().concat('#')
+    }
+  }
+
+  getThirteenth = () => this.getSixth()
+  // MAKE MINOR THIRTEENTH MAJOR IN MINOR CHORDS:  C E G Ab  => C E G A
+  getMajorThirteenth = () => this.getMajorSixth()
+}
+
+// GET OPTIONS FROM DROPDOWN
 
 function getName() {
   const nameSelect = document.getElementById('name')
@@ -55,6 +194,11 @@ function getRegister() {
   let register = registerSelect.options[registerSelect.selectedIndex].value
   return register
 }
+
+let foundKeyCenters
+let idx
+let accidentalNotes
+let elements
 
 // DISP CHORD NAME BASED OFF OF name, accidental AND type
 // CHANGE type VALUE TO SYMBOLS
@@ -365,27 +509,6 @@ function displayChordTones() {
   return chordTones
 }
 
-// CHORD OBJECT TEST
-// const c1 = new Chord("c", "", "major");
-// const c2 = new Chord("a#", "major");
-
-// MODELLING SCALES
-
-const circleOfFifths = {
-  // NATURAL NOTES
-  degrees: ['c', 'd', 'e', 'f', 'g', 'a', 'b'],
-  // FIND TONIC  AND ITS INDEX WILL CORRESPOND TO ITS LAST ACCIDENTAL NOTE'S IDX IN sharps/flats
-  majorSharpKeys: ['g', 'd', 'a', 'e', 'b', 'f#', 'c#'],
-  majorFlatKeys: ['f', 'bb', 'eb', 'ab', 'db', 'gb', 'cb'],
-
-  minorSharpKeys: ['e', 'b', 'f#', 'c#', 'g#', 'd#', 'a#'],
-  minorFlatKeys: ['d', 'g', 'c', 'f', 'bb', 'eb', 'ab'],
-  // FOR EXAMPLE: E MAJOR IS AT IDX 3, WILL GIVE F,C,G,D AS D IS AT IDX 3 IN sharps
-  // THEN ADD SHARPS TO THOSE NOTES IN THE NATURAL SCALE
-  sharps: ['f', 'c', 'g', 'd', 'a', 'e', 'b'],
-  flats: ['b', 'e', 'a', 'd', 'g', 'c', 'f'],
-}
-
 // BUILD NATURAL SCALE STARTING WITH TONIC
 function getNaturalScale(ton) {
   let tonic = ton
@@ -483,6 +606,7 @@ function getDiatonicScale(name, accidental, type) {
     // IF MINOR
   } else if (type === 'minor' || type === 'diminished') {
     //  IF MINOR SHARP
+    foundKeyCenters
     if (circleOfFifths['minorSharpKeys'].indexOf(firstDegree) > -1) {
       foundKeyCenters = circleOfFifths['minorSharpKeys']
       idx = foundKeyCenters.indexOf(firstDegree) + 1
@@ -542,72 +666,6 @@ function displayChordScale() {
   let scale = getDiatonicScale(getName(), getAccidental(), getType())
   chordScaleSpan.innerText = scale
 }
-
-// PLAY CHORD
-
-// SHARP-FLAT COMBINED CHROMATIC SCALE E2-B4
-// "s"="sharp" AND "b"="flat"
-const soundNames = [
-  'E1',
-  'FEs1',
-  'FsGb1',
-  'GFss1',
-  'GsAb1',
-  'AGssBbb1',
-  'AsBb1',
-  'BCb1',
-  'C2',
-  'CsDb2',
-  'DCssEbb2',
-  'DsEb2',
-  'E2',
-  'FEs2',
-  'FsGb2',
-  'GFss2',
-  'GsAb2',
-  'AGssBbb2',
-  'AsBb2',
-  'BCb2',
-  'C3',
-  'CsDb3',
-  'DCssEbb3',
-  'DsEb3',
-  'E3',
-  'FEs3',
-  'FsGb3',
-  'GFss3',
-  'GsAb3',
-  'AGssBbb3',
-  'AsBb3',
-  'BCb3',
-  'C4',
-  'CsDb4',
-  'DCssEbb4',
-  'DsEb4',
-  'E4',
-  'FEs4',
-  'FsGb4',
-  'GFss4',
-  'GsAb4',
-  'AGssBbb4',
-  'AsBb4',
-  'BCb4',
-  'C5',
-  'CsDb5',
-  'DCssEbb5',
-  'DsEb5',
-  'E5',
-  'FEs5',
-  'FsGb5',
-  'GFss5',
-  'GsAb5',
-  'AGssBbb5',
-  'AsBb5',
-  'BCb5',
-  'C6',
-  'CsDb6',
-  'DCssEbb6',
-]
 
 let chordNotesArr = []
 
@@ -702,7 +760,7 @@ function playChordTones() {
     for (const soundFile of soundFiles) {
       const sound = new Howl({
         src: [soundFile],
-        volume: 0.4,
+        volume: 0.4
       })
       sound.play()
     }
@@ -715,49 +773,49 @@ function arpeggiateChord() {
   setTimeout(() => {
     const sound = new Howl({
       src: [soundFiles[0]],
-      volume: 0.3,
+      volume: 0.3
     })
     sound.play()
   }, 500)
   setTimeout(() => {
     const sound = new Howl({
       src: [soundFiles[1]],
-      volume: 0.33,
+      volume: 0.33
     })
     sound.play()
   }, 700)
   setTimeout(() => {
     const sound = new Howl({
       src: [soundFiles[2]],
-      volume: 0.36,
+      volume: 0.36
     })
     sound.play()
   }, 900)
   setTimeout(() => {
     const sound = new Howl({
       src: [soundFiles[3]],
-      volume: 0.39,
+      volume: 0.39
     })
     sound.play()
   }, 1100)
   setTimeout(() => {
     const sound = new Howl({
       src: [soundFiles[4]],
-      volume: 0.42,
+      volume: 0.42
     })
     sound.play()
   }, 1300)
   setTimeout(() => {
     const sound = new Howl({
       src: [soundFiles[5]],
-      volume: 0.45,
+      volume: 0.45
     })
     sound.play()
   }, 1500)
   setTimeout(() => {
     const sound = new Howl({
       src: [soundFiles[6]],
-      volume: 0.48,
+      volume: 0.48
     })
     sound.play()
   }, 1700)
@@ -776,7 +834,7 @@ function makeSoundDivs() {
   soundFiles.forEach((soundFile, i) => {
     soundFiles[i] = new Howl({
       src: [soundFile],
-      volume: 0.6,
+      volume: 0.6
     })
     let elem = document.createElement('div')
     // ??? THIS IS NOT WORKING !!!
@@ -837,7 +895,7 @@ const newChordButton = document.getElementById('new-chord-btn')
 
 // WHEN CHORD TYPE SELECTION IS MADE ( IN getTypeChange() )
 function addListenerShowChordBtn() {
-  showChordTonesBtn.addEventListener('click', function (evt) {
+  showChordTonesBtn.addEventListener('click', function(evt) {
     evt.preventDefault()
     handleShowChordTones()
   })
@@ -845,28 +903,28 @@ function addListenerShowChordBtn() {
 
 // WHEN SHOW CHORD IS CLICKED ( IN handleShowChordTones() )
 function addListenerPlayBtn() {
-  playButton.addEventListener('click', function (evt) {
+  playButton.addEventListener('click', function(evt) {
     evt.preventDefault()
     handlePlayChord()
   })
 }
 
 function addListenerArpeggiateBtn() {
-  arpeggiateButton.addEventListener('click', function (evt) {
+  arpeggiateButton.addEventListener('click', function(evt) {
     evt.preventDefault()
     handleArpeggiate()
   })
 }
 
 function addListenerPlayIndividualBtn() {
-  playIndividualButton.addEventListener('click', function (evt) {
+  playIndividualButton.addEventListener('click', function(evt) {
     evt.preventDefault()
     handlePlayIndividual()
   })
 }
 
 function addListenerNewChordBtn() {
-  newChordButton.addEventListener('click', function (evt) {
+  newChordButton.addEventListener('click', function(evt) {
     handleNewChord()
   })
 }
@@ -897,7 +955,7 @@ function getNameChange() {
   const nameDropdown = document.getElementById('name')
   nameDropdown.addEventListener(
     'change',
-    function () {
+    function() {
       nameChangeVal = this.value
       if (!isNameSelected) {
         isNameSelected = true
@@ -926,7 +984,7 @@ function getAccidentalChange() {
   const accidentalDropdown = document.getElementById('accidental')
   accidentalDropdown.addEventListener(
     'change',
-    function () {
+    function() {
       accidentalChangeVal = this.value
 
       isImpossibleKey =
@@ -961,8 +1019,8 @@ function getTypeChange() {
   const typeDropdown = document.getElementById('type')
   typeDropdown.addEventListener(
     'change',
-    function () {
-      getTypeChangeVal = this.value
+    function() {
+      // getTypeChangeVal = this.value
       enableExtensionOptions()
       hideTypeInstruction()
       showExtensionInstruction()
@@ -1378,13 +1436,13 @@ function enableExtensionOptions() {
 function playIntro() {
   setTimeout(() => {
     const sound = new Howl({
-      src: ['sounds/intro2.mp3'],
+      src: ['sounds/intro2.mp3']
     })
     sound.play()
   }, 600)
 }
 
-window.addEventListener('load', function () {
+window.addEventListener('load', function() {
   console.log('page is loaded')
   playIntro()
   disableSelectOptions()

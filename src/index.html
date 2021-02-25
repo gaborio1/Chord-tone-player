@@ -11,24 +11,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Mukta+Vaani:wght@200;300&display=swap" rel="stylesheet">
 
+    <!-- FONT AWESOME -->
+    <script src="https://kit.fontawesome.com/5b05473718.js" crossorigin="anonymous"></script>
+
     <!-- HOWLER JS MDN -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.js"></script>
     <link rel="stylesheet" href="style.scss">
   </head>
 
   <body>
-    <div id="main">
+    <div id="main" class="main">
       <div id="player" class="glass">
       <!-- <form action="#"> -->
       <!--  The value property of an HTML option element can only be a string !!! -->
-        <div id="sidebar">
+        <div id="sidebar" class="glass__sidebar">
           <div id="title-container">
-            <h1 id="title">Chord Tone Player</h1>
+            <h1 id="title" class="title">Chord Tone Player</h1>
           </div>
-          <div id="sidebar-controls-container">
-            <div id="transpose-select-container">
-              <label for="register">Transpose up/down an octave:</label>
-              
+          <div id="sidebar-controls-container" class="sidebar__controls">
+            <div id="transpose-select-container" class="controls__transpose-select">
+              <label for="register">Transpose up / down:</label>
               <select name="register" id="register">
                 <option value="guitar">Guitar</option>
                 <option value="bass" disabled>Bass</option>
@@ -36,23 +38,24 @@
               </select>
             </div>
             <div id="new-chord-btn-container">
+
               <!-- ORIGINAL BUTTON -->
               <!-- <button id="new-chord-btn" disabled>New chord</button> -->
 
               <!-- ANIMATED BUTTON  -->
               <div id="new-chord-btn" class="pre-animation-btn enabled-with-show-btn">
-                <span>New chord</span>
+                <span>New chord <i class="fas fa-redo-alt"></i></span>
             </div>
-            <!-- END -->
+            <!-- END OF ANIMATED BUTTON -->
 
             </div>  
           </div>
-          <div id="logo-container">
-            <div id="logo">
-              <div id="letter-d">D</div>
-              <div id="m-nine">
-                <div id="letter-m">m</div>
-                <div id="word-nine">nine</div>
+          <div id="logo-container" class="sidebar__logo">
+            <div id="logo" class="logo">
+              <div id="letter-d" class="letter-d">D</div>
+              <div id="m-nine" class="m-nine">
+                <div id="letter-m" class="letter-m">m</div>
+                <div id="word-nine" class="word-nine">nine</div>
               </div>
             </div>
             <!-- <h1 id="g">Maci ❤️ Bogar</h1> -->
@@ -60,9 +63,9 @@
           </div>
         </div>
         <br>
-        <div id="control-panel">
-          <div class="card animating-width" id="triad-select">
-            <div id="triad-select-first-row" class="control-panel-row">
+        <div id="control-panel" class="glass__control-panel">
+          <div class="card control-panel__triad-select animating-width" id="triad-select">
+            <div id="triad-select-first-row" class="control-panel__row">
               <label for="name">Letter name:</label>
               <select name="name" id="name">
                 <option class="note-name"></option>
@@ -74,9 +77,9 @@
                 <option value="a" class="note-name">a</option>
                 <option value="b" class="note-name">b</option>
               </select>
-              <p class="instruction hidden" id="name-instruction">Select name!</p>
+              <p class="instruction hidden" id="name-instruction"><i class="fas fa-arrow-circle-left"></i> Select name!</p>
             </div>
-            <div id="triad-select-second-row" class="control-panel-row">
+            <div id="triad-select-second-row" class="control-panel__row">
               <label for="accidental">Accidental:</label>
               <select name="accidental" id="accidental">
                 <option class="note-accidental"></option>
@@ -84,9 +87,9 @@
                 <option value="#" class="note-accidental">sharp #</option>
                 <option value="b" class="note-accidental">flat b</option>
               </select>
-              <p class="instruction hidden" id="accidental-instruction">Select accidental!</p>
+              <p class="instruction hidden" id="accidental-instruction"><i class="fas fa-arrow-circle-left"></i> Select accidental!</p>
             </div>
-            <div id="triad-select-third-row" class="control-panel-row">
+            <div id="triad-select-third-row" class="control-panel__row">
               <label for="type">Chord type:</label>
               <select name="type" id="type">
                 <option></option>
@@ -101,16 +104,16 @@
                 <option value="lydian">lydian</option>
                 <option value="invalid type" disabled>invalid type</option>
               </select>
-              <p class="instruction hidden" id="type-instruction">Select type!</p>
+              <p class="instruction hidden" id="type-instruction"><i class="fas fa-arrow-circle-left"></i> Select type!</p>
             </div>
           </div>
           <br>
-          <div class="card animating-width" id="extension-select" class="">
-            <div class="control-panel-row">
-            <p class="">Extensions: <span class="instruction hidden" id="extension-instruction">Optional!</span></p>
+          <div class="control-panel__extension-select card animating-width" id="extension-select">
+            <div class="control-panel__row">
+            <p class="">Extensions: <span class="instruction hidden" id="extension-instruction"><i class="fas fa-question-circle"></i> Optional!</span></p>
             </div>
             <!-- <p class="instruction hidden" id="extension-instruction">Optional!</p> -->
-            <div id="extension-select-first-row" class="control-panel-row">
+            <div id="extension-select-first-row" class="control-panel__row">
               <div class="label-select">
                 <label for="sixth">6th:</label>
                 <select name="sixth" id="sixth">
@@ -134,7 +137,7 @@
               </select>
             </div>
             </div>
-            <div id="extension-select-second-row" class="control-panel-row">
+            <div id="extension-select-second-row" class="control-panel__row">
               <div class="label-select">
                 <label for="eleventh">11th:</label>
                 <select name="eleventh" id="eleventh">
@@ -155,24 +158,28 @@
           </div>
           <br>
           <!-- <button type="button" onclick="displayData()">Get chord tones-onclick</button> -->
-          <div class="card animating-width" id="display-chord">
+          <div class="control-panel__display-chord card animating-width" id="display-chord">
+
             <!-- ORIGINAL BUTTON -->
             <!-- <button id="chord-tones-btn" disabled>Show chord tones</button> -->
 
             <!-- ANIMATED BUTTON  -->
-            <div id="chord-tones-btn" class="pre-animation-btn">
-              <span>Show chord</span>
+            <div id="chord-tones-btn" class="chord-tones-btn pre-animation-btn">
+              <span>Show chord <i class="fas fa-info"></i></span>
             </div>
+            <!-- END OF ANIMATED BUTTON -->
+
             <p id="invalid-key-message" class="hidden">Theoretical key!</p>
-            <div id="display-chord-text-rows" class="control-panel-row">
+            <div id="display-chord-text-rows" class=" control-panel__display-chord__text-rows control-panel__row">
               <p>Chord name: <span id="chordNameType"></span></p>
               <p>Chord tones: <span id="chordTones"></span></p>
               <p>Chord scale: <span id="chordScale"></span></p>
             </div>
           </div>
           <br>
-          <div class="card" id="play-options">
-            <div id="play-options-btn-row">
+          <div id="play-options" class="control-panel__play-options card">
+            <div id="play-options-btn-row" class="play-options__btn-row">
+
               <!-- ORIGINAL BUTTONS -->
               <!-- <button id="play-chord-btn" disabled>Play chord</button> -->
               <!-- <button id="arpeggiate-chord-btn" disabled>Arpeggiate</button> -->
@@ -180,16 +187,18 @@
 
               <!-- ANIMATED BUTTONS -->
               <div id="play-chord-btn" class="pre-animation-btn enabled-with-show-btn">
-                <span>Play chord</span>
+                <span>Chord <i class="fas fa-play"></i></span>
               </div>
               <div id="arpeggiate-chord-btn" class="pre-animation-btn enabled-with-show-btn">
-                <span>Arpeggiate</span>
+                <span>Arpeggio <i class="fas fa-play"></i></span>
               </div>
               <div id="play-individual-btn" class="pre-animation-btn enabled-with-show-btn">
-                <span>Individual notes</span>
+                <span>Notes <i class="fas fa-music"></i></span>
               </div>
+              <!-- END OF ANIMATED BUTTONS -->
+
             </div>
-            <div id="audio-container"></div>
+            <div id="audio-container" class="play-options__audio-container"></div>
           </div>
         </div>
         <br>

@@ -19,7 +19,7 @@ export class Chord {
     this.optThirteenth = optThirteenth
     // this.root = getRoot();
     // this.sixthSeventh = this.sixthSeventh;
-    this.test = function () {
+    this.test = function() {
       const {
         name,
         type,
@@ -27,7 +27,7 @@ export class Chord {
         getThird,
         getFifth,
         getMinorSeventh,
-        optSeventh,
+        optSeventh
       } = this
       // console.log(`Hello from: ${name}${accidental} ${type}, my notes: ${getRoot()}, ${getThird()}, ${getFifth()}`);
       return `Hello from: ${name}${accidental} ${type} ${optSeventh}, my notes: ${getRoot()}, ${getThird()}, ${getFifth()}, ${this.getSeventh()}`
