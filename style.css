@@ -11,7 +11,7 @@ body {
 }
 
 /* BACKGROUND */
-#main {
+.main {
     min-height: 100vh;
     /* https://uigradients.com/#AquaMarine */
     /* background: linear-gradient(to right top ,#1A2980, #26D0CE); */
@@ -21,18 +21,15 @@ body {
     justify-content: center;
 }
 
-/* PLAYER */
-#player {
-    display: flex;
-     /* width: 60%; */
-     max-width: 820px;
-     /* min-height: 80vh; */
-     min-height: 600px;
-     border-radius: .5rem;
-}
 
 /* PLAYER GLASS BOARD */
 .glass {
+    display: flex;
+    /* width: 60%; */
+    max-width: 820px;
+    /* min-height: 80vh; */
+    min-height: 600px;
+    border-radius: .5rem;
     border: 2px solid rgba(9, 241, 241, 0.9);
     box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.4);
     /* background: linear-gradient(to right bottom, cornsilk, #26D0CE); */
@@ -43,7 +40,7 @@ body {
 }
 
 /* SIDEBAR */
-#sidebar {
+.glass__sidebar {
     flex: 2;
     border-right: 1px solid white;
     border-top-left-radius: .5rem;
@@ -55,7 +52,7 @@ body {
     background: rgba(255, 255, 255, 0.171);
 }
 
-#title {
+.title {
     /* CHROME DEFAULT FONTS */
     font-family: 'Times New Roman', Times, serif;
     font-size: 3rem;
@@ -66,7 +63,7 @@ body {
     text-shadow: 2px 2px 3px rgba(122, 122, 122, 0.5);
 }
 
-#sidebar-controls-container {
+.sidebar__controls {
     border-top: 1px solid white;
     border-bottom: 1px solid white;
     height: 30%;
@@ -76,24 +73,24 @@ body {
     justify-content: space-around;
 }
 
-#transpose-select-container {
+.controls__transpose-select {
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
 }
 
-#transpose-select-container select {
+.controls__transpose-select select {
     margin: 1rem auto;
 }
 
-#logo-container {
+.sidebar__logo {
     height: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#logo {
+.logo {
     /* CHROME DEFAULT FONTS */
     font-family: 'Times New Roman', Times, serif;
     height: 8rem;
@@ -108,27 +105,27 @@ body {
     box-shadow: 4px 2px 5px rgba(122, 122, 122, 0.5);
 }
 
-#m-nine {
+.m-nine {
     display: flex;
     flex-direction: column;
     margin-left: 0.3rem;
     /* border: 2px solid rgb(187, 79, 79); */
 }
 
-#letter-d {
+.letter-d {
     /* border: 2px solid rgb(193, 204, 34); */
     font-size: 5rem;
     /* font-weight: 500; */
 }
 
-#letter-m {
+.letter-m {
     /* border: 2px solid rgb(34, 122, 11); */
     border-bottom: 2px solid black;
     font-size: 2.5rem;
     margin-top: 0.3rem;
 }
 
-#word-nine {
+.word-nine {
     /* border: 2px solid rgb(207, 40, 207); */
     margin-bottom: 1.1rem;
     font-size: 1.2rem;
@@ -139,7 +136,7 @@ body {
 
 
 /* CONTROL PANEL */
-#control-panel {
+.glass__control-panel {
     flex: 6;
     display: flex;
     flex-direction: column;
@@ -247,7 +244,7 @@ select {
     background-color:rgba(222, 240, 241, 0.726);
 }
 
-#triad-select select {
+.control-panel__triad-select select {
     margin-left: .25rem;
 }
 
@@ -264,11 +261,11 @@ select {
     line-height: 1.1rem;
 }
 
-.control-panel-row {
+.control-panel__row {
     margin-left: 1.5rem;
 } 
 
-#triad-select .control-panel-row {
+.control-panel__triad-select .control-panel__row {
     display: flex;
 } 
 
@@ -282,23 +279,23 @@ select {
     display: none;
 }
 
-#extension-select .control-panel-row {
+.control-panel__extension-select .control-panel__row {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 } 
 
 /* EXTENSIONS SPAN */
-#extension-select .control-panel-row:nth-child(1) {
+.control-panel__extension-select .control-panel__row:nth-child(1) {
     /* border: 1px solid rgb(206, 15, 142); */
     justify-content: left;
 } 
 
-#display-chord-text-rows p {
+.control-panel__display-chord__text-rows p {
     margin-bottom: .4rem;
 }
 
-#triad-select {
+.control-panel__triad-select {
     width: 60%;
     margin-top: 1rem;
     flex-direction: column;
@@ -308,11 +305,11 @@ select {
 
 }
 
-#triad-select:hover {
+.control-panel__triad-select:hover {
     width: 90%;
   }
 
-#extension-select {
+.control-panel__extension-select {
     width: 70%;
     display: flex;
     flex-direction: column;
@@ -322,12 +319,12 @@ select {
     transition: width 1s;
 }
 
-#extension-select:hover {
+.control-panel__extension-select:hover {
     width: 90%;
   }
 
 
-#display-chord {
+.control-panel__display-chord {
     width: 80%;
     /* TEMPORARY FIX: SHOW CHORD BUTTON STICKS OUT OF CARD WITH GOOGLE FONTS */
     /* height: fit-content; */
@@ -336,28 +333,28 @@ select {
     transition: width 1s;
 }
 
-#display-chord:hover {
+.control-panel__display-chord:hover {
     width: 90%;
   }
 
-#chord-tones-btn {
+.chord-tones-btn {
     margin:10px auto;
 }
 
-#play-options {
+.control-panel__play-options {
     width: 90%;
     margin-bottom: 1rem;
     flex-direction: column;
     justify-content: space-around;
 }
 
-#play-options-btn-row {
+.play-options__btn-row {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-#audio-container {
+.play-options__audio-container {
     display: flex;
     justify-content: center;
     /* TEMPORARY FIX: CARD GROWS IF 6 OR 7 SOUND DIVS */
@@ -390,7 +387,7 @@ select {
     }
   }
 
-#sidebar {
+.glass__sidebar {
     animation: 1.8s ease-out 0s 1 slideInFromAbove;
 }
 
@@ -405,21 +402,21 @@ select {
     }
   }
   
-#triad-select {  
+.control-panel__triad-select {  
     /* This section calls the slideInFromLeft animation we defined above */
     animation: 1s ease-out 0s 1 slideInFromLeft;
 }
 
-#extension-select {  
+.control-panel__extension-select {  
     animation: 1.2s ease-out 0s 1 slideInFromLeft;
 }
 
-#display-chord {  
+.control-panel__display-chord {  
     animation: 1.4s ease-out 0s 1 slideInFromLeft;
 }
 
 
-#play-options {  
+.control-panel__play-options {  
     animation: 1.6s ease-out 0s 1 slideInFromLeft;
 }
 

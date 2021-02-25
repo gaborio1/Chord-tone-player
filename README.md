@@ -20,6 +20,10 @@ functions to add:
  ✔️ animate cards, sidebar (slide in)
  ✔️ add icons
 
+ refactor:
+✔️ BEM naming convention 
+✔️ no ID selectors in CSS
+
 
 bugs:
   DUE TO THE LARGE NUMBER OF POSSIBLE COMBINATIONS BOTH IN CHORD TONES AND CHORD NAMES,
