@@ -1,8 +1,7 @@
 // import Chord from './classes/Chord'
 import circleOfFifths from './utils/circleOfFifths'
 import soundNames from './utils/soundNames'
-
-console.log(circleOfFifths)
+import { getElementValue } from './utils/index'
 
 class Chord {
   constructor(
@@ -139,61 +138,63 @@ class Chord {
 
 // GET OPTIONS FROM DROPDOWN
 
-function getName() {
-  const nameSelect = document.getElementById('name')
-  let chordName = nameSelect.options[nameSelect.selectedIndex].value
-  return chordName
-}
+// Replace all below with one single utiliy fuction getElementValue
 
-function getType() {
-  const typeSelect = document.getElementById('type')
-  let chordType = typeSelect.options[typeSelect.selectedIndex].value
-  return chordType
-}
+// function getName() {
+//   const nameSelect = document.getElementById('name')
+//   let chordName = nameSelect.options[nameSelect.selectedIndex].value
+//   return chordName
+// }
 
-function getAccidental() {
-  const accidentalSelect = document.getElementById('accidental')
-  let chordAccidental =
-    accidentalSelect.options[accidentalSelect.selectedIndex].value
-  return chordAccidental
-}
+// function getType() {
+//   const typeSelect = document.getElementById('type')
+//   let chordType = typeSelect.options[typeSelect.selectedIndex].value
+//   return chordType
+// }
 
-function getOptSixth() {
-  const sixthSelect = document.getElementById('sixth')
-  let chordSixth = sixthSelect.options[sixthSelect.selectedIndex].value
-  return chordSixth
-}
+// function getAccidental() {
+//   const accidentalSelect = document.getElementById('accidental')
+//   let chordAccidental =
+//     accidentalSelect.options[accidentalSelect.selectedIndex].value
+//   return chordAccidental
+// }
 
-function getOptSeventh() {
-  const seventhSelect = document.getElementById('seventh')
-  let chordSeventh = seventhSelect.options[seventhSelect.selectedIndex].value
-  return chordSeventh
-}
+// function getOptSixth() {
+//   const sixthSelect = document.getElementById('sixth')
+//   let chordSixth = sixthSelect.options[sixthSelect.selectedIndex].value
+//   return chordSixth
+// }
 
-function getOptNinth() {
-  const ninthSelect = document.getElementById('ninth')
-  let chordNinth = ninthSelect.options[ninthSelect.selectedIndex].value
-  return chordNinth
-}
+// function getOptSeventh() {
+//   const seventhSelect = document.getElementById('seventh')
+//   let chordSeventh = seventhSelect.options[seventhSelect.selectedIndex].value
+//   return chordSeventh
+// }
 
-function getOptEleventh() {
-  const eleventhSelect = document.getElementById('eleventh')
-  let chordEleventh = eleventhSelect.options[eleventhSelect.selectedIndex].value
-  return chordEleventh
-}
+// function getOptNinth() {
+//   const ninthSelect = document.getElementById('ninth')
+//   let chordNinth = ninthSelect.options[ninthSelect.selectedIndex].value
+//   return chordNinth
+// }
 
-function getOptThirteenth() {
-  const thirteenthSelect = document.getElementById('thirteenth')
-  let chordThirteenth =
-    thirteenthSelect.options[thirteenthSelect.selectedIndex].value
-  return chordThirteenth
-}
+// function getOptEleventh() {
+//   const eleventhSelect = document.getElementById('eleventh')
+//   let chordEleventh = eleventhSelect.options[eleventhSelect.selectedIndex].value
+//   return chordEleventh
+// }
 
-function getRegister() {
-  const registerSelect = document.getElementById('register')
-  let register = registerSelect.options[registerSelect.selectedIndex].value
-  return register
-}
+// function getOptThirteenth() {
+//   const thirteenthSelect = document.getElementById('thirteenth')
+//   let chordThirteenth =
+//     thirteenthSelect.options[thirteenthSelect.selectedIndex].value
+//   return chordThirteenth
+// }
+
+// function getRegister() {
+//   const registerSelect = document.getElementById('register')
+//   let register = registerSelect.options[registerSelect.selectedIndex].value
+//   return register
+// }
 
 let foundKeyCenters
 let idx
@@ -206,7 +207,7 @@ function displayChordName() {
   const chordNameTypeSpan = document.getElementById('chordNameType')
   let chordNameType
   let typeSymbol
-  switch (getType()) {
+  switch (getElementValue('#type')) {
     case 'major':
       typeSymbol = ''
       break
@@ -214,25 +215,28 @@ function displayChordName() {
       typeSymbol = 'm'
       break
     case 'dominant':
-      if (getOptNinth() === '9' || getOptNinth() === 'add9') {
+      if (
+        getElementValue('#ninth') === '9' ||
+        getElementValue('#ninth') === 'add9'
+      ) {
         typeSymbol = '9'
-      } else if (getOptEleventh() === '11') {
+      } else if (getElementValue('#eleventh') === '11') {
         typeSymbol = '11'
-      } else if (getOptThirteenth() === '13') {
+      } else if (getElementValue('#thirteenth') === '13') {
         typeSymbol = '13'
       } else {
         typeSymbol = '7'
       }
       break
     case 'augmented':
-      if (getOptSeventh()) {
+      if (getElementValue('#seventh')) {
         typeSymbol = '+7 (7#5)'
       } else {
         typeSymbol = '+'
       }
       break
     case 'diminished':
-      if (getOptSeventh()) {
+      if (getElementValue('#seventh')) {
         typeSymbol = '07'
       } else {
         typeSymbol = '0'
@@ -254,9 +258,9 @@ function displayChordName() {
       typeSymbol = 'invalid type'
   }
 
-  let type = getType()
+  let type = getElementValue('#type')
   // ADD OPTIONAL 6,7,9,11,13 TO SYMBOL
-  if (getOptSixth() && !getOptSeventh()) {
+  if (getElementValue('#sixth') && !getElementValue('#seventh')) {
     if (type === 'major') {
       typeSymbol += '6'
     } else if (type === 'minor') {
@@ -266,7 +270,7 @@ function displayChordName() {
     }
   }
 
-  if (getOptSeventh() && !getOptSixth()) {
+  if (getElementValue('#seventh') && !getElementValue('#sixth')) {
     if (type === 'major') {
       typeSymbol += 'M7'
     } else if (type === 'minor') {
@@ -276,7 +280,7 @@ function displayChordName() {
     }
   }
   // 6/7
-  if (getOptSixth() && getOptSeventh()) {
+  if (getElementValue('#sixth') && getElementValue('#seventh')) {
     if (type === 'minor') {
       typeSymbol += '7/6'
     } else if (type === 'major') {
@@ -286,16 +290,16 @@ function displayChordName() {
     }
   }
 
-  let ninthValue = getOptNinth()
+  let ninthValue = getElementValue('#ninth')
   if (ninthValue === '9') {
     if (type === 'major') {
-      if (getOptSixth()) {
+      if (getElementValue('#sixth')) {
         typeSymbol = 'M9/6'
       } else {
         typeSymbol = 'M9'
       }
     } else if (type === 'minor') {
-      if (getOptSixth()) {
+      if (getElementValue('#sixth')) {
         typeSymbol = 'm9/6'
       } else {
         typeSymbol += '9'
@@ -307,7 +311,7 @@ function displayChordName() {
     }
   } else if (ninthValue === 'add9') {
     if (type === 'dominant') {
-      if (getOptSixth()) {
+      if (getElementValue('#sixth')) {
         console.log('dom9 = dom add9 !!!')
       } else {
         typeSymbol = '9'
@@ -317,7 +321,7 @@ function displayChordName() {
     }
   }
 
-  let eleventhValue = getOptEleventh()
+  let eleventhValue = getElementValue('#eleventh')
   if (eleventhValue === '11') {
     if (type === 'major') {
       typeSymbol += 'M11'
@@ -336,7 +340,7 @@ function displayChordName() {
     }
   }
 
-  let thirteenthValue = getOptThirteenth()
+  let thirteenthValue = getElementValue('#thirteenth')
   if (thirteenthValue === '13') {
     if (type === 'major') {
       typeSymbol += 'M13'
@@ -355,7 +359,9 @@ function displayChordName() {
     }
   }
 
-  chordNameType = `${getName().toUpperCase()}${getAccidental()}${typeSymbol}`
+  chordNameType = `${getElementValue('#name').toUpperCase()}${getElementValue(
+    '#accidental'
+  )}${typeSymbol}`
   chordNameTypeSpan.innerText = chordNameType
   return chordNameType
 }
@@ -363,25 +369,25 @@ function displayChordName() {
 // DISP CHORD TONES BASED ON DIATONIC SCALE
 function displayChordTones() {
   const chordObj = new Chord(
-    getName(),
-    getAccidental(),
-    getType(),
-    getOptSeventh()
+    getElementValue('#name'),
+    getElementValue('#accidental'),
+    getElementValue('#type'),
+    getElementValue('#seventh')
   )
   // this.test FROM CONSTRUCTOR
   console.log(chordObj.test())
-  // const c1 = new Chord(getName(), getAccidental(), getType(), getOptSeventh());
+  // const c1 = new Chord(getName(), getAccidental(), getElementValue('#type')(), getOptSeventh());
   // console.dir(" c1 chordObj: " + c1);
 
   const chordTonesSpan = document.getElementById('chordTones')
   let chordTones = ''
-  let sixthValue = getOptSixth()
-  let seventhValue = getOptSeventh()
-  let ninthValue = getOptNinth()
-  let eleventhValue = getOptEleventh()
-  let thirteenthValue = getOptThirteenth()
+  let sixthValue = getElementValue('#sixth')
+  let seventhValue = getElementValue('#seventh')
+  let ninthValue = getElementValue('#ninth')
+  let eleventhValue = getElementValue('#eleventh')
+  let thirteenthValue = getElementValue('#thirteenth')
 
-  switch (getType()) {
+  switch (getElementValue('#type')) {
     case 'diminished':
       chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getFlatFifth()}`
       break
@@ -411,7 +417,7 @@ function displayChordTones() {
   // ADD OPTIONAL 6,7,9,11,13 BASED ON type => chordScale
 
   if (sixthValue === '6') {
-    if (getType() === 'minor') {
+    if (getElementValue('#type') === 'minor') {
       // MAKE 6TH MAJOR FOR MINOR CHORDS !!!
       chordTones += ' ' + chordObj.getMajorSixth()
     } else {
@@ -420,11 +426,11 @@ function displayChordTones() {
   }
 
   if (seventhValue === '7') {
-    if (getType() === 'dominant') {
+    if (getElementValue('#type') === 'dominant') {
       chordTones = chordTones
-    } else if (getType() === 'diminished') {
+    } else if (getElementValue('#type') === 'diminished') {
       chordTones += ' ' + chordObj.getMajorSixth()
-    } else if (getType() === 'augmented') {
+    } else if (getElementValue('#type') === 'augmented') {
       chordTones += ' ' + chordObj.getMinorSeventh()
     } else {
       chordTones += ' ' + chordObj.getSeventh()
@@ -432,7 +438,7 @@ function displayChordTones() {
   }
 
   if (ninthValue === '9') {
-    if (getType() === 'dominant') {
+    if (getElementValue('#type') === 'dominant') {
       chordTones += ' ' + chordObj.getNinth()
     } else {
       chordTones += ' ' + chordObj.getSeventh() + ' ' + chordObj.getNinth()
@@ -442,7 +448,7 @@ function displayChordTones() {
   }
 
   // SHARP 11 WITH MAJOR !!!
-  if (eleventhValue === '11' && getType() === 'major') {
+  if (eleventhValue === '11' && getElementValue('#type') === 'major') {
     chordTones +=
       ' ' +
       chordObj.getSeventh() +
@@ -451,7 +457,7 @@ function displayChordTones() {
       ' ' +
       chordObj.getSharpEleventh()
     // NATURAL 11 WITH MINOR !!!
-  } else if (eleventhValue === '11' && getType() === 'minor') {
+  } else if (eleventhValue === '11' && getElementValue('#type') === 'minor') {
     chordTones +=
       ' ' +
       chordObj.getSeventh() +
@@ -459,17 +465,29 @@ function displayChordTones() {
       chordObj.getNinth() +
       ' ' +
       chordObj.getEleventh()
-  } else if (eleventhValue === 'add11' && getType() === 'major') {
+  } else if (
+    eleventhValue === 'add11' &&
+    getElementValue('#type') === 'major'
+  ) {
     chordTones += ' ' + chordObj.getSharpEleventh()
-  } else if (eleventhValue === 'add11' && getType() === 'minor') {
+  } else if (
+    eleventhValue === 'add11' &&
+    getElementValue('#type') === 'minor'
+  ) {
     chordTones += ' ' + chordObj.getEleventh()
-  } else if (eleventhValue === '11' && getType() === 'dominant') {
+  } else if (
+    eleventhValue === '11' &&
+    getElementValue('#type') === 'dominant'
+  ) {
     chordTones += ' ' + chordObj.getNinth() + ' ' + chordObj.getEleventh()
-  } else if (eleventhValue === 'add11' && getType() === 'dominant') {
+  } else if (
+    eleventhValue === 'add11' &&
+    getElementValue('#type') === 'dominant'
+  ) {
     chordTones += ' ' + chordObj.getEleventh()
   }
 
-  if (thirteenthValue === '13' && getType() === 'major') {
+  if (thirteenthValue === '13' && getElementValue('#type') === 'major') {
     chordTones +=
       ' ' +
       chordObj.getSeventh() +
@@ -480,7 +498,7 @@ function displayChordTones() {
       ' ' +
       chordObj.getThirteenth()
     // MAJOR 13 WITH MINOR !!!
-  } else if (thirteenthValue === '13' && getType() === 'minor') {
+  } else if (thirteenthValue === '13' && getElementValue('#type') === 'minor') {
     chordTones +=
       ' ' +
       chordObj.getSeventh() +
@@ -490,11 +508,20 @@ function displayChordTones() {
       chordObj.getEleventh() +
       ' ' +
       chordObj.getMajorThirteenth()
-  } else if (thirteenthValue === 'add13' && getType() === 'major') {
+  } else if (
+    thirteenthValue === 'add13' &&
+    getElementValue('#type') === 'major'
+  ) {
     chordTones += ' ' + chordObj.getThirteenth()
-  } else if (thirteenthValue === 'add13' && getType() === 'minor') {
+  } else if (
+    thirteenthValue === 'add13' &&
+    getElementValue('#type') === 'minor'
+  ) {
     chordTones += ' ' + chordObj.getMajorThirteenth()
-  } else if (thirteenthValue === '13' && getType() === 'dominant') {
+  } else if (
+    thirteenthValue === '13' &&
+    getElementValue('#type') === 'dominant'
+  ) {
     chordTones +=
       ' ' +
       chordObj.getNinth() +
@@ -502,7 +529,10 @@ function displayChordTones() {
       chordObj.getEleventh() +
       ' ' +
       chordObj.getThirteenth()
-  } else if (thirteenthValue === 'add13' && getType() === 'dominant') {
+  } else if (
+    thirteenthValue === 'add13' &&
+    getElementValue('#type') === 'dominant'
+  ) {
     chordTones += ' ' + chordObj.getThirteenth()
   }
   chordTonesSpan.innerText = chordTones
@@ -663,7 +693,11 @@ function getDiatonicScale(name, accidental, type) {
 const chordScaleSpan = document.getElementById('chordScale')
 
 function displayChordScale() {
-  let scale = getDiatonicScale(getName(), getAccidental(), getType())
+  let scale = getDiatonicScale(
+    getElementValue('#name'),
+    getElementValue('#accidental'),
+    getElementValue('#type')
+  )
   chordScaleSpan.innerText = scale
 }
 
@@ -686,7 +720,7 @@ function makeChordNotesArr() {
 function calcRegisterIdx() {
   // THIS IS WHERE LOOP SHOULD START DEPENDING ON SELECTED REGISTER
   let registerIdx
-  switch (getRegister()) {
+  switch (getElementValue('#register')) {
     case 'bass':
       registerIdx = 0
       break
@@ -951,88 +985,154 @@ let isNameSelected = false
 // EVENT LISTENERS ON NAME/ACCIDENTAL/TYPE DROPDOWN OPTIONS:
 
 // GET SELECTED NAME, ENABLE ACCIDENTAL OPTIONS, SHOW INSTR ONCE NAME IS SELECTED
+// function getNameChange() {
+//   const nameDropdown = document.getElementById('name')
+//   nameDropdown.addEventListener(
+//     'change',
+//     function() {
+//       nameChangeVal = this.value
+//       if (!isNameSelected) {
+//         isNameSelected = true
+//         accidentalEnable()
+//         hideNameInstruction()
+//         showAccidentalInstruction()
+//       } else if (
+//         isNameSelected &&
+//         !accidentalInstruction.classList.contains('hidden')
+//       ) {
+//         showAccidentalInstruction()
+//       } else {
+//         hideAccidentalInstruction()
+//       }
+//       //   WHAT IS FALSE ???
+//     },
+//     false
+//   )
+// }
+// getNameChange()
+
 function getNameChange() {
-  const nameDropdown = document.getElementById('name')
-  nameDropdown.addEventListener(
-    'change',
-    function() {
-      nameChangeVal = this.value
-      if (!isNameSelected) {
-        isNameSelected = true
-        accidentalEnable()
-        hideNameInstruction()
-        showAccidentalInstruction()
-      } else if (
-        isNameSelected &&
-        !accidentalInstruction.classList.contains('hidden')
-      ) {
-        showAccidentalInstruction()
-      } else {
-        hideAccidentalInstruction()
-      }
-      //   WHAT IS FALSE ???
-    },
-    false
-  )
+  nameChangeVal = this.value
+  if (!isNameSelected) {
+    isNameSelected = true
+    accidentalEnable()
+    hideNameInstruction()
+    showAccidentalInstruction()
+  } else if (
+    isNameSelected &&
+    !accidentalInstruction.classList.contains('hidden')
+  ) {
+    showAccidentalInstruction()
+  } else {
+    hideAccidentalInstruction()
+  }
 }
-getNameChange()
+
+document.getElementById('name').addEventListener('change', getNameChange)
 
 let isImpossibleKey = false
 
 // GET SELECTED ACCIDENTAL, ENABLE TYPE OPTIONS, SHOW INSTR ONCE ACCIDENTAL IS SELECTED
+// function getAccidentalChange() {
+//   const accidentalDropdown = document.getElementById('accidental')
+//   accidentalDropdown.addEventListener(
+//     'change',
+//     function() {
+//       accidentalChangeVal = this.value
+
+//       isImpossibleKey =
+//         (nameChangeVal === 'b' && accidentalChangeVal === '#') ||
+//         (nameChangeVal === 'e' && accidentalChangeVal === '#') ||
+//         (nameChangeVal === 'f' && accidentalChangeVal === 'b')
+//       console.log(isImpossibleKey)
+
+//       typeEnable()
+//       if (
+//         !accidentalInstruction.classList.contains('hidden') &&
+//         accidentalOptions.selectedIndex > 0
+//       ) {
+//         hideAccidentalInstruction()
+//       }
+//       hideAccidentalInstruction()
+//       // showTypeInstruction();
+//       if (isImpossibleKey) {
+//         showAccidentalInstruction()
+//         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//         hideTypeInstruction()
+//       }
+//       showTypeInstruction()
+//     },
+//     false
+//   )
+// }
+// getAccidentalChange()
+
 function getAccidentalChange() {
-  const accidentalDropdown = document.getElementById('accidental')
-  accidentalDropdown.addEventListener(
-    'change',
-    function() {
-      accidentalChangeVal = this.value
+  accidentalChangeVal = this.value
 
-      isImpossibleKey =
-        (nameChangeVal === 'b' && accidentalChangeVal === '#') ||
-        (nameChangeVal === 'e' && accidentalChangeVal === '#') ||
-        (nameChangeVal === 'f' && accidentalChangeVal === 'b')
-      console.log(isImpossibleKey)
+  isImpossibleKey =
+    (nameChangeVal === 'b' && accidentalChangeVal === '#') ||
+    (nameChangeVal === 'e' && accidentalChangeVal === '#') ||
+    (nameChangeVal === 'f' && accidentalChangeVal === 'b')
+  console.log(isImpossibleKey)
 
-      typeEnable()
-      if (
-        !accidentalInstruction.classList.contains('hidden') &&
-        accidentalOptions.selectedIndex > 0
-      ) {
-        hideAccidentalInstruction()
-      }
-      hideAccidentalInstruction()
-      // showTypeInstruction();
-      if (isImpossibleKey) {
-        showAccidentalInstruction()
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        hideTypeInstruction()
-      }
-      showTypeInstruction()
-    },
-    false
-  )
+  typeEnable()
+  if (
+    !accidentalInstruction.classList.contains('hidden') &&
+    accidentalOptions.selectedIndex > 0
+  ) {
+    hideAccidentalInstruction()
+  }
+  hideAccidentalInstruction()
+  // showTypeInstruction();
+  if (isImpossibleKey) {
+    showAccidentalInstruction()
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    hideTypeInstruction()
+  }
+  showTypeInstruction()
 }
-getAccidentalChange()
+
+document
+  .getElementById('accidental')
+  .addEventListener('change', getAccidentalChange)
 
 // GET SELECTED TYPE, ENABLE EXTENSIONS 6, 7, 9, 11, 13 , SHOW INSTR
+// function getTypeChange() {
+//   // Try to avoid creating too specific variables as this function
+//   // can only be used wiht typeDropdown hence it won't be reusable at all
+//   const typeDropdown = document.getElementById('type')
+//   typeDropdown.addEventListener(
+//     'change',
+//     function() {
+//       // getTypeChangeVal = this.value
+//       enableExtensionOptions()
+//       hideTypeInstruction()
+//       showExtensionInstruction()
+//       enableShowChordButton()
+//       // ENABLE SHOW CHORD BUTTON
+//       showChordTonesBtn.classList.add('animated-btn')
+//       addListenerShowChordBtn()
+//     },
+//     false
+//   )
+// }
+// getTypeChange()
+
+// so something like that instead
+
 function getTypeChange() {
-  const typeDropdown = document.getElementById('type')
-  typeDropdown.addEventListener(
-    'change',
-    function() {
-      // getTypeChangeVal = this.value
-      enableExtensionOptions()
-      hideTypeInstruction()
-      showExtensionInstruction()
-      enableShowChordButton()
-      // ENABLE SHOW CHORD BUTTON
-      showChordTonesBtn.classList.add('animated-btn')
-      addListenerShowChordBtn()
-    },
-    false
-  )
+  enableExtensionOptions()
+  hideTypeInstruction()
+  showExtensionInstruction()
+  enableShowChordButton()
+  showChordTonesBtn.classList.add('animated-btn')
+  addListenerShowChordBtn()
 }
-getTypeChange()
+
+document.getElementById('type').addEventListener('change', getTypeChange)
+
+// See how I select the element and add getTypeChange to it so this function is more reusable
 
 // arraySelects[i].options[selectedOption].disabled = true;
 
