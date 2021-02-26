@@ -30,13 +30,14 @@ bugs:
   SOME OF THE LESS FREQUENTLY USED CHORD NAMES ARE NOT HANDLED PROPERLY AT THIS MOMENT.
   HOWEVER, CHORD TONES ARE DISPLAYED CORRECTLY IN EVERY CHORD.
 
-  LIST OF CHORD NAMES THAT HAS BEEN FIXED SO FAR:
-    M7/6  m7/6  7/6 
-    +7  07
-    M9/6  m9/6  9/6
-    6add9 m6add9   
+  ✔️ LIST OF CHORD NAMES THAT HAS BEEN FIXED SO FAR:
+      M7/6  m7/6  7/6 
+      +7  07
+      M9/6  m9/6  9/6
+      6add9 m6add9   
 
-   ✔️ remove existing chord degree divs before appending new ones 
+  ✔️ if chordTone.length = 2 make sure chordTone is at idx 0 || 2
+  ✔️ remove existing chord degree divs before appending new ones 
     augmented with optional 7th ???
   ✔️ diminished 7 - make 7th = major 6th 
   ✔️ dominant(7) 9 get rid of 7th

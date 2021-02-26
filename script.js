@@ -608,12 +608,15 @@ function getDiatonicScale(name, accidental, type) {
 // getDiatonicScale("e","", "minor");
 // getDiatonicScale("g","", "minor");
 
-const chordScaleSpan = document.getElementById("chordScale");
-
-function displayChordScale() {
-    let scale = getDiatonicScale(getName(), getAccidental(), getType());
+// GET AND DISPLAY DIATONIC SCALE 
+const displayChordScale = () => {
+    const chordScaleSpan = document.getElementById("chordScale");
+    // getDiatonicScale() RETURNS AN ARRAY SO CAN USE const FOR scale ?-?
+    const scale = getDiatonicScale(getName(), getAccidental(), getType());
     chordScaleSpan.innerText = scale;
 }
+
+
 
 // PLAY CHORD 
 
@@ -629,8 +632,9 @@ const soundNames = [
 
 let chordNotesArr = [];
 
-// THESE 2 ARE USED IN getChordToneSounds f
-function makeChordNotesArr() {
+// THESE 2 ARE USED IN getChordToneSounds 
+
+const makeChordNotesArr = () => {
     // SPLIT CHORD NOTES INTO ARRAY ["C", "E", "G", "Bb"]
     chordNotesArr = displayChordTones().split(" ");
     // !!! REPLACE ALL SPECIAL CHARS "#" WITH "s" FOR SHARP AS HOWLER WILL NOT LOAD MP3'S WITH SPEC CHARACTER IN FILENAME !!! 
@@ -643,8 +647,8 @@ function makeChordNotesArr() {
     return chordNotesArr;
 }
 
-function calcRegisterIdx() {
-    // THIS IS WHERE LOOP SHOULD START DEPENDING ON SELECTED REGISTER
+// THIS IS WHERE FOR LOOP SHOULD START (DEPENDING ON SELECTED REGISTER) IN getChordToneSounds()
+const calcRegisterIdx = () => {
     let registerIdx;
     switch (getRegister()) {
         case "bass" :
@@ -660,7 +664,8 @@ function calcRegisterIdx() {
     return registerIdx;
 }
 
-function getChordToneSounds() {
+// ASSIGN PATH/NAME/REGISTER/FILE EXTENSION TO EVERY NOTE IN chordNotesArr: [C,E,G] => [sounds/C3.mp3, sounds/E3.mp3, sounds/G3.mp3]
+const getChordToneSounds = () => {
     makeChordNotesArr();
     // EMPTY ARRAY FOR SOUNDS WITH PATHS AND EXTENSION
     const soundsArr = [];
@@ -678,16 +683,19 @@ function getChordToneSounds() {
             // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             let condF = soundNames[i].length < 8;
             let condG = chordTone.length === 3;
-
+            let condH = (soundNames[i].indexOf(chordTone) === 0 || soundNames[i].indexOf(chordTone) === 2);
+            // chordTone.length = 1    (  "F" )
             if (condA && condB && condC) {
                 soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
                 break;
-            } else if (condD && condE && condF && condC) {
+            // chordTone.length = 2    ( F#" )
+            } else if (condC && condD && condE && condF & condH) {
                 soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
                 break;
-            } else if (condG && condE && condC) {
+            // chordTone.length = 3 "   ( F##" )
+            } else if (condC && condE && condG) {
                 soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
                 break;
@@ -701,7 +709,6 @@ function getChordToneSounds() {
     // for (let i = 1; i < soundsArr.length; i++) {
     //     console.log(soundsArr[i]);
     //     soundsArr[i] = soundsArr[i].replace(octaveDigit, "hello")
-    //     console.log(soundsArr[i].replace(octaveDigit, "hello"));
     //     // if (octaveDigit IS LESS THAN PREVIOUS ELEMENT'S ) {
     //         // ADD 1 TO IT  
     //         // console.log("wrong octave");
@@ -713,8 +720,12 @@ function getChordToneSounds() {
     return soundsArr;
 }
 
-// PLAY CHORD NOTES TOGETHER
-function playChordTones() {
+
+
+
+
+// PLAY CHORD NOTES TOGETHER ( PLAY CHORD BUTTON )
+const playChordTones = () => {
     const soundFiles = getChordToneSounds();
     console.log("soundFiles: " + soundFiles);
     setTimeout(() => {
@@ -725,12 +736,11 @@ function playChordTones() {
             });
             sound.play();
         }
-      }, 500)
-    
+    }, 500)
 }
 
-// ARPEGGIATE CHORD 
-function arpeggiateChord() {
+// PLAY CHORD NOTES IN SEQUENCE ( ARPEGGIO BUTTON )
+const arpeggiateChord = () => {
     const soundFiles = getChordToneSounds();
     setTimeout(() => {
         const sound = new Howl({
@@ -783,8 +793,8 @@ function arpeggiateChord() {
     }, 1700)
 }
 
-// CREATE A RESPONSIVE DIV FOR EACH CHORD DEGREE 
-function makeSoundDivs() {
+// CREATE A RESPONSIVE DIV FOR EACH CHORD DEGREE ( NOTES BUTTON )
+const makeSoundDivs = () => {
     const soundFiles = getChordToneSounds();
     // NEED ACTUAL NOTE NAMES WITHOUT PATH AND EXTENSION
     const chordTones = displayChordTones().split(" ");
@@ -812,12 +822,14 @@ function makeSoundDivs() {
     })
 }
 
-// REFRESH PAGE FOR NEW CHORD
-function refreshPage() {
+
+// REFRESH PAGE FOR NEW CHORD ( NEW CHORD BUTTON )
+const refreshPage = () => {
     location.reload();
     // THIS ALSO WORKS
     // location.reload(true);
 }
+
 // EVENT HANDLERS ON BUTTONS
 function handleShowChordTones() {
     displayChordName();
@@ -1400,7 +1412,7 @@ function playIntro() {
 
 window.addEventListener("load", function() {
     console.log("page is loaded");
-        playIntro();
+        // playIntro();
         disableSelectOptions();
         setTimeout(() => {
             showNameInstruction();
