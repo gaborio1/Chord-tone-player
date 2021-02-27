@@ -21,8 +21,20 @@ body {
     justify-content: center;
 }
 
+/* THIS DIV IS COVERED BY THE GLASS BUT ITS BORDER CAN BE SEEN BLURRED AROUND THE INNER EDGE OF GLASS */
+.under-the-glass {
+    width: 820px;
+    height: 600px;
+    /* border: 5px solid tomato; */
+    border: 2px solid rgba(9, 241, 241, 0.9);
+    border-radius: .5rem;
+    /* THIS POSITIONS DIV DIRECLY UNDER GLASS */
+    position: absolute;
+    z-index: 0;
 
-/* PLAYER GLASS BOARD */
+}
+
+/* PLAYER GLASS BOARD STACKED ON TOP OF .under-the-glass */
 .glass {
     display: flex;
     /* width: 60%; */
@@ -37,6 +49,9 @@ body {
     /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
     /* background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2)); */
     background: rgba(255, 255, 255, 0.4);
+    /* HOW MUCH BACKDROP IS BLURRED */
+    backdrop-filter: blur(2rem);
+    /* position: relative; */
 }
 
 /* SIDEBAR */
@@ -74,13 +89,19 @@ body {
 }
 
 .controls__transpose-select {
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
 }
 
 .controls__transpose-select select {
-    margin: 1rem auto;
+    margin: 1.2em auto;
+}
+
+.controls__new-chord-container {
+    /* border: 2px solid white; */
+    margin-bottom: 1rem;
 }
 
 .sidebar__logo {
