@@ -422,13 +422,15 @@ function displayChordTones() {
         chordTones += " " + chordObj.getSharpEleventh();
     } else if (eleventhValue === "add11" && getType() === "minor") {
         chordTones += " " + chordObj.getEleventh();
+    } else if (eleventhValue === "add11" && getType() === "sus2") {
+        chordTones += " " + chordObj.getSharpEleventh();
+    } else if (eleventhValue === "add11" && getType() === "sus2") {
+        chordTones += " " + chordObj.getSharpEleventh();
     } else if (eleventhValue === "11" && getType() === "dominant") {
         chordTones +=  " " + chordObj.getNinth() + " " + chordObj.getEleventh();
     } else if (eleventhValue === "add11" && getType() === "dominant") {
         chordTones += " " + chordObj.getEleventh();
-    } 
-
-    if (thirteenthValue === "13" && getType() === "major") {
+    } else if (thirteenthValue === "13" && getType() === "major") {
         chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth() + " " + chordObj.getSharpEleventh() + " " + chordObj.getThirteenth();
         // MAJOR 13 WITH MINOR !!!
     } else if (thirteenthValue === "13" && getType() === "minor") {
@@ -720,10 +722,6 @@ const getChordToneSounds = () => {
     return soundsArr;
 }
 
-
-
-
-
 // PLAY CHORD NOTES TOGETHER ( PLAY CHORD BUTTON )
 const playChordTones = () => {
     const soundFiles = getChordToneSounds();
@@ -977,8 +975,8 @@ getAccidentalChange();
 function getTypeChange() {
     const typeDropdown = document.getElementById("type");
     typeDropdown.addEventListener('change', function() {
-        getTypeChangeVal = this.value;
-        enableExtensionOptions();
+        typeChangeVal = this.value;
+        enableExtensionOptions(typeChangeVal);
         hideTypeInstruction();
         showExtensionInstruction();
         enableShowChordButton();
@@ -1391,13 +1389,35 @@ function disableSelectOptions() {
     thirteenthDisable();
 }
 
-// ENABLE 6, 7, 9, 11, 13 OPTIONS
-function enableExtensionOptions() {
-    sixthEnable();
-    seventhEnable();
-    ninthEnable();
-    eleventhEnable();
-    thirteenthEnable();
+// ENABLE 6, 7, 9, 11, 13 OPTIONS BASED ON TYPE SELECTED
+function enableExtensionOptions(typeChangeVal) {
+    // DOMINANT:
+    if (typeChangeVal === "dominant") {
+        sixthEnable();
+        ninthEnable();
+        eleventhEnable();
+        thirteenthEnable();
+    } else if (typeChangeVal === "augmented" || typeChangeVal === "diminished" || typeChangeVal === "phrygian") {
+        sixthEnable();
+        seventhEnable();
+        ninthEnable();
+        eleventhEnable();
+    } else if (typeChangeVal === "sus2") {
+        sixthEnable();
+        seventhEnable();
+        eleventhEnable();
+    } else if (typeChangeVal === "sus4" || typeChangeVal === "lydian") {
+        sixthEnable();
+        seventhEnable();
+        ninthEnable();
+    // MAJOR OR MINOR 
+    } else {
+        sixthEnable();
+        seventhEnable();
+        ninthEnable();
+        eleventhEnable();
+        thirteenthEnable();
+    }
 }
 
 // PLAY INTRO WHEN PAGE LOADS

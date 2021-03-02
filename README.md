@@ -20,6 +20,9 @@ functions to add:
  ✔️ animate cards, sidebar (slide in)
  ✔️ add icons
 
+  customise dropdown!
+  dynamically enable / disable extensions based on type selected! ( for example, disable add9 with sus2 )
+
  refactor:
 ✔️ BEM naming convention 
 ✔️ no ID selectors in CSS
@@ -35,6 +38,8 @@ bugs:
       +7  07
       M9/6  m9/6  9/6
       6add9 m6add9   
+
+  C7/6: 6th plays same pitch as 7th
 
   ✔️ if chordTone.length = 2 make sure chordTone is at idx 0 || 2
   ✔️ remove existing chord degree divs before appending new ones 
