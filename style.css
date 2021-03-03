@@ -188,7 +188,7 @@ button.hover:hover {
     text-align: center;
     margin: .5rem;
     background-color: rgba(86, 125, 143, 0.35);
-    border-radius: .3rem;
+    border-radius: .2rem;
     /* box-shadow: 4px 2px 4px rgba(122, 122, 122, 0.4); */
 }
 
@@ -205,7 +205,7 @@ button.hover:hover {
   }
 
 .animated-btn::before {
-    border-radius: .3rem;
+    border-radius: .2rem;
     content: '';
     position: absolute;
     top: 0;
@@ -226,7 +226,8 @@ button.hover:hover {
 }
 
 .animated-btn::after {
-    border-radius: .3rem;
+    /* ROUNDED CORNERS ON HOVER */
+    border-radius: .9rem;
     content: '';
     position: absolute;
     top: 0;
@@ -258,7 +259,7 @@ button.hover:hover {
 i {
     font-size: .8rem;
     margin: 0px 4px 0px 4px;
-    color: rgba(0, 0, 0, 0.581);
+    color: rgba(0, 37, 54, 0.546);
 }
 
 select {

@@ -21,7 +21,9 @@ functions to add:
  ✔️ add icons
 
   customise dropdown!
-  dynamically enable / disable extensions based on type selected! ( for example, disable add9 with sus2 )
+ ✔️ dynamically enable / disable extensions based on type selected! ( for example, disable 11 with sus2 )
+  dynamically enable / disable extensions based on other extensions ( for example, add9add13 )
+  add alterations
 
  refactor:
 ✔️ BEM naming convention 

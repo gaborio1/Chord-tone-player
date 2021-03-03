@@ -1292,10 +1292,29 @@ function ninthDisable() {
     addNinthOpt.disabled = true;
 }
 
-function ninthEnable() {
-    ninthOptions.options[0].disabled = false;
-    ninthOpt.disabled =false;
-    addNinthOpt.disabled = false;
+const  ninthEnable = (typeChangeVal) => {
+
+    switch (typeChangeVal) {
+        case "major" :
+        case "minor" :
+        case "augmented" :
+        case "diminished" :
+        case "sus4" :
+        case "phrygian" :
+        case "lydian" :
+            ninthOptions.options[0].disabled = false;
+            ninthOpt.disabled = false;
+            addNinthOpt.disabled = false;
+            break;
+        case "dominant" :
+            ninthOptions.options[0].disabled = false;
+            ninthOpt.disabled = false;
+            break;
+        // sus2
+        default:
+            console.log("FROM typeChangeVal: sus2");
+    }
+
 }
 
 function eleventhDisable() {
@@ -1304,10 +1323,28 @@ function eleventhDisable() {
     addEleventhOpt.disabled = true;
 }
 
-function eleventhEnable() {
-    eleventhOptions.options[0].disabled = false;
-    eleventhOpt.disabled = false;
-    addEleventhOpt.disabled = false;
+const eleventhEnable = (typeChangeVal) => {
+
+    switch (typeChangeVal) {
+        case "major" :
+        case "minor" :
+        case "dominant" :
+        case "augmented" :
+        case "diminished" :
+        case "phrygian" :
+            eleventhOptions.options[0].disabled = false;
+            eleventhOpt.disabled = false;
+            addEleventhOpt.disabled = false;
+            break;
+        case "sus2" :
+            eleventhOptions.options[0].disabled = false;
+            addEleventhOpt.disabled = false;
+            break;
+        // sus4, lydian
+        default:
+            console.log("FROM typeChangeVal: sus4 / lydian");
+    }
+
 }
 
 function thirteenthDisable() {
@@ -1316,10 +1353,29 @@ function thirteenthDisable() {
     addThirteenthOpt.disabled = true;
 }
 
-function thirteenthEnable() {
-    thirteenthOptions.options[0].disabled = false;
-    thirteenthOpt.disabled = false;
-    addThirteenthOpt.disabled = false;
+
+
+const thirteenthEnable = (typeChangeVal) => {
+
+    switch (typeChangeVal) {
+        case "major" :
+        case "minor" :
+        case "dominant" :
+        case "augmented" :
+        case "diminished" :
+        case "phrygian" :
+            thirteenthOptions.options[0].disabled = false;
+            thirteenthOpt.disabled = false;
+            addThirteenthOpt.disabled = false;
+            break;
+        case "sus2" :
+        case "sus4" :
+        case "lydian" :
+            thirteenthOptions.options[0].disabled = false;
+            addThirteenthOpt.disabled = false;
+            break;
+    }
+
 }
 
 function enableAllSoundAndNewButtons() {
@@ -1391,33 +1447,35 @@ function disableSelectOptions() {
 
 // ENABLE 6, 7, 9, 11, 13 OPTIONS BASED ON TYPE SELECTED
 function enableExtensionOptions(typeChangeVal) {
-    // DOMINANT:
+
     if (typeChangeVal === "dominant") {
         sixthEnable();
-        ninthEnable();
-        eleventhEnable();
-        thirteenthEnable();
-    } else if (typeChangeVal === "augmented" || typeChangeVal === "diminished" || typeChangeVal === "phrygian") {
+        ninthEnable(typeChangeVal);
+        eleventhEnable(typeChangeVal);
+        thirteenthEnable(typeChangeVal);
+    } else if (typeChangeVal === "phrygian") {
         sixthEnable();
         seventhEnable();
-        ninthEnable();
-        eleventhEnable();
+        ninthEnable(typeChangeVal);
+        eleventhEnable(typeChangeVal);
     } else if (typeChangeVal === "sus2") {
         sixthEnable();
         seventhEnable();
-        eleventhEnable();
+        eleventhEnable(typeChangeVal);
+        thirteenthEnable(typeChangeVal);
     } else if (typeChangeVal === "sus4" || typeChangeVal === "lydian") {
         sixthEnable();
         seventhEnable();
-        ninthEnable();
-    // MAJOR OR MINOR 
+        ninthEnable(typeChangeVal);
+    // MAJOR, MINOR, AUGMENTED OR DIMINISHED 
     } else {
         sixthEnable();
         seventhEnable();
-        ninthEnable();
-        eleventhEnable();
-        thirteenthEnable();
+        ninthEnable(typeChangeVal);
+        eleventhEnable(typeChangeVal);
+        thirteenthEnable(typeChangeVal);
     }
+
 }
 
 // PLAY INTRO WHEN PAGE LOADS
