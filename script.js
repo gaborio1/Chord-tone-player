@@ -1,4 +1,3 @@
-console.log('connected');
 
 class Chord {
     constructor(name, accidental, type, optSixth = "", optSeventh = "", optNinth = "", optEleventh = "", optThirteenth = "") {
@@ -20,6 +19,7 @@ class Chord {
     }
     // FIND AND RETURN APPROPRIATE SCALE DEGREE FROM DIATONIC SCALE
     getRoot = () => getDiatonicScale(this.name, this.accidental, this.type)[0];
+
     getFlatSecond = () => {
         const {getSecond} = this;
         // IF second HAS A SECOND CHAR "#", ONLY RETURN THE FIRST CHAR (LETTER NAME)
@@ -33,7 +33,9 @@ class Chord {
     }
 
     getSecond = () => getDiatonicScale(this.name, this.accidental, this.type)[1];
+
     getThird = () => getDiatonicScale(this.name, this.accidental, this.type)[2];
+
     getFourth = () => getDiatonicScale(this.name, this.accidental, this.type)[3];
 
     getSharpFourth = () => {
@@ -98,8 +100,11 @@ class Chord {
     }
 
     getSeventh = () => getDiatonicScale(this.name, this.accidental, this.type)[6];
+
     getNinth = () => this.getSecond();
+
     getEleventh = () => this.getFourth();
+
     getSharpEleventh = () => {
         const {getEleventh} = this;
         let secondChar = getEleventh().charAt(1);
@@ -111,9 +116,12 @@ class Chord {
         }
     }
 
+    // THIS WILL BE MAJOR SIXTH IN MAJOR SCALE AND MINOR SIXTH IN MINOR SCALE !!!
     getThirteenth = () => this.getSixth();
-    // MAKE MINOR THIRTEENTH MAJOR IN MINOR CHORDS:  C E G Ab  => C E G A
-    getMajorThirteenth = () => this.getMajorSixth();
+
+    // FORCE MINOR THIRTEENTH TO BE MAJOR IN MINOR CHORDS:  C E G Ab  => C E G A   !!!
+    // THIS IS BECAUSE THIRTEENTH IS SAME AS SIXTH AND MINOR CHORDSCALE HAS A MINOR SIXTH
+    forceMajorThirteenth = () => this.getMajorSixth();
 }
 
 // GET OPTIONS FROM DROPDOWN
@@ -172,110 +180,124 @@ const getRegister = () => {
     return register;
 }
 
-// DISP CHORD NAME BASED OFF OF name, accidental AND type
-// CHANGE type VALUE TO SYMBOLS
-const displayChordName = () => {
-    const chordNameTypeSpan = document.getElementById("chordNameType");
-    let chordNameType;
-    let typeSymbol;
-    switch (getType()) {
+// CONSTRUCT BASE TRIAD / DOMINANT(7) SYMBOL, BASED ON name, accidetal and type ( sus2, aug, 7 etc ) FOR addExtensionToBaseTypeSymbol() 
+const buildBaseTypeSymbol = () => {
+
+    let baseTypeSymbol;
+    let type = getType();
+    switch (type) {
         case "major" :
-            typeSymbol = "";
+            baseTypeSymbol = "";
             break;
         case "minor" :
-            typeSymbol = "m";
+            baseTypeSymbol = "m";
             break;
         case "dominant" :
             if (getOptNinth() === "9" || getOptNinth() === "add9") {
-                typeSymbol = "9";
+                baseTypeSymbol = "9";
             } else if (getOptEleventh() === "11") {
-                typeSymbol = "11";
+                baseTypeSymbol = "11";
             } else if (getOptThirteenth() === "13") {
-                typeSymbol = "13"
+                baseTypeSymbol = "13"
             }
             else {
-                typeSymbol = "7";
+                baseTypeSymbol = "7";
             }
             break;
         case "augmented" :
             if (getOptSeventh()) {
-                typeSymbol = "+7 (7#5)";
+                baseTypeSymbol = "+7 (7#5)";
             } else {
-                typeSymbol = "+";
+                baseTypeSymbol = "+";
             }
             break;
         case "diminished" :
             if (getOptSeventh()) {
-                typeSymbol = "07";
+                baseTypeSymbol = "07";
             } else {
-                typeSymbol = "0";
+                baseTypeSymbol = "0";
             }
             break;
         case "sus2" :
-            typeSymbol = "sus2"
+            baseTypeSymbol = "sus2"
             break;
         case "sus4" :
-            typeSymbol = "sus4"
+            baseTypeSymbol = "sus4"
             break;
         case "phrygian" :
-            typeSymbol = " sus(b)2"
+            baseTypeSymbol = " sus(b)2"
             break;
         case "lydian" :
-            typeSymbol = " sus(#)4"
+            baseTypeSymbol = " sus(#)4"
             break;
         default:
-            typeSymbol = "invalid type"
+            baseTypeSymbol = "invalid type"
         }
+    return baseTypeSymbol;
 
-    let type = getType();
+}
+
+// OPTIONALLY ADD EXTENSIONS TO BASE SYMBOL ( C => Cadd9 ) FOR displayFullChordName()
+const addExtensionToBaseChordSymbol = () => {
+
+    const type = getType();
+    const sixthValue = getOptSixth();
+    const seventhValue = getOptSeventh();
+    const ninthValue = getOptNinth();
+    const eleventhValue = getOptEleventh();
+    const thirteenthValue = getOptThirteenth();
+
+    fullSymbol = buildBaseTypeSymbol();
+
     // ADD OPTIONAL 6,7,9,11,13 TO SYMBOL
-    if (getOptSixth() && !getOptSeventh()) {
+    if (sixthValue && !seventhValue) {
+        console.log("hello");
         if (type === "major") {
-            typeSymbol += "6";
+            fullSymbol += "6";
         } else if (type === "minor") {
-            typeSymbol += "6";
+            fullSymbol += "6";
         } else if (type === "dominant") {
-            typeSymbol += "/6";
+            fullSymbol += "/6";
         }
     }
 
-    if (getOptSeventh() && !getOptSixth()) {
+    if (seventhValue && !sixthValue) {
         if (type === "major") {
-            typeSymbol += "M7";
+            fullSymbol += "M7";
         } else if (type === "minor") {
-            typeSymbol += "7";
+            fullSymbol += "7";
         } else {
             console.log("another type you have to fix");
         }
     }
+
     // 6/7
-    if (getOptSixth() && getOptSeventh()) {
+    if (sixthValue && seventhValue) {
         if (type === "minor") {
-            typeSymbol += "7/6";
+            fullSymbol += "7/6";
         } else if (type === "major") {
-            typeSymbol += "M7/6"
+            fullSymbol += "M7/6"
         } else {
             console.log("another type you have to fix")
         }
     }
 
-    let ninthValue = getOptNinth();
     if (ninthValue === "9") {
         if (type === "major") {
-            if (getOptSixth()) {
-                typeSymbol = "M9/6"
+            if (sixthValue) {
+                fullSymbol = "M9/6"
             } else {
-                typeSymbol = "M9";
+                fullSymbol = "M9";
             }
         } else if (type === "minor") {
-            if (getOptSixth()) {
-                typeSymbol = "m9/6"
+            if (sixthValue) {
+                fullSymbol = "m9/6"
             } else {
-                typeSymbol += "9";
+                fullSymbol += "9";
             }
             
         } else if (type === "dominant") {
-            typeSymbol += "";
+            fullSymbol += "";
         } else {
             console.log("another type you have to fix");
         }
@@ -283,169 +305,207 @@ const displayChordName = () => {
     
     else if (ninthValue === "add9") {
         if (type === "dominant") {
-            if (getOptSixth()) {
+            if (sixthValue) {
                 console.log("dom9 = dom add9 !!!");
             } else {
-                typeSymbol = "9";
+                fullSymbol = "9";
             }
         } else {
-            typeSymbol += " add9";
+            fullSymbol += " add9";
         }
     }
 
-    let eleventhValue = getOptEleventh();
     if (eleventhValue === "11") {
         if (type === "major") {
-            typeSymbol += "M11";
+            fullSymbol += "M11";
         } else if (type === "minor") {
-            typeSymbol += "11";
+            fullSymbol += "11";
         } else if (type === "dominant") {
-            typeSymbol += "";
+            fullSymbol += "";
         } else {
             console.log("another type you have to fix");
         }
+
     } else if (eleventhValue === "add11") {
         if (type === "dominant") {
-            typeSymbol = "11";
+            fullSymbol = "11";
         } else {
-            typeSymbol += " add11";
+            fullSymbol += " add11";
         }
     }
 
-    let thirteenthValue = getOptThirteenth();
     if (thirteenthValue === "13") {
         if (type === "major") {
-            typeSymbol += "M13";
+            fullSymbol += "M13";
         } else if (type === "minor") {
-            typeSymbol += "13";
+            fullSymbol += "13";
         } else if (type === "dominant") {
-            typeSymbol += "";
+            fullSymbol += "";
         } else {
             console.log("another type you have to fix");
         }
+
     } else if (thirteenthValue === "add13") {
         if (type === "dominant") {
-            typeSymbol = "13";
+            fullSymbol = "13";
         } else {
-            typeSymbol += " add13";
+            fullSymbol += " add13";
         }
     }
+    return fullSymbol;
 
-    chordNameType = `${getName().toUpperCase()}${getAccidental()}${typeSymbol}`;
-    chordNameTypeSpan.innerText = chordNameType;
-    return chordNameType;
 }
 
-// DISP CHORD TONES BASED ON DIATONIC SCALE
-const displayChordTones = () => {
+// CAPITALISE LETTER NAME, ADD ACCIDENTAL AND TYPE SYMBOL ( c => C + # + m9 ==> Cm9 ) FOR DISPLAYFULLCHORDNAME()
+const buildFullChordName = () => {
+    fullSymbol = addExtensionToBaseChordSymbol();
+    let fullChordName;
+    fullChordName = `${getName().toUpperCase()}${getAccidental()}${fullSymbol}`;
+    return fullChordName;
+}
+
+// SEQUENCE OF BUILDING AND DISPLAYING FULL CHORD NAME:
+// buildBaseTypeSymbol() => addExtensionToBaseChordSymbol() => buildFullChordName() => displayFullChordName()
+const displayFullChordName = () => {
+    const fullChordNameSpan = document.getElementById("full-chord-name");
+    fullChordNameSpan.innerText = buildFullChordName();
+}
+
+const buildChordTones = () => {
+    // MAKE NEW CHORD AND USE ITS METHODS TO RETRIEVE ITS NOTES BASED OFF OF ITS CHORD SCALE
     const chordObj = new Chord(getName(), getAccidental(), getType(), getOptSeventh());
     // this.test FROM CONSTRUCTOR
     console.log(chordObj.test());
-    // const c1 = new Chord(getName(), getAccidental(), getType(), getOptSeventh());
-    // console.dir(" c1 chordObj: " + c1);
 
-    const chordTonesSpan = document.getElementById("chordTones");
     let chordTones = "";
-    let sixthValue = getOptSixth();
-    let seventhValue = getOptSeventh();
-    let ninthValue = getOptNinth();
-    let eleventhValue = getOptEleventh();
-    let thirteenthValue = getOptThirteenth();
 
-    switch (getType()) {
+    const type = getType();
+    const sixthValue = getOptSixth();
+    const seventhValue = getOptSeventh();
+    const ninthValue = getOptNinth();
+    const eleventhValue = getOptEleventh();
+    const thirteenthValue = getOptThirteenth();
+
+    const root = chordObj.getRoot();
+    const flatSecond = chordObj.getFlatSecond();
+    const third = chordObj.getThird();
+    const fourth = chordObj.getFourth();
+    const sharpFourth = chordObj.getSharpFourth();
+    const fifth = chordObj.getFifth();
+    const sharpFifth = chordObj.getSharpFifth();
+    const sixth = chordObj.getSixth();
+    const majorSixth = chordObj.getMajorSixth();
+    const seventh = chordObj.getSeventh();
+    const minorSeventh = chordObj.getMinorSeventh();
+    const ninth = chordObj.getNinth();
+    const eleventh = chordObj.getEleventh();
+    const sharpEleventh = chordObj.getSharpEleventh();
+    const thirteenth = chordObj.getThirteenth();
+    const majorThirteenth = chordObj.forceMajorThirteenth();
+
+    switch (type) {
         case "diminished" :
-            chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getFlatFifth()}`;
+            // chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getFlatFifth()}`;
+            chordTones = `${root} ${third} ${fifth}`;
             break;
         case "augmented" :
-            chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getSharpFifth()}`;
+            chordTones = `${root} ${third} ${sharpFifth}`;
             break;
         case "dominant" :
-            chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getFifth()} ${chordObj.getMinorSeventh()}`;
+            chordTones = `${root} ${third} ${fifth} ${minorSeventh}`;
             break;
         case "sus2" :
-            chordTones = `${chordObj.getRoot()} ${chordObj.getSecond()} ${chordObj.getFifth()}`;
+            chordTones = `${root} ${second} ${fifth}`;
             break;
         case "sus4" :
-            chordTones = `${chordObj.getRoot()} ${chordObj.getFourth()} ${chordObj.getFifth()}`;
+            chordTones = `${root} ${fourth} ${fifth}`;
             break;
         case "phrygian" :
-            chordTones = `${chordObj.getRoot()} ${chordObj.getFlatSecond()} ${chordObj.getFifth()}`;
+            chordTones = `${root} ${flatSecond} ${fifth}`;
             break;
         case "lydian" :
-            chordTones = `${chordObj.getRoot()} ${chordObj.getSharpFourth()} ${chordObj.getFifth()}`;
+            chordTones = `${root} ${sharpFourth} ${fifth}`;
             break;
         // DEFAULT IS MAJOR OR MINOR
         default:
-            chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getFifth()}`;
+            chordTones = `${root} ${third} ${fifth}`;
     }
-    // DUPICATED CODE let sixthValue = getOptSixth(); DISPLAYCHORDNAME() ALSO USES SAME VARIABLES !!!
+
     // ADD OPTIONAL 6,7,9,11,13 BASED ON type => chordScale
-    
     if (sixthValue === "6") {
-        if (getType() === "minor") {
+        if (type === "minor") {
             // MAKE 6TH MAJOR FOR MINOR CHORDS !!!
-            chordTones += " " + chordObj.getMajorSixth();
+            chordTones += " " + majorSixth;
         } else {
-            chordTones += " " + chordObj.getSixth();
+            chordTones += " " + sixth;
         }
     }
 
     if (seventhValue === "7") {
-        if (getType() === "dominant") {
+        if (type === "dominant") {
             chordTones = chordTones;
-        } else if (getType() === "diminished") {
-            chordTones += " " + chordObj.getMajorSixth();
-        } else if (getType() === "augmented") {
-            chordTones += " " + chordObj.getMinorSeventh();
+        } else if (type === "diminished") {
+            chordTones += " " + majorSixth;
+        } else if (type === "augmented") {
+            chordTones += " " + minorSeventh;
         } else {
-            chordTones += " " + chordObj.getSeventh();
+            chordTones += " " + seventh;
         }
     } 
 
     if (ninthValue === "9") {
-        if (getType() === "dominant") {
-            chordTones += " " + chordObj.getNinth();
+        if (type === "dominant") {
+            chordTones += " " + ninth;
         } else {
-            chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth();
+            chordTones += " " + seventh + " " + ninth;
         }
     } else if (ninthValue === "add9") {
-        chordTones += " " + chordObj.getNinth();
+        chordTones += " " + ninth;
     }
 
     // SHARP 11 WITH MAJOR !!!
-    if (eleventhValue === "11" && getType() === "major") {
-        chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth() + " " + chordObj.getSharpEleventh();
+    if (eleventhValue === "11" && type === "major") {
+        chordTones += " " + seventh + " " + ninth + " " + sharpEleventh;
         // NATURAL 11 WITH MINOR !!!
-    } else if (eleventhValue === "11" && getType() === "minor") {
-        chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth() + " " + chordObj.getEleventh();
-    } else if (eleventhValue === "add11" && getType() === "major") {
-        chordTones += " " + chordObj.getSharpEleventh();
-    } else if (eleventhValue === "add11" && getType() === "minor") {
-        chordTones += " " + chordObj.getEleventh();
-    } else if (eleventhValue === "add11" && getType() === "sus2") {
-        chordTones += " " + chordObj.getSharpEleventh();
-    } else if (eleventhValue === "add11" && getType() === "sus2") {
-        chordTones += " " + chordObj.getSharpEleventh();
-    } else if (eleventhValue === "11" && getType() === "dominant") {
-        chordTones +=  " " + chordObj.getNinth() + " " + chordObj.getEleventh();
-    } else if (eleventhValue === "add11" && getType() === "dominant") {
-        chordTones += " " + chordObj.getEleventh();
-    } else if (thirteenthValue === "13" && getType() === "major") {
-        chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth() + " " + chordObj.getSharpEleventh() + " " + chordObj.getThirteenth();
+    } else if (eleventhValue === "11" && type === "minor") {
+        chordTones += " " + seventh + " " + ninth + " " + eleventh;
+    } else if (eleventhValue === "add11" && type === "major") {
+        chordTones += " " + sharpEleventh;
+    } else if (eleventhValue === "add11" && type === "minor") {
+        chordTones += " " + eleventh;
+    } else if (eleventhValue === "add11" && type === "sus2") {
+        chordTones += " " + eleventh;
+    } else if (eleventhValue === "add11" && type === "sus2") {
+        chordTones += " " + sharpEleventh;
+    } else if (eleventhValue === "11" && type === "dominant") {
+        chordTones +=  " " + ninth + " " + eleventh;
+    } else if (eleventhValue === "add11" && type === "dominant") {
+        chordTones += " " + eleventh;
+    } else if (thirteenthValue === "13" && type === "major") {
+        chordTones += " " + seventh + " " + ninth + " " + sharpEleventh + " " + thirteenth;
         // MAJOR 13 WITH MINOR !!!
-    } else if (thirteenthValue === "13" && getType() === "minor") {
-        chordTones += " " + chordObj.getSeventh() + " " + chordObj.getNinth() + " " + chordObj.getEleventh() + " " + chordObj.getMajorThirteenth();
-    } else if (thirteenthValue === "add13" && getType() === "major") {
-        chordTones += " " +  chordObj.getThirteenth();
-    } else if (thirteenthValue === "add13" && getType() === "minor") {
-        chordTones += " " + chordObj.getMajorThirteenth();
-    } else if (thirteenthValue === "13" && getType() === "dominant") {
-        chordTones +=  " " + chordObj.getNinth() + " " + chordObj.getEleventh() + " " + chordObj.getThirteenth();
-    } else if (thirteenthValue === "add13" && getType() === "dominant") {
-        chordTones += " " + chordObj.getThirteenth();
+    } else if (thirteenthValue === "13" && type === "minor") {
+        chordTones += " " + seventh + " " + ninth + " " + eleventh + " " + majorThirteenth;
+    } else if (thirteenthValue === "add13" && type === "major") {
+        chordTones += " " +  thirteenth;
+    } else if (thirteenthValue === "add13" && type === "minor") {
+        chordTones += " " + majorThirteenth;
+    } else if (thirteenthValue === "13" && type === "dominant") {
+        chordTones +=  " " + ninth + " " + eleventh + " " + thirteenth;
+    } else if (thirteenthValue === "add13" && type === "dominant") {
+        chordTones += " " + thirteenth;
     }
-    chordTonesSpan.innerText = chordTones;
     return chordTones;
+
+}
+
+
+
+// DISPLAY CHORD TONES 
+const displayChordTones = () => {
+   const chordTonesSpan = document.getElementById("chord-tones");
+    chordTones = buildChordTones();
+    chordTonesSpan.innerText = buildChordTones();
 }
 
 // CHORD OBJECT TEST
@@ -470,8 +530,8 @@ const circleOfFifths = {
 }
 
 // BUILD NATURAL SCALE STARTING WITH TONIC 
-const getNaturalScale = (ton) => {
-    let tonic = ton;
+const getNaturalScale = (name) => {
+    let tonic = name;
     // GET TONIC IDX
     let tonicIdx = circleOfFifths["degrees"].indexOf(tonic);
     // GET 2 SUBSCALES 
@@ -596,24 +656,16 @@ const getDiatonicScale = (name, accidental, type) => {
             showInvalidKeyMessage();
         }
     } 
-    // IF DOMINANT
-    // else {
-    //     diatonicScale = naturalScale;
-    // }
     // UPPERCASE NOTE LETTER NAMES BUT NOT THE ACCIDENTAL
     const result = diatonicScale.map(note => note.charAt(0).toUpperCase() + note.slice(1));
+
     return result;
 }
-// TESTS FOR LINE 244 CONSOLE LOG
-// getDiatonicScale("e","", "major");
-// getDiatonicScale("e","b", "major");
-// getDiatonicScale("e","", "minor");
-// getDiatonicScale("g","", "minor");
+
 
 // GET AND DISPLAY DIATONIC SCALE 
 const displayChordScale = () => {
-    const chordScaleSpan = document.getElementById("chordScale");
-    // getDiatonicScale() RETURNS AN ARRAY SO CAN USE const FOR scale ?-?
+    const chordScaleSpan = document.getElementById("chord-scale");
     const scale = getDiatonicScale(getName(), getAccidental(), getType());
     chordScaleSpan.innerText = scale;
 }
@@ -632,13 +684,14 @@ const soundNames = [
     "E5", "FEs5", "FsGb5", "GFss5", "GsAb5", "AGssBbb5", "AsBb5", "BCb5", "C6", "CsDb6", "DCssEbb6"
 ];
 
+// WON'T WORK WITH let !!!
 let chordNotesArr = [];
 
 // THESE 2 ARE USED IN getChordToneSounds 
 
 const makeChordNotesArr = () => {
     // SPLIT CHORD NOTES INTO ARRAY ["C", "E", "G", "Bb"]
-    chordNotesArr = displayChordTones().split(" ");
+    chordNotesArr = buildChordTones().split(" ");
     // !!! REPLACE ALL SPECIAL CHARS "#" WITH "s" FOR SHARP AS HOWLER WILL NOT LOAD MP3'S WITH SPEC CHARACTER IN FILENAME !!! 
     // ["C#", "E#", "G##"]  =>   ["Cs", "Es", "Gss"]
     for (let i = 0; i < chordNotesArr.length; i++) {
@@ -668,21 +721,20 @@ const calcRegisterIdx = () => {
 
 // ASSIGN PATH/NAME/REGISTER/FILE EXTENSION TO EVERY NOTE IN chordNotesArr: [C,E,G] => [sounds/C3.mp3, sounds/E3.mp3, sounds/G3.mp3]
 const getChordToneSounds = () => {
+
     makeChordNotesArr();
     // EMPTY ARRAY FOR SOUNDS WITH PATHS AND EXTENSION
     const soundsArr = [];
      // KEEP TRACK OF ACTUAL MINIMUM INDEX (OUTSIDE OF LOOP!!!), INITIALISE WITH A VALUE OF 0 AND ACCUMULATE IN INNER LOOP
     let minIdx = 0;
-    // FIND EACH NOTE OF chordNotesArr [C,E,G] IN chromaticScale 
+    // FIND EACH NOTE OF chordNotesArr [C,E,G] IN soundNames[] 
     chordNotesArr.forEach((chordTone) => {
         for (let i = calcRegisterIdx(); i < soundNames.length; i++) {
-
             let condA = chordTone.length === 1;
             let condB = soundNames[i].charAt(0) === chordTone;
             let condC = i >= minIdx;
             let condD = chordTone.length === 2;
             let condE = soundNames[i].includes(chordTone);
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             let condF = soundNames[i].length < 8;
             let condG = chordTone.length === 3;
             let condH = (soundNames[i].indexOf(chordTone) === 0 || soundNames[i].indexOf(chordTone) === 2);
@@ -705,21 +757,9 @@ const getChordToneSounds = () => {
         }
         return minIdx;
     })
-
-    // FIND OCTAVEDIGIT AND CHANGE IF NECESSARY WITH REGEX
-    // const octaveDigit = /(\d)(?=\.)/;
-    // for (let i = 1; i < soundsArr.length; i++) {
-    //     console.log(soundsArr[i]);
-    //     soundsArr[i] = soundsArr[i].replace(octaveDigit, "hello")
-    //     // if (octaveDigit IS LESS THAN PREVIOUS ELEMENT'S ) {
-    //         // ADD 1 TO IT  
-    //         // console.log("wrong octave");
-    //     // }
-    // }
-    // console.log(soundsArr);
-
     console.log("soundsArr updated octave: " + soundsArr);
     return soundsArr;
+
 }
 
 // PLAY CHORD NOTES TOGETHER ( PLAY CHORD BUTTON )
@@ -740,6 +780,7 @@ const playChordTones = (arr) => {
 
 // PLAY CHORD NOTES IN SEQUENCE ( ARPEGGIO BUTTON )
 const arpeggiateChord = () => {
+
     const soundFiles = getChordToneSounds();
     setTimeout(() => {
         const sound = new Howl({
@@ -790,18 +831,20 @@ const arpeggiateChord = () => {
         });
         sound.play();
     }, 1700)
+
 }
 
 // CREATE A RESPONSIVE DIV FOR EACH CHORD DEGREE ( NOTES BUTTON )
 const makeSoundDivs = () => {
+
     const soundFiles = getChordToneSounds();
     // NEED ACTUAL NOTE NAMES WITHOUT PATH AND EXTENSION
-    const chordTones = displayChordTones().split(" ");
+    const chordTones = buildChordTones().split(" ");
     const audioContainer = document.getElementById("audio-container");
     // REMOVE EXISTING DIVS IF ANY TO CLEAR CONTENT IN AUDIOCONTAINER
     while (audioContainer.firstChild) {
         audioContainer.removeChild(audioContainer.firstChild);
-      }
+    }
     soundFiles.forEach((soundFile, i) => {
         soundFiles[i] = new Howl({
             src: [soundFile],
@@ -819,6 +862,7 @@ const makeSoundDivs = () => {
         audioContainer.appendChild(elem);
         // document.body.append(elem);
     })
+
 }
 
 
@@ -831,17 +875,17 @@ const refreshPage = () => {
 
 // EVENT HANDLERS ON BUTTONS
 const handleShowChordTones = () => {
-    displayChordName();
+    displayFullChordName();
     displayChordTones();
     displayChordScale();
     enableRegister();
     enableAllSoundAndNewButtons();
     hideExtensionInstruction();
     // ENABLE OTHER FOUR BUTTONS
-    addListenerPlayBtn();
-    addListenerArpeggiateBtn();
-    addListenerPlayIndividualBtn();
-    addListenerNewChordBtn();
+    addListenerPlayButton();
+    addListenerArpeggiateButton();
+    addListenerPlayIndividualButton();
+    addListenerNewChordButton();
 }
 
 const handlePlayChord = () => {
@@ -861,49 +905,49 @@ const handleNewChord = () => {
 }
 
 // EVENT LISTENERS ON BUTTONS
-const showChordTonesBtn = document.getElementById("chord-tones-btn");
+const showChordTonesButton = document.getElementById("chord-tones-btn");
 const playButton = document.getElementById("play-chord-btn");
 const arpeggiateButton = document.getElementById("arpeggiate-chord-btn");
 const playIndividualButton = document.getElementById("play-individual-btn");
 const newChordButton = document.getElementById("new-chord-btn");
 
 // WHEN CHORD TYPE SELECTION IS MADE ( IN getTypeChange() )
-const addListenerShowChordBtn = () => {
-    showChordTonesBtn.addEventListener("click", function(evt) {
+const addListenerShowChordButton = () => {
+    showChordTonesButton.addEventListener("click", function(evt) {
         evt.preventDefault();
         handleShowChordTones();
     })
 }
 
 // WHEN SHOW CHORD IS CLICKED ( IN handleShowChordTones() )
-const addListenerPlayBtn = () => {
+const addListenerPlayButton = () => {
     playButton.addEventListener("click", function(evt) {
         evt.preventDefault();
         handlePlayChord();
     })
 }
 
-const addListenerArpeggiateBtn = () => {
+const addListenerArpeggiateButton = () => {
     arpeggiateButton.addEventListener("click", function(evt) {
         evt.preventDefault();
         handleArpeggiate();
     })
 }
 
-const addListenerPlayIndividualBtn = () => {
+const addListenerPlayIndividualButton = () => {
     playIndividualButton.addEventListener("click", function(evt) {
         evt.preventDefault();
         handlePlayIndividual();
     })
 }
 
-const addListenerNewChordBtn = () => {
+const addListenerNewChordButton = () => {
     newChordButton.addEventListener("click", function(evt) {
         handleNewChord();
     })
 }
 
-// WHEN PAGE LOADS, ONLY NAME SELECTION IS ENABLED. ENABLE DROPDOWNS IN SEQUENCE: ONCE ONE IS SELECTED, ENABLE NEXT THEN ATER TYPE IS SELECTED, ENABLE ALL EXTENSIONS 6, 7, 9, 11, 13
+// WHEN PAGE LOADS, ONLY NAME SELECTION IS ENABLED. ENABLE DROPDOWNS IN SEQUENCE: ONCE ONE IS SELECTED, ENABLE NEXT THEN ATER TYPE IS SELECTED, ENABLE EXTENSIONS 6, 7, 9, 11, 13
 
 // INITIALISE VARS TO TRACK WHAT'S SELECTED AS NAME AND ACCIDENTAL
 let nameChangeVal;
@@ -948,7 +992,6 @@ let isImpossibleKey = false;
 
 // GET SELECTED ACCIDENTAL, ENABLE TYPE OPTIONS, SHOW INSTR ONCE ACCIDENTAL IS SELECTED
 const getAccidentalChange = () => {
-
     const accidentalDropdown = document.getElementById("accidental");
     accidentalDropdown.addEventListener('change', function() {
 
@@ -970,7 +1013,6 @@ const getAccidentalChange = () => {
         }
         showTypeInstruction();
     }, false);
-
 }
 getAccidentalChange();
 
@@ -984,8 +1026,8 @@ const getTypeChange = () => {
         showExtensionInstruction();
         enableShowChordButton();
         // ENABLE SHOW CHORD BUTTON 
-        showChordTonesBtn.classList.add("animated-btn");
-        addListenerShowChordBtn()
+        showChordTonesButton.classList.add("animated-btn");
+        addListenerShowChordButton()
     }, false);
 }
 getTypeChange();
@@ -1055,7 +1097,6 @@ const accidentalDisable = () => {
 
 // ONLY ENABLE POSSIBLE ACCIDENTALS
 const accidentalEnable = () => {
-
     switch (nameChangeVal) {
         case "c" :
         case "d" :
@@ -1077,7 +1118,6 @@ const accidentalEnable = () => {
             // flatOpt.disabled = false;
             break;
     }
-
 }
 
 const typeDisable = () => {
@@ -1196,7 +1236,6 @@ const enableAllTypes = () => {
 // ONLY ENABLE CHORD TYPES FOR VALID KEY SIGNATURES !!!
 // THIS DOES NOT HANDLE INSTRUCTIONS, ONLY THE TYPE SELECTION !!!
 const typeEnable = () => {
-    
     if (nameChangeVal=== "b" && accidentalChangeVal === "#") {
         disableBSharpTypes();
     }
@@ -1298,7 +1337,6 @@ const ninthDisable = () => {
 }
 
 const ninthEnable = (typeChangeVal) => {
-
     switch (typeChangeVal) {
         case "major" :
         case "minor" :
@@ -1319,7 +1357,6 @@ const ninthEnable = (typeChangeVal) => {
         default:
             console.log("FROM typeChangeVal: sus2");
     }
-
 }
 
 const eleventhDisable = () => {
@@ -1329,7 +1366,6 @@ const eleventhDisable = () => {
 }
 
 const eleventhEnable = (typeChangeVal) => {
-
     switch (typeChangeVal) {
         case "major" :
         case "minor" :
@@ -1349,7 +1385,6 @@ const eleventhEnable = (typeChangeVal) => {
         default:
             console.log("FROM typeChangeVal: sus4 / lydian");
     }
-
 }
 
 const thirteenthDisable = () => {
@@ -1359,7 +1394,6 @@ const thirteenthDisable = () => {
 }
 
 const thirteenthEnable = (str) => {
-
     const typeChangeVal = str;
     switch (typeChangeVal) {
         case "major" :
@@ -1379,7 +1413,6 @@ const thirteenthEnable = (str) => {
             addThirteenthOpt.disabled = false;
             break;
     }
-
 }
 
 const enableAllSoundAndNewButtons = () => {
@@ -1431,12 +1464,12 @@ const enableRegister = () => {
 
 const enableShowChordButton = () => {
     // NOT IN USE
-    // showChordTonesBtn.disabled = false;
+    // showChordTonesButton.disabled = false;
     // NOT IN USE
     // MAKE BUTTON HOVER-ABLE
-    // showChordTonesBtn.classList.add("hover");
-    showChordTonesBtn.classList.add("animated-btn");
-    showChordTonesBtn.classList.remove("pre-animation-btn");
+    // showChordTonesButton.classList.add("hover");
+    showChordTonesButton.classList.add("animated-btn");
+    showChordTonesButton.classList.remove("pre-animation-btn");
 }
 // DISABLE ALL
 const disableSelectOptions = () => {
