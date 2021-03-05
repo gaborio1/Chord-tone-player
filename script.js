@@ -9,12 +9,30 @@ class Chord {
         this.optNinth = optNinth;
         this.optEleventh = optEleventh;
         this.optThirteenth = optThirteenth;
-        // this.root = getRoot();
-        // this.sixthSeventh = this.sixthSeventh;
+        
+        this.root = this.getRoot();
+        this.flatSecond = this.getFlatSecond();
+        this.second = this.getSecond();
+        this.third = this.getThird();
+        this.fourth = this.getFourth();
+        this.sharpFourth = this.getSharpFourth();
+        this.flatFifth = this.getFlatFifth();
+        this.fifth = this.getFifth();
+        this.sharpFifth = this.getSharpFifth();
+        this.sixth = this.getSixth();
+        this.majorSixth = this.getMajorSixth();
+        this.minorSeventh = this.getMinorSeventh();
+        this.seventh = this.getSeventh();
+        this.ninth = this.getNinth();
+        this.eleventh = this.getEleventh();
+        this.sharpEleventh = this.getSharpEleventh();
+        this.thirteenth = this.getThirteenth();
+        this.forcedMajorThirteenth = this.forceMajorThirteenth();
+
         this.test = function() {
-            const {name, type, getRoot, getThird, getFifth, getMinorSeventh, optSeventh} = this;
+            const {name, type, getRoot, getThird, getFifth, optSixth, optSeventh, optNinth, optEleventh, optThirteenth} = this;
             // console.log(`Hello from: ${name}${accidental} ${type}, my notes: ${getRoot()}, ${getThird()}, ${getFifth()}`);
-            return `Hello from: ${name}${accidental} ${type} ${optSeventh}, my notes: ${getRoot()}, ${getThird()}, ${getFifth()}, ${this.getSeventh()}`;
+            return `Hello from: ${name}${accidental} ${type} ${optSixth} ${optSeventh} ${optNinth} ${optEleventh} ${optThirteenth}, my notes: ${getRoot()}, ${getThird()}, ${getFifth()}`;
         }
     }
     // FIND AND RETURN APPROPRIATE SCALE DEGREE FROM DIATONIC SCALE
@@ -195,8 +213,10 @@ const buildBaseTypeSymbol = () => {
         case "dominant" :
             if (getOptNinth() === "9" || getOptNinth() === "add9") {
                 baseTypeSymbol = "9";
+                break;
             } else if (getOptEleventh() === "11") {
                 baseTypeSymbol = "11";
+                break;
             } else if (getOptThirteenth() === "13") {
                 baseTypeSymbol = "13"
             }
@@ -207,6 +227,7 @@ const buildBaseTypeSymbol = () => {
         case "augmented" :
             if (getOptSeventh()) {
                 baseTypeSymbol = "+7 (7#5)";
+                break;
             } else {
                 baseTypeSymbol = "+";
             }
@@ -214,6 +235,7 @@ const buildBaseTypeSymbol = () => {
         case "diminished" :
             if (getOptSeventh()) {
                 baseTypeSymbol = "07";
+                break;
             } else {
                 baseTypeSymbol = "0";
             }
@@ -251,7 +273,6 @@ const addExtensionToBaseChordSymbol = () => {
 
     // ADD OPTIONAL 6,7,9,11,13 TO SYMBOL
     if (sixthValue && !seventhValue) {
-        console.log("hello");
         if (type === "major") {
             fullSymbol += "6";
         } else if (type === "minor") {
@@ -373,12 +394,12 @@ const displayFullChordName = () => {
 
 const buildChordTones = () => {
     // MAKE NEW CHORD AND USE ITS METHODS TO RETRIEVE ITS NOTES BASED OFF OF ITS CHORD SCALE
-    const chordObj = new Chord(getName(), getAccidental(), getType(), getOptSeventh());
+    const chordObj = new Chord(getName(), getAccidental(), getType(), getOptSixth(), getOptSeventh(), getOptNinth(), getOptEleventh(), getOptThirteenth());
     // this.test FROM CONSTRUCTOR
     console.log(chordObj.test());
+    console.log(chordObj);
 
     let chordTones = "";
-
     const type = getType();
     const sixthValue = getOptSixth();
     const seventhValue = getOptSeventh();
@@ -391,6 +412,7 @@ const buildChordTones = () => {
     const third = chordObj.getThird();
     const fourth = chordObj.getFourth();
     const sharpFourth = chordObj.getSharpFourth();
+    const flatFifth = chordObj.getFlatFifth();
     const fifth = chordObj.getFifth();
     const sharpFifth = chordObj.getSharpFifth();
     const sixth = chordObj.getSixth();
@@ -401,12 +423,13 @@ const buildChordTones = () => {
     const eleventh = chordObj.getEleventh();
     const sharpEleventh = chordObj.getSharpEleventh();
     const thirteenth = chordObj.getThirteenth();
+    // FORCE MAJOR THIRTEENTH IN MINOR CHORDS !!!
     const majorThirteenth = chordObj.forceMajorThirteenth();
 
     switch (type) {
         case "diminished" :
             // chordTones = `${chordObj.getRoot()} ${chordObj.getThird()} ${chordObj.getFlatFifth()}`;
-            chordTones = `${root} ${third} ${fifth}`;
+            chordTones = `${root} ${third} ${flatFifth}`;
             break;
         case "augmented" :
             chordTones = `${root} ${third} ${sharpFifth}`;
@@ -436,6 +459,9 @@ const buildChordTones = () => {
         if (type === "minor") {
             // MAKE 6TH MAJOR FOR MINOR CHORDS !!!
             chordTones += " " + majorSixth;
+        // SWAP 7 AND 6 IN 7/6:  C E G Bb A ==> C E G A Bb !!! 
+        } else if (type === "dominant") {
+            chordTones = `${root} ${third} ${fifth} ${sixth} ${minorSeventh}`;
         } else {
             chordTones += " " + sixth;
         }
@@ -498,8 +524,6 @@ const buildChordTones = () => {
     return chordTones;
 
 }
-
-
 
 // DISPLAY CHORD TONES 
 const displayChordTones = () => {
@@ -662,15 +686,12 @@ const getDiatonicScale = (name, accidental, type) => {
     return result;
 }
 
-
 // GET AND DISPLAY DIATONIC SCALE 
 const displayChordScale = () => {
     const chordScaleSpan = document.getElementById("chord-scale");
     const scale = getDiatonicScale(getName(), getAccidental(), getType());
     chordScaleSpan.innerText = scale;
 }
-
-
 
 // PLAY CHORD 
 
@@ -732,26 +753,29 @@ const getChordToneSounds = () => {
         for (let i = calcRegisterIdx(); i < soundNames.length; i++) {
             let condA = chordTone.length === 1;
             let condB = soundNames[i].charAt(0) === chordTone;
-            let condC = i >= minIdx;
+            let condC = i > minIdx;
             let condD = chordTone.length === 2;
             let condE = soundNames[i].includes(chordTone);
             let condF = soundNames[i].length < 8;
             let condG = chordTone.length === 3;
-            let condH = (soundNames[i].indexOf(chordTone) === 0 || soundNames[i].indexOf(chordTone) === 2);
+            let condH = (soundNames[i].indexOf(chordTone) === 0 || soundNames[i].indexOf(chordTone) === 1 || soundNames[i].indexOf(chordTone) === 2);
             // chordTone.length = 1    (  "F" )
-            if (condA && condB && condC) {
+            if (condA && condB && condC && condH) {
                 soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
+                // console.log(chordTone);
                 break;
             // chordTone.length = 2    ( F#" )
             } else if (condC && condD && condE && condF & condH) {
                 soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
+                // console.log(chordTone);
                 break;
             // chordTone.length = 3 "   ( F##" )
             } else if (condC && condE && condG) {
                 soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
+                // console.log(chordTone);
                 break;
             }
         }
@@ -864,7 +888,6 @@ const makeSoundDivs = () => {
     })
 
 }
-
 
 // REFRESH PAGE FOR NEW CHORD ( NEW CHORD BUTTON )
 const refreshPage = () => {
@@ -1045,7 +1068,6 @@ getTypeChange();
 // const gOpt = nameOptions.options[5]; 
 // const aOpt = nameOptions.options[6]; 
 // const bOpt = nameOptions.options[7]; 
-
 
 const accidentalOptions = document.getElementById("accidental");
 const naturalOpt = accidentalOptions.options[1];

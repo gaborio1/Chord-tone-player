@@ -40,8 +40,10 @@ bugs:
       +7  07
       M9/6  m9/6  9/6
       6add9 m6add9   
+      add9 madd9 
 
   C7/6: 6th plays same pitch as 7th
+  make add13 an octave higher than 6
 
   ✔️ if chordTone.length = 2 make sure chordTone is at idx 0 || 2
   ✔️ remove existing chord degree divs before appending new ones 
