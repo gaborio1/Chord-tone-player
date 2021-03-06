@@ -57,7 +57,7 @@ body {
 /* SIDEBAR */
 .glass__sidebar {
     flex: 2;
-    border-right: 1px solid white;
+    border-right: none;
     border-top-left-radius: .5rem;
     border-bottom-left-radius: .5rem;
     display: flex;
@@ -463,3 +463,166 @@ select {
 /* animation-iteration-count: 1;  */
 /* the name of the animation we defined above */
 /* animation-name: slideInFromLeft;  */
+
+
+
+
+/* 1024px BREAKPOINT */
+
+@media screen and (max-width: 1024px) {
+    .glass {
+        flex-direction: column;        
+        /* width: 60%; */
+        /* max-width: 820px; */
+        min-height: 60vh;
+        /* min-height: 600px; */
+       
+    }
+
+    .under-the-glass {
+        display: none;
+        /* width: 820px; */
+        /* height: 600px; */
+        /* border: 5px solid tomato; */
+        border: 2px solid rgba(9, 241, 241, 0.9);
+        border-radius: .5rem;
+        /* THIS POSITIONS DIV DIRECLY UNDER GLASS */
+        max-width: 567px;
+        /* min-height: 80vh; */
+        min-height: 60vh;
+
+        position: absolute;
+        z-index: 0;
+    
+    }
+
+        /* SIDEBAR */
+    .glass__sidebar {
+        flex: 1;
+        /* border-top-left-radius: .5rem; */
+        /* border-bottom-left-radius: .5rem; */
+        border-radius: .5rem;
+        display: flex;
+        border-bottom: 1px solid white;
+        flex-direction: row;
+        justify-content: space-between;
+        /* background: rgba(166, 189, 187, 0.349); */
+        background: rgba(255, 255, 255, 0.171);
+    }
+
+    .title-container {
+        /* flex: 1; */
+        width: 30%;
+    }
+
+    .title {
+        /* CHROME DEFAULT FONTS */
+        /* font-family: 'Times New Roman', Times, serif; */
+        font-size: 2.2rem;
+        padding: 0px;
+        margin-top: 1rem;
+        text-transform: uppercase;
+        text-align: center;
+        /* padding: 1rem; */
+        color: rgb(1, 92, 134);
+        text-shadow: 2px 2px 3px rgba(122, 122, 122, 0.5);
+
+        width: 11rem;
+    }
+
+    .sidebar__controls {
+        /* flex: 3; */
+        width: 40%;
+        border-left: 1px solid white;
+        border-right: 1px solid white;
+        border-top: none;
+        border-bottom: none;
+    }
+
+    .sidebar__logo {
+        /* flex: 1; */
+        width: 30%;
+        width: 12rem;
+    }
+
+    .logo {
+        /* CHROME DEFAULT FONTS */
+        margin-top: 1.5rem;
+        height: 7rem;
+        width: 7rem;
+        font-size: 1rem;
+        border: 6px solid rgb(1, 92, 134);
+        padding: 10px;
+        box-shadow: 4px 2px 5px rgba(122, 122, 122, 0.5);
+    }
+    
+    .m-nine {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0.3rem;
+        /* border: 2px solid rgb(187, 79, 79); */
+    }
+    
+    .letter-d {
+        /* border: 2px solid rgb(193, 204, 34); */
+        font-size: 4.5rem;
+        /* font-weight: 500; */
+    }
+    
+    .letter-m {
+        /* border: 2px solid rgb(34, 122, 11); */
+        border-bottom: 2px solid black;
+        font-size: 2.2rem;
+        margin-top: 0.3rem;
+    }
+    
+    .word-nine {
+        /* border: 2px solid rgb(207, 40, 207); */
+        margin-bottom: 1.2rem;
+        font-size: 1.0rem;
+        color: tomato;
+    }
+
+    /* CONTROL PANEL */
+    .glass__control-panel {
+
+        flex: 4;
+        
+    }
+
+    .card {
+        /* background: rgba(26, 41, 128, 0.2); */
+        background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4));
+        /* height: 25%; */
+        height: 100px;
+        margin: 0px 0px 0px 5%;
+        border-top-right-radius: .5rem;
+        border-bottom-right-radius: .5rem;
+        box-shadow: 6px 3px 10px rgba(122, 122, 122, 0.4);
+        display: flex;
+        /* THIS FIXES SHOW CHORD TONES CARD HEIGHT */
+        line-height: 1.1rem;
+    }
+
+    .play-options__audio-container {
+        display: flex;
+        justify-content: center;
+        /* TEMPORARY FIX: CARD GROWS IF 6 OR 7 SOUND DIVS */
+        width: 450px;
+        margin: 0px auto;
+    }
+
+    .sound-div {
+        width: 3.5rem;
+        color: black;    
+        background-color: rgba(255, 99, 71, 0.5);
+        border: 1px solid rgba(255, 99, 71, 0.361);
+        box-shadow: 2px 1px 2px rgba(255, 99, 71, 0.211);
+        border-radius: .3rem;
+        /* display: block; */
+        padding: .4rem;
+        margin: 2px;
+        text-align: center;
+    }
+
+}
