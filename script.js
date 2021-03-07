@@ -1557,3 +1557,24 @@ window.addEventListener("load", function() {
         showNameInstruction();
     }, 2000)
 });
+
+let resizeTimer;
+window.addEventListener("resize", () => {
+    const animatedElements = document.querySelectorAll(".animation-enabled");
+    for (let el of animatedElements) {
+        el.classList.remove("animation-enabled");
+        el.classList.add("animation-disabled");
+        // console.log("removed class");
+    }
+    // document.body.classList.add("resize-animation-stopper");
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        // document.body.classList.remove("resize-animation-stopper");
+        const animationDisabledElements = document.querySelectorAll(".animation-disabled");
+        for (let el of animationDisabledElements) {
+            el.classList.add("animation-enabled");
+            el.classList.remove("animation-disabled");
+            // console.log("added class");
+        }
+    }, 500);
+});

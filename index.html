@@ -16,7 +16,11 @@
 
     <!-- HOWLER JS MDN -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.js"></script>
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" media="screen and (min-device-width: 1025px)" href="style.css" />
+    <link rel='stylesheet' media='screen and (min-width: 481px) and (max-width: 1024px)' href='medium.css' />
+
+    <!-- <link rel="stylesheet" href="style.css"> -->
   </head>
 
   <body>
@@ -26,7 +30,7 @@
       <div id="player" class="glass">
       <!-- <form action="#"> -->
       <!--  The value property of an HTML option element can only be a string !!! -->
-        <div id="sidebar" class="glass__sidebar">
+        <div id="sidebar" class="glass__sidebar animation-enabled">
           <div id="title-container">
             <h1 id="title" class="title">Chord Tone Player</h1>
           </div>
@@ -66,7 +70,7 @@
         </div>
         <br>
         <div id="control-panel" class="glass__control-panel">
-          <div class="card control-panel__triad-select animating-width" id="triad-select">
+          <div class="card control-panel__triad-select animating-width animation-enabled" id="triad-select">
             <div id="triad-select-first-row" class="control-panel__row">
               <label for="name">Letter name:</label>
               <select name="name" id="name">
@@ -110,7 +114,7 @@
             </div>
           </div>
           <br>
-          <div class="control-panel__extension-select card animating-width" id="extension-select">
+          <div class="control-panel__extension-select card animating-width animation-enabled" id="extension-select">
             <div class="control-panel__row">
             <p class="">Extensions: <span class="instruction hidden" id="extension-instruction"><i class="fas fa-question-circle"></i> Optional!</span></p>
             </div>
@@ -160,7 +164,7 @@
           </div>
           <br>
           <!-- <button type="button" onclick="displayData()">Get chord tones-onclick</button> -->
-          <div class="control-panel__display-chord card animating-width" id="display-chord">
+          <div class="control-panel__display-chord card animating-width animation-enabled" id="display-chord">
 
             <!-- ORIGINAL BUTTON -->
             <!-- <button id="chord-tones-btn" disabled>Show chord tones</button> -->
@@ -179,7 +183,7 @@
             </div>
           </div>
           <br>
-          <div id="play-options" class="control-panel__play-options card">
+          <div id="play-options" class="control-panel__play-options card animation-enabled">
             <div id="play-options-btn-row" class="play-options__btn-row">
 
               <!-- ORIGINAL BUTTONS -->
