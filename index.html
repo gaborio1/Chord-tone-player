@@ -17,17 +17,23 @@
     <!-- HOWLER JS MDN -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.js"></script>
 
-    <link rel="stylesheet" media="screen and (min-device-width: 1025px)" href="style.css" />
+    <link rel="stylesheet" media="screen and (min-width: 1025px) " href="style.css" />
     <link rel='stylesheet' media='screen and (min-width: 481px) and (max-width: 1024px)' href='medium.css' />
 
     <!-- <link rel="stylesheet" href="style.css"> -->
   </head>
-
   <body>
     <div id="main" class="main">
+      <div class="text-container animation-enabled">
+        <h1>Build your chord.</h1>
+        <h2>Get the notes.</h2>
+        <h2>Then play.</h2>
+      </div>
+      
       <!-- THIS DIV IS STACKED UNDERNEATH GLASS, ONLY HAS STYLING PURPOSE -->
-      <div class="under-the-glass"></div>
-      <div id="player" class="glass">
+      <!-- NOT IN USE -->
+      <!-- <div class="under-the-glass"></div> -->
+      <div id="player" class="glass animation-enabled">
       <!-- <form action="#"> -->
       <!--  The value property of an HTML option element can only be a string !!! -->
         <div id="sidebar" class="glass__sidebar animation-enabled">
@@ -177,9 +183,9 @@
 
             <p id="invalid-key-message" class="hidden">Theoretical key!</p>
             <div id="display-chord-text-rows" class=" control-panel__display-chord__text-rows control-panel__row">
-              <p>Chord name: <span id="full-chord-name"></span></p>
-              <p>Chord tones: <span id="chord-tones"></span></p>
-              <p>Chord scale: <span id="chord-scale"></span></p>
+              <p>Chord name: <span id="full-chord-name" class="chord-name-span"></span></p>
+              <p>Chord tones: <span id="chord-tones" class="chord-tones-span"></span></p>
+              <p>Chord scale: <span id="chord-scale" class="chord-scale-span"></span></p>
             </div>
           </div>
           <br>

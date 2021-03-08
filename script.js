@@ -690,7 +690,10 @@ const getDiatonicScale = (name, accidental, type) => {
 const displayChordScale = () => {
     const chordScaleSpan = document.getElementById("chord-scale");
     const scale = getDiatonicScale(getName(), getAccidental(), getType());
-    chordScaleSpan.innerText = scale;
+    console.log(scale.join(" "));
+    const scaleArr = scale.join(" ");
+    console.log(scaleArr);
+    chordScaleSpan.innerText = scale.join("  ");
 }
 
 // PLAY CHORD 

@@ -29,20 +29,20 @@ body {
 }
 
 /* THIS DIV IS COVERED BY THE GLASS BUT ITS BORDER CAN BE SEEN BLURRED AROUND THE INNER EDGE OF GLASS */
-.under-the-glass {
-
+/* NOT IN USE */
+/* .under-the-glass {
     display: none;
-    border: 2px solid rgba(9, 241, 241, 0.9);
     border-radius: .5rem;
     max-width: 567px;
     min-height: 60vh;
-    /* border: 5px solid tomato; */
     border: 2px solid rgba(9, 241, 241, 0.9);
     border-radius: .5rem;
-    /* THIS POSITIONS DIV DIRECLY UNDER GLASS */
     position: absolute;
     z-index: 0;
+} */
 
+.text-container {
+    display: none;
 }
 
 /* PLAYER GLASS BOARD STACKED ON TOP OF .under-the-glass */
@@ -98,7 +98,7 @@ body {
     /* padding: 1rem; */
     color: rgb(1, 92, 134);
     text-shadow: 2px 2px 3px rgba(122, 122, 122, 0.5);
-
+    line-height: 2.5rem;
     width: 11rem;
 }
 
@@ -140,9 +140,6 @@ body {
     justify-content: center;
 }
 
-
-
-
 .logo {
     /* CHROME DEFAULT FONTS */
     font-family: 'Times New Roman', Times, serif;
@@ -168,12 +165,14 @@ body {
 
 .letter-d {
     /* border: 2px solid rgb(193, 204, 34); */
+    color: rgb(1, 92, 134);
     font-size: 4.5rem;
     /* font-weight: 500; */
 }
 
 .letter-m {
     /* border: 2px solid rgb(34, 122, 11); */
+    color: rgb(1, 92, 134);
     border-bottom: 2px solid black;
     font-size: 2.2rem;
     margin-top: 0.3rem;
@@ -185,8 +184,6 @@ body {
     font-size: 1.0rem;
     color: tomato;
 }
-
-
 
 /* CONTROL PANEL */
 
@@ -387,6 +384,31 @@ select {
   }
 
 
+p .chord-name-span {
+    /* border: 1px solid beige; */
+    /* letter-spacing: .5rem; */
+    /* font-size: 1.2rem; */
+    margin-left: 10px;
+    color: black;
+}
+
+
+p .chord-tones-span {
+    /* border: 1px solid beige; */
+    /* font-size: 1.2rem; */
+    /* letter-spacing: .3rem; */
+    margin-left: 10px;
+    color: black;
+}
+
+
+p .chord-scale-span {
+    /* border: 1px solid beige; */
+    letter-spacing: .3rem;
+    margin-left: 10px;
+}
+
+
 .control-panel__display-chord {
     width: 80%;
     /* TEMPORARY FIX: SHOW CHORD BUTTON STICKS OUT OF CARD WITH GOOGLE FONTS */
@@ -426,7 +448,6 @@ select {
     margin: 0px auto;
 }
 
-
 .sound-div {
     width: 3.5rem;
     color: black;    
@@ -444,12 +465,6 @@ select {
     background-color: rgba(255, 99, 71, 0.7);
 }
 
-
-
-
-
-
-
 /* SIDEBAR FROM ABOVE */
 @keyframes slideInFromAbove {
     0% {
@@ -464,7 +479,6 @@ select {
     animation: 1.8s ease-out 0s 1 slideInFromAbove;
 }
 
-
 /* CARDS FROM LEFT */
  @keyframes slideInFromLeft {
 
@@ -476,8 +490,7 @@ select {
     }
 }
    
-
-/* CARDS FROM LEFT */
+/* CARDS FROM RIGHT */
 @keyframes slideInFromRight {
 
     0% {
