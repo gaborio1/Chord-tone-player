@@ -3,6 +3,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <!-- FIX DEV TOOLS DEVICE, WITHOUT THIS STYLES NOT APPLIED  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chord Tone Player</title>
     <meta name="description" content="">
     <meta name="author" content="">
@@ -17,10 +19,11 @@
     <!-- HOWLER JS MDN -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.js"></script>
 
-    <link rel="stylesheet" media="screen and (min-width: 1025px) " href="style.css" />
-    <link rel='stylesheet' media='screen and (min-width: 481px) and (max-width: 1024px)' href='medium.css' />
+    <!-- MEDIA QUERY BREAKPOINTS -->
+    <link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px) " href="style.css" />
+    <link rel='stylesheet' type="text/css" media='screen and (min-width: 601px) and (max-width: 1024px)' href='medium.css' />
+    <link rel='stylesheet' type="text/css" media='screen and (min-width: 375px) and (max-width: 600px)' href='xsmall.css' />
 
-    <!-- <link rel="stylesheet" href="style.css"> -->
   </head>
   <body>
     <div id="main" class="main">
@@ -42,7 +45,7 @@
           </div>
           <div id="sidebar-controls-container" class="sidebar__controls">
             <div id="transpose-select-container" class="controls__transpose-select">
-              <label for="register">Transpose up / down:</label>
+              <label class="label label--transpose" for="register">Transpose:</label>
               <select name="register" id="register">
                 <option value="guitar">Guitar</option>
                 <option value="bass" disabled>Bass</option>
@@ -59,8 +62,7 @@
                 <span>New chord <i class="fas fa-redo-alt"></i></span>
             </div>
             <!-- END OF ANIMATED BUTTON -->
-
-            </div>  
+          </div>  
           </div>
           <div id="logo-container" class="sidebar__logo">
             <div id="logo" class="logo">
@@ -74,11 +76,11 @@
             <!-- <h1 id="g">❤️ Hello szia, Tomi vagyok ❤️ </h1> -->
           </div>
         </div>
-        <br>
+        
         <div id="control-panel" class="glass__control-panel">
           <div class="card control-panel__triad-select animating-width animation-enabled" id="triad-select">
             <div id="triad-select-first-row" class="control-panel__row">
-              <label for="name">Letter name:</label>
+              <label class="label" for="name">Letter name:</label>
               <select name="name" id="name">
                 <option class="note-name"></option>
                 <option value="c" class="note-name">c</option>
@@ -92,7 +94,7 @@
               <p class="instruction hidden" id="name-instruction"><i class="fas fa-arrow-circle-left"></i> Select name!</p>
             </div>
             <div id="triad-select-second-row" class="control-panel__row">
-              <label for="accidental">Accidental:</label>
+              <label class="label" for="accidental">Accidental:</label>
               <select name="accidental" id="accidental">
                 <option class="note-accidental"></option>
                 <option value="" class="note-accidental">natural</option>
@@ -102,7 +104,7 @@
               <p class="instruction hidden" id="accidental-instruction"><i class="fas fa-arrow-circle-left"></i> Select accidental!</p>
             </div>
             <div id="triad-select-third-row" class="control-panel__row">
-              <label for="type">Chord type:</label>
+              <label class="label" for="type">Chord type:</label>
               <select name="type" id="type">
                 <option></option>
                 <option value="major">major</option>
@@ -119,7 +121,7 @@
               <p class="instruction hidden" id="type-instruction"><i class="fas fa-arrow-circle-left"></i> Select type!</p>
             </div>
           </div>
-          <br>
+          <!-- <br> -->
           <div class="control-panel__extension-select card animating-width animation-enabled" id="extension-select">
             <div class="control-panel__row">
             <p class="">Extensions: <span class="instruction hidden" id="extension-instruction"><i class="fas fa-question-circle"></i> Optional!</span></p>
@@ -127,21 +129,21 @@
             <!-- <p class="instruction hidden" id="extension-instruction">Optional!</p> -->
             <div id="extension-select-first-row" class="control-panel__row">
               <div class="label-select">
-                <label for="sixth">6th:</label>
+                <label class="label" for="sixth">6th:</label>
                 <select name="sixth" id="sixth">
                   <option value=""></option>
                   <option value="6">6</option>
                 </select>
               </div>
               <div class="label-select">
-                <label for="seventh">7th:</label>
+                <label class="label" for="seventh">7th:</label>
                 <select name="seventh" id="seventh">
                   <option value=""></option>
                   <option value="7">7</option>
                 </select>
               </div>
               <div class="label-select">
-                <label for="ninth">9th:</label>
+                <label class="label" for="ninth">9th:</label>
                 <select name="ninth" id="ninth">
                   <option value=""></option>
                   <option value="9">9</option>
@@ -151,7 +153,7 @@
             </div>
             <div id="extension-select-second-row" class="control-panel__row">
               <div class="label-select">
-                <label for="eleventh">11th:</label>
+                <label class="label" for="eleventh">11th:</label>
                 <select name="eleventh" id="eleventh">
                   <option value=""></option>
                   <option value="11">11</option>
@@ -159,7 +161,7 @@
                 </select>
               </div>
               <div class="label-select">
-                <label for="thirteenth">13th:</label>
+                <label class="label" for="thirteenth">13th:</label>
                   <select name="thirteenth" id="thirteenth">
                   <option value=""></option>
                   <option value="13">13</option>
@@ -168,7 +170,7 @@
               </div>
             </div>
           </div>
-          <br>
+          <!-- <br> -->
           <!-- <button type="button" onclick="displayData()">Get chord tones-onclick</button> -->
           <div class="control-panel__display-chord card animating-width animation-enabled" id="display-chord">
 
@@ -188,7 +190,7 @@
               <p>Chord scale: <span id="chord-scale" class="chord-scale-span"></span></p>
             </div>
           </div>
-          <br>
+          <!-- <br> -->
           <div id="play-options" class="control-panel__play-options card animation-enabled">
             <div id="play-options-btn-row" class="play-options__btn-row">
 
@@ -213,7 +215,6 @@
             <div id="audio-container" class="play-options__audio-container"></div>
           </div>
         </div>
-        <br>
       </div>
     </body>
   <script src="script.js"></script>

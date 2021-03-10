@@ -1553,8 +1553,8 @@ const playIntro = () => {
 }
 
 window.addEventListener("load", function() {
-    console.log("page is loaded");
-        // playIntro();
+    console.log("page is loaded");    
+        playIntro();
     disableSelectOptions();
     setTimeout(() => {
         showNameInstruction();

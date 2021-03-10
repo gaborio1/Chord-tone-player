@@ -19,10 +19,11 @@ body {
 .main {
     min-height: 100vh;
     /* https://uigradients.com/#AquaMarine */
-    background: linear-gradient(to right top ,#1A2980, #26D0CE);
-    background: repeating-linear-gradient(to right bottom ,#122175, #23a8a6);
     /* background: linear-gradient(to right top ,#51577c, #26D0CE); */
-
+    background: linear-gradient(to right bottom ,#122175, #23a8a6);
+    
+    /* THIS IS COOL !!! */
+    /* background: #000000d5; */
 
     display: flex;
     flex-direction: column;
