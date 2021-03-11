@@ -1,5 +1,5 @@
-@media only screen and (min-width : 321px) and (max-width : 600px) {
-    /* CSS RESET */
+@media only screen and (min-width : 100px) and (max-width : 600px) {
+
     * {
         margin: 0;
         padding: 0;
@@ -11,20 +11,11 @@
         font-weight: 200;
         /* margin: 0px; */
     }
-    /* 
-    .resize-animation-stopper * {
-        animation: none !important;
-        transition: none !important;
-    } */
 
     /* BACKGROUND */
     .main {
-
-        height: 100vh;
+        height: 95vh;
         /* width: 100%; */
-        /* https://uigradients.com/#AquaMarine */
-        /* background: linear-gradient(to right top ,#1A2980, #26D0CE); */
-        /* background: linear-gradient(to right top ,#51577c, #26D0CE); */
         background: #000000d5;
         /* background: beige; */
         display: flex;
@@ -33,63 +24,32 @@
 
     }
 
-    /* THIS DIV IS COVERED BY THE GLASS BUT ITS BORDER CAN BE SEEN BLURRED AROUND THE INNER EDGE OF GLASS */
-    /* NOT IN USE */
-    /* .under-the-glass {
-        display: none;
-        border-radius: .5rem;
-        max-width: 567px;
-        min-height: 60vh;
-        border: 2px solid rgba(9, 241, 241, 0.9);
-        border-radius: .5rem;
-        position: absolute;
-        z-index: 0;
-    } */
-
     .text-container {
         display: none;
     }
 
     /* PLAYER GLASS BOARD STACKED ON TOP OF .under-the-glass */
     .glass {    
-        /* min-height: 60vh; */
+        border: 5px solid rgba(32, 214, 102, 0.766);
+        height: 95vh;
+        width: 95vw;
         display: flex;
         flex-direction: column;  
-        /* align-items: center; */
-        min-width: 370px;
-        max-width: 375px;
-        max-height: 667px;
-        /* height: 1000px; */
-        border-radius: .5rem;
-        /* border: 5px solid black; */
-        /* box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.4); */
-        /* background: linear-gradient(to right bottom, cornsilk, #26D0CE); */
-        /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
-        /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
-        /* background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2)); */
-        /* background: rgba(255, 255, 255, 0.4); */
+        align-items: center;
+        border-radius: .8rem;
         background: rgba(255, 255, 255, 0.115);
-        /* HOW MUCH BACKDROP IS BLURRED */
-        backdrop-filter: blur(2rem);
-        /* position: relative; */
     }
 
     /* SIDEBAR */
     .glass__sidebar {
-        height: 120px;
-        /* border: 3px solid green; */
-        flex: 1;
-        /* height: 150px; */
+        /* height: 20%; */
+        width: 100%;
         border-top-left-radius: .5rem;
         border-top-right-radius: .5rem;
         /* border-radius: .5rem; */
         display: flex;
-        /* border-bottom: 1px solid rgba(255, 255, 255, 0.355); */
-        border-bottom: 1px solid rgba(255, 99, 71, 0.533);
         flex-direction: column;
         justify-content: space-between;
-        /* background: rgba(166, 189, 187, 0.349); */
-        /* background: rgba(255, 255, 255, 0.171); */
         background: rgba(255, 255, 255, 0.053);
         background: #FFBE0B;
         /* background: linear-gradient(to  bottom, #FFBE0B, #FB5607); */
@@ -110,14 +70,10 @@
         /* text-transform: uppercase; */
         text-align: center;
         letter-spacing: .1rem;
-        /* padding: 1rem; */
         color: rgb(1, 92, 134);
         color: #FB5607;
         color: #3A86FF;
         color: black;
-        /* text-shadow: 2px 2px 2px rgb(0, 0, 0); */
-        /* line-height: 2rem; */
-        /* width: 8rem; */
     }
 
     .glass__sidebar__transpose-and-logo-container {
@@ -128,11 +84,6 @@
 
     .sidebar__controls {
         flex: 2;
-        /* width: 33.33%; */
-        /* border-left: 1px solid rgba(255, 255, 255, 0.355); */
-        /* border-left: 1px solid rgba(255, 99, 71, 0.533); */
-        /* border-right: 1px solid rgba(255, 255, 255, 0.355); */
-        /* border-right: 1px solid rgba(255, 99, 71, 0.533); */
         border-top: none;
         border-bottom: none;
         display: flex;
@@ -142,12 +93,9 @@
     }
 
     .controls__transpose-select {
-        /* margin-top: .5rem; */
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* justify-content: center; */
-        /* border: 1px solid black; */
     }
 
     .controls__transpose-select select {
@@ -155,10 +103,10 @@
         margin-top: .2rem;
     }
 
-    .controls__new-chord-container {
-        /* border: 2px solid white; */
-        /* margin-bottom: 1rem; */
-    }
+    /* .controls__new-chord-container {
+        border: 2px solid white;
+        margin-bottom: 1rem;
+    } */
 
 
     .sidebar__logo {
@@ -181,9 +129,7 @@
         justify-content: center;
         /* height: 5rem; */
         /* width: 6rem; */
-        /* border: 6px solid rgb(1, 92, 134); */
         /* border: 6px solid #3A86FF; */
-
         /* padding: 10px; */
         /* box-shadow: 4px 2px 5px rgba(122, 122, 122, 0.5); */
     }
@@ -221,32 +167,53 @@
     }
 
     /* CONTROL PANEL */
-
     .glass__control-panel {
         /* border: 3px solid green; */
-        flex: 4;
+        /* flex: 4; */
         display: flex;
+        /* min-height: 454px; */
+        height: 100%;
+        width: 100%;
         flex-direction: column;
         justify-content: space-between;
         margin-top: 0px;
     }
 
-
-    .animated-btn span {
+    .pre-animation-btn span {
         /* border: 1px solid rgba(245, 245, 220, 0.567); */
-        box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.245);        border-radius: .3rem;
-        padding-left: 15px;
-        color: #FFBE0B;
+        /* box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.245);  */
+        border-radius: .3rem;
+        padding-left: 12px;
+        /* color: #FFBE0B; */
         color: black;
-        color: rgb(255, 255, 255);
+        /* color: rgb(255, 255, 255); */
     }
 
+    .animated-btn span {
+        padding: 0px 0px 0px 10px;
+        /* border: 1px solid rgba(0, 0, 0, 0.67); */
+        box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.245); 
+        border-radius: .1rem;
+    }
+
+
+    .controls__new-chord-container .pre-animation-btn span {
+        padding: 0px 0px 0px 12px;
+        margin-left: 10px;
+    }
+
+
+
+    .controls__new-chord-container .animated-btn span {
+        padding: 0px 0px 0px 12px;
+        margin-left: 5px;
+    }
 
     /*  FONT AWESOME ICONS*/
     i {
         /* display: none; */
         font-size: .6rem;
-        margin: 0px 4px 0px 4px;
+        margin: 0px 6px 0px 4px;
         color: #FFBE0B;
     }
 
@@ -271,12 +238,14 @@
         margin-left: .25rem;
     }
 
-
     .card {
         /* background: rgba(26, 41, 128, 0.2); */
         background: rgba(255, 255, 255, 0.053);
-        /* height: 25%; */
-        height: 120px;
+        height: 25%;
+        /* height: 120px; */
+        /* min-height: 106px; */
+        /* min-width: 300px; */
+        /* width: 100%;       */
         /* margin: 15px 0px 0px 0%; */
         /* border-top-right-radius: .5rem; */
         /* border-bottom-right-radius: .5rem; */
@@ -286,6 +255,7 @@
         line-height: 1.1rem;
         /* border: 1px solid beige; */
     }
+
 
     .control-panel__row {
         margin-left: 1.5rem;
@@ -437,7 +407,8 @@
         /* background-color: #FFBE0B; */
         /* border: 1px solid rgba(255, 99, 71, 0.361); */
         /* box-shadow: 2px 1px 2px rgba(255, 99, 71, 0.211); */
-        box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.245);        border-radius: .3rem;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.245);        
+        border-radius: .2rem;
         /* display: block; */
         padding: .4rem;
         margin: 2px;
@@ -447,7 +418,7 @@
     .sound-div:hover {
         background-color: rgba(255, 99, 71, 0.7);
         background-color: #FF006E;
-        /* background-color: #FFBE0B; */
+        background-color: #FFBE0B;
     }
 
     /* SIDEBAR FROM ABOVE */
