@@ -20,9 +20,11 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.js"></script>
 
     <!-- MEDIA QUERY BREAKPOINTS -->
-    <link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px) " href="style.css" />
-    <link rel='stylesheet' type="text/css" media='screen and (min-width: 601px) and (max-width: 1024px)' href='medium.css' />
     <link rel='stylesheet' type="text/css" media='screen and (min-width: 375px) and (max-width: 600px)' href='xsmall.css' />
+    <link rel='stylesheet' type="text/css" media='screen and (min-width: 601px) and (max-width: 1024px)' href='medium.css' />
+    <link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px) " href="style.css" />
+
+    
 
   </head>
   <body>
@@ -39,42 +41,50 @@
       <div id="player" class="glass animation-enabled">
       <!-- <form action="#"> -->
       <!--  The value property of an HTML option element can only be a string !!! -->
+
         <div id="sidebar" class="glass__sidebar animation-enabled">
+
           <div id="title-container">
             <h1 id="title" class="title">Chord Tone Player</h1>
           </div>
-          <div id="sidebar-controls-container" class="sidebar__controls">
-            <div id="transpose-select-container" class="controls__transpose-select">
-              <label class="label label--transpose" for="register">Transpose:</label>
-              <select name="register" id="register">
-                <option value="guitar">Guitar</option>
-                <option value="bass" disabled>Bass</option>
-                <option value="guitarUp" disabled>Guitar +12</option>
-              </select>
-            </div>
-            <div id="new-chord-btn-container" class="controls__new-chord-container">
 
-              <!-- ORIGINAL BUTTON -->
-              <!-- <button id="new-chord-btn" disabled>New chord</button> -->
-
-              <!-- ANIMATED BUTTON  -->
-              <div id="new-chord-btn" class="pre-animation-btn enabled-with-show-btn">
-                <span>New chord <i class="fas fa-redo-alt"></i></span>
-            </div>
-            <!-- END OF ANIMATED BUTTON -->
-          </div>  
-          </div>
-          <div id="logo-container" class="sidebar__logo">
-            <div id="logo" class="logo">
-              <div id="letter-d" class="letter-d">D</div>
-              <div id="m-nine" class="m-nine">
-                <div id="letter-m" class="letter-m">m</div>
-                <div id="word-nine" class="word-nine">nine</div>
+          <div class="glass__sidebar__transpose-and-logo-container">
+            <div id="sidebar-controls-container" class="sidebar__controls">
+              <div id="transpose-select-container" class="controls__transpose-select">
+                <label class="label label--transpose" for="register">Transpose:</label>
+                <select name="register" id="register">
+                  <option value="guitar">Guitar</option>
+                  <option value="bass" disabled>Bass</option>
+                  <option value="guitarUp" disabled>Guitar +12</option>
+                </select>
               </div>
+              <div id="new-chord-btn-container" class="controls__new-chord-container">
+  
+                <!-- ORIGINAL BUTTON -->
+                <!-- <button id="new-chord-btn" disabled>New chord</button> -->
+  
+                <!-- ANIMATED BUTTON  -->
+                <div id="new-chord-btn" class="pre-animation-btn enabled-with-show-btn">
+                  <span>New chord <i class="fas fa-redo-alt"></i></span>
+                </div>
+                <!-- < !-- END OF ANIMATED BUTTON --> 
+              </div>  
             </div>
-            <!-- <h1 id="g">Maci ❤️ Bogar</h1> -->
-            <!-- <h1 id="g">❤️ Hello szia, Tomi vagyok ❤️ </h1> -->
+  
+            <div id="logo-container" class="sidebar__logo">
+              <div id="logo" class="logo">
+                <div id="letter-d" class="letter-d">D</div>
+                <div id="m-nine" class="m-nine">
+                  <div id="letter-m" class="letter-m">m</div>
+                  <div id="word-nine" class="word-nine">nine</div>
+                </div>
+              </div>
+              <!-- <h1 id="g">Maci ❤️ Bogar</h1> -->
+              <!-- <h1 id="g">❤️ Hello szia, Tomi vagyok ❤️ </h1> -->
+            </div>
           </div>
+          
+
         </div>
         
         <div id="control-panel" class="glass__control-panel">

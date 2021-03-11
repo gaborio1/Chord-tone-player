@@ -1,527 +1,546 @@
+
+@media only screen and (min-width : 601px) and (max-width : 1024px) {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Mukta Vaani', sans-serif;
+        font-weight: 200;
+    }
+    /* 
+    .resize-animation-stopper * {
+        animation: none !important;
+        transition: none !important;
+      } */
+    
+    /* BACKGROUND */
+    .main {
+    
+        min-height: 100vh;
+        /* https://uigradients.com/#AquaMarine */
+        background: linear-gradient(to right top ,#1A2980, #26D0CE);
+        /* background: linear-gradient(to right top ,#51577c, #26D0CE); */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+    }
+    
+    /* THIS DIV IS COVERED BY THE GLASS BUT ITS BORDER CAN BE SEEN BLURRED AROUND THE INNER EDGE OF GLASS */
+    /* NOT IN USE */
+    /* .under-the-glass {
+        display: none;
+        border-radius: .5rem;
+        max-width: 567px;
+        min-height: 60vh;
+        border: 2px solid rgba(9, 241, 241, 0.9);
+        border-radius: .5rem;
+        position: absolute;
+        z-index: 0;
+    } */
+    
+    .text-container {
+        display: none;
+    }
+    
+    /* PLAYER GLASS BOARD STACKED ON TOP OF .under-the-glass */
+    .glass {
+    
+        flex-direction: column;        
+        min-height: 60vh;
+        display: flex;
+        max-width: 820px;
+        border-radius: .5rem;
+        border: 2px solid rgba(9, 241, 241, 0.9);
+        box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.4);
+        /* background: linear-gradient(to right bottom, cornsilk, #26D0CE); */
+        /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
+        /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
+        /* background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2)); */
+        background: rgba(255, 255, 255, 0.4);
+        /* HOW MUCH BACKDROP IS BLURRED */
+        backdrop-filter: blur(2rem);
+        /* position: relative; */
+    }
+    
+    /* SIDEBAR */
+    .glass__sidebar {
+    
+    
+        flex: 1;
+        /* border-top-left-radius: .5rem; */
+        /* border-bottom-left-radius: .5rem; */
+        border-radius: .5rem;
+        display: flex;
+        border-bottom: 1px solid white;
+        flex-direction: row;
+        justify-content: space-between;
+        /* background: rgba(166, 189, 187, 0.349); */
+        background: rgba(255, 255, 255, 0.171);
+      
+    }
+    
+    .glass__sidebar__transpose-and-logo-container {
+        flex: 2;
+        display: flex;
+        flex-direction: row;
+        /* border: 3px solid green; */
+    }
+
+    .title-container {
+        flex: 1;
+        /* width: 30%; */
+    }
+    
+    .title {
+        /* CHROME DEFAULT FONTS */
+        /* font-family: 'Times New Roman', Times, serif; */
+        font-size: 2.2rem;
+        padding: 0px;
+        margin-top: 1rem;
+        text-transform: uppercase;
+        text-align: center;
+        /* padding: 1rem; */
+        color: rgb(1, 92, 134);
+        text-shadow: 2px 2px 3px rgba(122, 122, 122, 0.5);
+        line-height: 2.5rem;
+        width: 11rem;
+    }
+    
+    .sidebar__controls {
+        flex: 1;
+        width: 40%;
+        border-left: 1px solid white;
+        border-right: 1px solid white;
+        border-top: none;
+        border-bottom: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+    
+    .controls__transpose-select {
+        margin-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+    }
+    
+    .controls__transpose-select select {
+        margin: 1.2em auto;
+    }
+    
+    .controls__new-chord-container {
+        /* border: 2px solid white; */
+        margin-bottom: 1rem;
+    }
+    
+    
+    .sidebar__logo {
+        flex: 1;
+        /* height: 30%; */
+        width: 12rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .logo {
+        /* CHROME DEFAULT FONTS */
+        font-family: 'Times New Roman', Times, serif;
+        margin-top: .2rem;
+        border-bottom-left-radius: .8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 7rem;
+        width: 7rem;
+        font-size: 1rem;
+        border: 6px solid rgb(1, 92, 134);
+        padding: 10px;
+        box-shadow: 4px 2px 5px rgba(122, 122, 122, 0.5);
+    }
+    
+    .m-nine {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0.3rem;
+        /* border: 2px solid rgb(187, 79, 79); */
+    }
+    
+    .letter-d {
+        /* border: 2px solid rgb(193, 204, 34); */
+        color: rgb(1, 92, 134);
+        font-size: 4.5rem;
+        /* font-weight: 500; */
+    }
+    
+    .letter-m {
+        /* border: 2px solid rgb(34, 122, 11); */
+        color: rgb(1, 92, 134);
+        border-bottom: 2px solid black;
+        font-size: 2.2rem;
+        margin-top: 0.3rem;
+    }
+    
+    .word-nine {
+        /* border: 2px solid rgb(207, 40, 207); */
+        margin-bottom: 1.2rem;
+        font-size: 1.0rem;
+        color: tomato;
+    }
+    
+    /* CONTROL PANEL */
+    
+    .glass__control-panel {
+        flex: 4;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        justify-content: center;
+    }
+    
+    /* CURRENTLY NOT IN USE */
+    /* ORIGINAL BUTTON */
+    /* button {
+        width: 7.5rem;
+        border: none;
+        outline: none;
+        border-radius: .3rem;
+        padding: .4rem;
+        background-color: rgba(86, 125, 143, 0.5);
+    }
+    button.hover:hover {
+        background-color: rgba(86, 125, 143, 0.8);
+    } */
+    /* END OF ORIGINAL BUTTON */
+    
+    /* ANIMATED BUTTON */
+    .pre-animation-btn {
+        width: 7.5rem;
+        /* height: 1rem; */
+        /* padding: .3rem; */
+        padding-top: .1rem;
+        text-align: center;
+        margin: .5rem;
+        background-color: rgba(86, 125, 143, 0.35);
+        border-radius: .2rem;
+        /* box-shadow: 4px 2px 4px rgba(122, 122, 122, 0.4); */
+    }
+    
+    .animated-btn {
+        /* color: #FFF; */
+        color: black;
+        transition: all 0.8s;
+        position: relative;
+        width: 7.5rem;
+        /* padding: .3rem; */
+        padding-top: .1rem;
+        text-align: center;
+        margin: .5rem;
+      }
+    
+    .animated-btn::before {
+        border-radius: .2rem;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        /* background-color: rgba(86, 125, 143, 0.45); */
+        border: 1px solid  rgba(0, 107, 156, 0.348);
+        background-color: rgba(0, 107, 156, 0.307);
+        box-shadow: 4px 2px 4px rgba(122, 122, 122, 0.4);
+        transition: all 0.5s;
+    }
+    
+    .animated-btn:hover::before {
+        opacity: 0 ;
+        transform: scale(0.5,0.5);
+    }
+    
+    .animated-btn::after {
+        /* ROUNDED CORNERS ON HOVER */
+        border-radius: .9rem;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        opacity: 0;
+        transition: all 0.5s;
+        border: 1px solid rgb(255, 99, 71);
+        box-shadow: 4px 2px 4px rgba(122, 122, 122, 0.4);
+        transform: scale(1.2,1.2);
+    }
+    
+    .animated-btn:hover::after {
+        background-color: rgba(255, 99, 71, 0.8);
+        opacity: .4;
+        transform: scale(1,1);
+        box-shadow: 4px 2px 4px rgba(255, 99, 71, 0.526);
+    }
+    
+    .animated-btn span {
+        font-weight: 300;
+    }
+    /* END OF ANIMATED BUTTON */
+    
+    
+    /*  FONT AWESOME ICONS*/
+    i {
+        font-size: .8rem;
+        margin: 0px 4px 0px 4px;
+        color: rgba(0, 37, 54, 0.546);
+    }
+    
+    select {
+        border: none;
+        width: fit-content;
+        height: 1.3rem;
+        border-radius: .2rem;
+        outline: none;
+        color:rgba(255, 99, 71, 0.8);
+        background-color:rgba(222, 240, 241, 0.726);
+    }
+    
+    .control-panel__triad-select select {
+        margin-left: .25rem;
+    }
+    
+    
+    .card {
+        /* background: rgba(26, 41, 128, 0.2); */
+        background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4));
+        /* height: 25%; */
+        height: 100px;
+        margin: 23px 0px 0px 5%;
+        border-top-right-radius: .5rem;
+        border-bottom-right-radius: .5rem;
+        box-shadow: 6px 3px 10px rgba(122, 122, 122, 0.4);
+        display: flex;
+        /* THIS FIXES SHOW CHORD TONES CARD HEIGHT */
+        line-height: 1.1rem;
+    }
+    
+    .control-panel__row {
+        margin-left: 1.5rem;
+    } 
+    
+    .control-panel__triad-select .control-panel__row {
+        display: flex;
+    } 
+    
+    .instruction {
+        /* width: 100%; */
+        display: inline;
+        margin: 0px auto;
+    }
+    
+    .hidden {
+        display: none;
+    }
+    
+    .control-panel__extension-select .control-panel__row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    } 
+    
+    /* EXTENSIONS SPAN */
+    .control-panel__extension-select .control-panel__row:nth-child(1) {
+        /* border: 1px solid rgb(206, 15, 142); */
+        justify-content: left;
+    } 
+    
+    .control-panel__display-chord__text-rows p {
+        margin-bottom: .4rem;
+    }
+    
+    .control-panel__triad-select {
+        width: 60%;
+        /* margin-top: .5rem; */
+        flex-direction: column;
+        justify-content: space-around;
+    
+        transition: width 1s;
+    
+    }
+    
+    .control-panel__triad-select:hover {
+        width: 90%;
+      }
+    
+    .control-panel__extension-select {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: space-around;
+    
+        transition: width 1s;
+    }
+    
+    .control-panel__extension-select:hover {
+        width: 90%;
+      }
+    
+    
+    p .chord-name-span {
+        /* border: 1px solid beige; */
+        /* letter-spacing: .5rem; */
+        /* font-size: 1.2rem; */
+        margin-left: 10px;
+        color: black;
+    }
+    
+    
+    p .chord-tones-span {
+        /* border: 1px solid beige; */
+        /* font-size: 1.2rem; */
+        /* letter-spacing: .3rem; */
+        margin-left: 10px;
+        color: black;
+    }
+    
+    
+    p .chord-scale-span {
+        /* border: 1px solid beige; */
+        letter-spacing: .3rem;
+        margin-left: 10px;
+    }
+    
+    
+    .control-panel__display-chord {
+        width: 80%;
+        /* TEMPORARY FIX: SHOW CHORD BUTTON STICKS OUT OF CARD WITH GOOGLE FONTS */
+        /* height: fit-content; */
+        flex-direction: column;
+        justify-content: space-around;
+        transition: width 1s;
+    }
+    
+    .control-panel__display-chord:hover {
+        width: 90%;
+      }
+    
+    .chord-tones-btn {
+        margin:10px auto;
+    }
+    
+    .control-panel__play-options {
+        width: 90%;
+        /* margin-bottom: .5rem; */
+        flex-direction: column;
+        justify-content: space-around;
+        margin-bottom: 23px;
+    }
+    
+    .play-options__btn-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    
+    
+    .play-options__audio-container {
+        display: flex;
+        justify-content: center;
+        /* TEMPORARY FIX: CARD GROWS IF 6 OR 7 SOUND DIVS */
+        width: 450px;
+        margin: 0px auto;
+    }
+    
+    .sound-div {
+        width: 3.5rem;
+        color: black;    
+        background-color: rgba(255, 99, 71, 0.5);
+        border: 1px solid rgba(255, 99, 71, 0.361);
+        box-shadow: 2px 1px 2px rgba(255, 99, 71, 0.211);
+        border-radius: .3rem;
+        /* display: block; */
+        padding: .4rem;
+        margin: 2px;
+        text-align: center;
+    }
+    
+    .sound-div:hover {
+        background-color: rgba(255, 99, 71, 0.7);
+    }
+    
+    /* SIDEBAR FROM ABOVE */
+    @keyframes slideInFromAbove {
+        0% {
+          transform: translateY(-375%);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+    
+    .glass__sidebar.animation-enabled {
+        animation: 1.8s ease-out 0s 1 slideInFromAbove;
+    }
+    
+    /* CARDS FROM LEFT */
+     @keyframes slideInFromLeft {
+    
+        0% {
+        transform: translateX(-275%);
+        }
+        100% {
+        transform: translateX(0);
+        }
+    }
+       
+    /* CARDS FROM RIGHT */
+    @keyframes slideInFromRight {
+    
+        0% {
+        transform: translateX(275%);
+        }
+        100% {
+        transform: translateX(0);
+        }
+    }
+      
+    .control-panel__triad-select.animation-enabled {  
+        /* This section calls the slideInFromLeft animation we defined above */
+        animation: 1s ease-out 0s 1 slideInFromLeft;
+    }
+    
+    .control-panel__extension-select.animation-enabled {  
+        animation: 1.2s ease-out 0s 1 slideInFromRight;
+        /* animation: 1.2s ease-out 0s 1 slideInFromLeft; */
+    }
+    
+    .control-panel__display-chord.animation-enabled {  
+        animation: 1.4s ease-out 0s 1 slideInFromLeft;
+    }
+    
+    
+    .control-panel__play-options.animation-enabled{  
+        animation: 1.6s ease-out 0s 1 slideInFromRight;
+        /* animation: 1.6s ease-out 0s 1 slideInFromLeft; */
+    }
+
+
+    /* Styles */
+}
+
+
+
+
 /* CSS RESET */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-body {
-    font-family: 'Mukta Vaani', sans-serif;
-    font-weight: 200;
-}
-/* 
-.resize-animation-stopper * {
-    animation: none !important;
-    transition: none !important;
-  } */
-
-/* BACKGROUND */
-.main {
-
-    min-height: 100vh;
-    /* https://uigradients.com/#AquaMarine */
-    background: linear-gradient(to right top ,#1A2980, #26D0CE);
-    /* background: linear-gradient(to right top ,#51577c, #26D0CE); */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-}
-
-/* THIS DIV IS COVERED BY THE GLASS BUT ITS BORDER CAN BE SEEN BLURRED AROUND THE INNER EDGE OF GLASS */
-/* NOT IN USE */
-/* .under-the-glass {
-    display: none;
-    border-radius: .5rem;
-    max-width: 567px;
-    min-height: 60vh;
-    border: 2px solid rgba(9, 241, 241, 0.9);
-    border-radius: .5rem;
-    position: absolute;
-    z-index: 0;
-} */
-
-.text-container {
-    display: none;
-}
-
-/* PLAYER GLASS BOARD STACKED ON TOP OF .under-the-glass */
-.glass {
-
-    flex-direction: column;        
-    min-height: 60vh;
-    display: flex;
-    max-width: 820px;
-    border-radius: .5rem;
-    border: 2px solid rgba(9, 241, 241, 0.9);
-    box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.4);
-    /* background: linear-gradient(to right bottom, cornsilk, #26D0CE); */
-    /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
-    /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
-    /* background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.2)); */
-    background: rgba(255, 255, 255, 0.4);
-    /* HOW MUCH BACKDROP IS BLURRED */
-    backdrop-filter: blur(2rem);
-    /* position: relative; */
-}
-
-/* SIDEBAR */
-.glass__sidebar {
-
-
-    flex: 1;
-    /* border-top-left-radius: .5rem; */
-    /* border-bottom-left-radius: .5rem; */
-    border-radius: .5rem;
-    display: flex;
-    border-bottom: 1px solid white;
-    flex-direction: row;
-    justify-content: space-between;
-    /* background: rgba(166, 189, 187, 0.349); */
-    background: rgba(255, 255, 255, 0.171);
-  
-}
-
-.title-container {
-    /* flex: 1; */
-    width: 30%;
-}
-
-.title {
-    /* CHROME DEFAULT FONTS */
-    /* font-family: 'Times New Roman', Times, serif; */
-    font-size: 2.2rem;
-    padding: 0px;
-    margin-top: 1rem;
-    text-transform: uppercase;
-    text-align: center;
-    /* padding: 1rem; */
-    color: rgb(1, 92, 134);
-    text-shadow: 2px 2px 3px rgba(122, 122, 122, 0.5);
-    line-height: 2.5rem;
-    width: 11rem;
-}
-
-.sidebar__controls {
-    /* flex: 3; */
-    width: 40%;
-    border-left: 1px solid white;
-    border-right: 1px solid white;
-    border-top: none;
-    border-bottom: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.controls__transpose-select {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-}
-
-.controls__transpose-select select {
-    margin: 1.2em auto;
-}
-
-.controls__new-chord-container {
-    /* border: 2px solid white; */
-    margin-bottom: 1rem;
-}
-
-
-.sidebar__logo {
-    height: 30%;
-    width: 12rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.logo {
-    /* CHROME DEFAULT FONTS */
-    font-family: 'Times New Roman', Times, serif;
-    margin-top: 1.5rem;
-    border-bottom-left-radius: .8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 7rem;
-    width: 7rem;
-    font-size: 1rem;
-    border: 6px solid rgb(1, 92, 134);
-    padding: 10px;
-    box-shadow: 4px 2px 5px rgba(122, 122, 122, 0.5);
-}
-
-.m-nine {
-    display: flex;
-    flex-direction: column;
-    margin-left: 0.3rem;
-    /* border: 2px solid rgb(187, 79, 79); */
-}
-
-.letter-d {
-    /* border: 2px solid rgb(193, 204, 34); */
-    color: rgb(1, 92, 134);
-    font-size: 4.5rem;
-    /* font-weight: 500; */
-}
-
-.letter-m {
-    /* border: 2px solid rgb(34, 122, 11); */
-    color: rgb(1, 92, 134);
-    border-bottom: 2px solid black;
-    font-size: 2.2rem;
-    margin-top: 0.3rem;
-}
-
-.word-nine {
-    /* border: 2px solid rgb(207, 40, 207); */
-    margin-bottom: 1.2rem;
-    font-size: 1.0rem;
-    color: tomato;
-}
-
-/* CONTROL PANEL */
-
-.glass__control-panel {
-    flex: 4;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    justify-content: center;
-}
-
-/* CURRENTLY NOT IN USE */
-/* ORIGINAL BUTTON */
-/* button {
-    width: 7.5rem;
-    border: none;
-    outline: none;
-    border-radius: .3rem;
-    padding: .4rem;
-    background-color: rgba(86, 125, 143, 0.5);
-}
-button.hover:hover {
-    background-color: rgba(86, 125, 143, 0.8);
-} */
-/* END OF ORIGINAL BUTTON */
-
-/* ANIMATED BUTTON */
-.pre-animation-btn {
-    width: 7.5rem;
-    /* height: 1rem; */
-    /* padding: .3rem; */
-    padding-top: .1rem;
-    text-align: center;
-    margin: .5rem;
-    background-color: rgba(86, 125, 143, 0.35);
-    border-radius: .2rem;
-    /* box-shadow: 4px 2px 4px rgba(122, 122, 122, 0.4); */
-}
-
-.animated-btn {
-    /* color: #FFF; */
-    color: black;
-    transition: all 0.8s;
-    position: relative;
-    width: 7.5rem;
-    /* padding: .3rem; */
-    padding-top: .1rem;
-    text-align: center;
-    margin: .5rem;
-  }
-
-.animated-btn::before {
-    border-radius: .2rem;
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    /* background-color: rgba(86, 125, 143, 0.45); */
-    border: 1px solid  rgba(0, 107, 156, 0.348);
-    background-color: rgba(0, 107, 156, 0.307);
-    box-shadow: 4px 2px 4px rgba(122, 122, 122, 0.4);
-    transition: all 0.5s;
-}
-
-.animated-btn:hover::before {
-    opacity: 0 ;
-    transform: scale(0.5,0.5);
-}
-
-.animated-btn::after {
-    /* ROUNDED CORNERS ON HOVER */
-    border-radius: .9rem;
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    opacity: 0;
-    transition: all 0.5s;
-    border: 1px solid rgb(255, 99, 71);
-    box-shadow: 4px 2px 4px rgba(122, 122, 122, 0.4);
-    transform: scale(1.2,1.2);
-}
-
-.animated-btn:hover::after {
-    background-color: rgba(255, 99, 71, 0.8);
-    opacity: .4;
-    transform: scale(1,1);
-    box-shadow: 4px 2px 4px rgba(255, 99, 71, 0.526);
-}
-
-.animated-btn span {
-    font-weight: 300;
-}
-/* END OF ANIMATED BUTTON */
-
-
-/*  FONT AWESOME ICONS*/
-i {
-    font-size: .8rem;
-    margin: 0px 4px 0px 4px;
-    color: rgba(0, 37, 54, 0.546);
-}
-
-select {
-    border: none;
-    width: fit-content;
-    height: 1.3rem;
-    border-radius: .2rem;
-    outline: none;
-    color:rgba(255, 99, 71, 0.8);
-    background-color:rgba(222, 240, 241, 0.726);
-}
-
-.control-panel__triad-select select {
-    margin-left: .25rem;
-}
-
-
-.card {
-    /* background: rgba(26, 41, 128, 0.2); */
-    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4));
-    /* height: 25%; */
-    height: 100px;
-    margin: 23px 0px 0px 5%;
-    border-top-right-radius: .5rem;
-    border-bottom-right-radius: .5rem;
-    box-shadow: 6px 3px 10px rgba(122, 122, 122, 0.4);
-    display: flex;
-    /* THIS FIXES SHOW CHORD TONES CARD HEIGHT */
-    line-height: 1.1rem;
-}
-
-.control-panel__row {
-    margin-left: 1.5rem;
-} 
-
-.control-panel__triad-select .control-panel__row {
-    display: flex;
-} 
-
-.instruction {
-    /* width: 100%; */
-    display: inline;
-    margin: 0px auto;
-}
-
-.hidden {
-    display: none;
-}
-
-.control-panel__extension-select .control-panel__row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-} 
-
-/* EXTENSIONS SPAN */
-.control-panel__extension-select .control-panel__row:nth-child(1) {
-    /* border: 1px solid rgb(206, 15, 142); */
-    justify-content: left;
-} 
-
-.control-panel__display-chord__text-rows p {
-    margin-bottom: .4rem;
-}
-
-.control-panel__triad-select {
-    width: 60%;
-    /* margin-top: .5rem; */
-    flex-direction: column;
-    justify-content: space-around;
-
-    transition: width 1s;
-
-}
-
-.control-panel__triad-select:hover {
-    width: 90%;
-  }
-
-.control-panel__extension-select {
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: space-around;
-
-    transition: width 1s;
-}
-
-.control-panel__extension-select:hover {
-    width: 90%;
-  }
-
-
-p .chord-name-span {
-    /* border: 1px solid beige; */
-    /* letter-spacing: .5rem; */
-    /* font-size: 1.2rem; */
-    margin-left: 10px;
-    color: black;
-}
-
-
-p .chord-tones-span {
-    /* border: 1px solid beige; */
-    /* font-size: 1.2rem; */
-    /* letter-spacing: .3rem; */
-    margin-left: 10px;
-    color: black;
-}
-
-
-p .chord-scale-span {
-    /* border: 1px solid beige; */
-    letter-spacing: .3rem;
-    margin-left: 10px;
-}
-
-
-.control-panel__display-chord {
-    width: 80%;
-    /* TEMPORARY FIX: SHOW CHORD BUTTON STICKS OUT OF CARD WITH GOOGLE FONTS */
-    /* height: fit-content; */
-    flex-direction: column;
-    justify-content: space-around;
-    transition: width 1s;
-}
-
-.control-panel__display-chord:hover {
-    width: 90%;
-  }
-
-.chord-tones-btn {
-    margin:10px auto;
-}
-
-.control-panel__play-options {
-    width: 90%;
-    /* margin-bottom: .5rem; */
-    flex-direction: column;
-    justify-content: space-around;
-    margin-bottom: 23px;
-}
-
-.play-options__btn-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-
-
-.play-options__audio-container {
-    display: flex;
-    justify-content: center;
-    /* TEMPORARY FIX: CARD GROWS IF 6 OR 7 SOUND DIVS */
-    width: 450px;
-    margin: 0px auto;
-}
-
-.sound-div {
-    width: 3.5rem;
-    color: black;    
-    background-color: rgba(255, 99, 71, 0.5);
-    border: 1px solid rgba(255, 99, 71, 0.361);
-    box-shadow: 2px 1px 2px rgba(255, 99, 71, 0.211);
-    border-radius: .3rem;
-    /* display: block; */
-    padding: .4rem;
-    margin: 2px;
-    text-align: center;
-}
-
-.sound-div:hover {
-    background-color: rgba(255, 99, 71, 0.7);
-}
-
-/* SIDEBAR FROM ABOVE */
-@keyframes slideInFromAbove {
-    0% {
-      transform: translateY(-375%);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-
-.glass__sidebar.animation-enabled {
-    animation: 1.8s ease-out 0s 1 slideInFromAbove;
-}
-
-/* CARDS FROM LEFT */
- @keyframes slideInFromLeft {
-
-    0% {
-    transform: translateX(-275%);
-    }
-    100% {
-    transform: translateX(0);
-    }
-}
-   
-/* CARDS FROM RIGHT */
-@keyframes slideInFromRight {
-
-    0% {
-    transform: translateX(275%);
-    }
-    100% {
-    transform: translateX(0);
-    }
-}
-  
-.control-panel__triad-select.animation-enabled {  
-    /* This section calls the slideInFromLeft animation we defined above */
-    animation: 1s ease-out 0s 1 slideInFromLeft;
-}
-
-.control-panel__extension-select.animation-enabled {  
-    animation: 1.2s ease-out 0s 1 slideInFromRight;
-    /* animation: 1.2s ease-out 0s 1 slideInFromLeft; */
-}
-
-.control-panel__display-chord.animation-enabled {  
-    animation: 1.4s ease-out 0s 1 slideInFromLeft;
-}
-
-
-.control-panel__play-options.animation-enabled{  
-    animation: 1.6s ease-out 0s 1 slideInFromRight;
-    /* animation: 1.6s ease-out 0s 1 slideInFromLeft; */
-}
 
 
 /* BY CHRIS SPITTLES (STACK OVERFLOW) THANKS MAN !*/
