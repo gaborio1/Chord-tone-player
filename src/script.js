@@ -1,3 +1,7 @@
+// import Chord from "./classes/Chord.js";
+// import helpersTest from "./helpers.js";
+import  { helpersTest, buildBaseTypeSymbol } from "./helpers.js";
+// import buildBaseTypeSymbol from "./helpers.js";
 
 class Chord {
     constructor(name, accidental, type, optSixth = "", optSeventh = "", optNinth = "", optEleventh = "", optThirteenth = "") {
@@ -199,67 +203,68 @@ const getRegister = () => {
 }
 
 // CONSTRUCT BASE TRIAD / DOMINANT(7) SYMBOL, BASED ON name, accidetal and type ( sus2, aug, 7 etc ) FOR addExtensionToBaseTypeSymbol() 
-const buildBaseTypeSymbol = () => {
+// const buildBaseTypeSymbol = () => {
 
-    let baseTypeSymbol;
-    let type = getType();
-    switch (type) {
-        case "major" :
-            baseTypeSymbol = "";
-            break;
-        case "minor" :
-            baseTypeSymbol = "m";
-            break;
-        case "dominant" :
-            if (getOptNinth() === "9" || getOptNinth() === "add9") {
-                baseTypeSymbol = "9";
-                break;
-            } else if (getOptEleventh() === "11") {
-                baseTypeSymbol = "11";
-                break;
-            } else if (getOptThirteenth() === "13") {
-                baseTypeSymbol = "13"
-            }
-            else {
-                baseTypeSymbol = "7";
-            }
-            break;
-        case "augmented" :
-            if (getOptSeventh()) {
-                baseTypeSymbol = "+7 (7#5)";
-                break;
-            } else {
-                baseTypeSymbol = "+";
-            }
-            break;
-        case "diminished" :
-            if (getOptSeventh()) {
-                baseTypeSymbol = "07";
-                break;
-            } else {
-                baseTypeSymbol = "0";
-            }
-            break;
-        case "sus2" :
-            baseTypeSymbol = "sus2"
-            break;
-        case "sus4" :
-            baseTypeSymbol = "sus4"
-            break;
-        case "phrygian" :
-            baseTypeSymbol = " sus(b)2"
-            break;
-        case "lydian" :
-            baseTypeSymbol = " sus(#)4"
-            break;
-        default:
-            baseTypeSymbol = "invalid type"
-        }
-    return baseTypeSymbol;
+//     let baseTypeSymbol;
+//     let type = getType();
+//     switch (type) {
+//         case "major" :
+//             baseTypeSymbol = "";
+//             break;
+//         case "minor" :
+//             baseTypeSymbol = "m";
+//             break;
+//         case "dominant" :
+//             if (getOptNinth() === "9" || getOptNinth() === "add9") {
+//                 baseTypeSymbol = "9";
+//                 break;
+//             } else if (getOptEleventh() === "11") {
+//                 baseTypeSymbol = "11";
+//                 break;
+//             } else if (getOptThirteenth() === "13") {
+//                 baseTypeSymbol = "13"
+//             }
+//             else {
+//                 baseTypeSymbol = "7";
+//             }
+//             break;
+//         case "augmented" :
+//             if (getOptSeventh()) {
+//                 baseTypeSymbol = "+7 (7#5)";
+//                 break;
+//             } else {
+//                 baseTypeSymbol = "+";
+//             }
+//             break;
+//         case "diminished" :
+//             if (getOptSeventh()) {
+//                 baseTypeSymbol = "07";
+//                 break;
+//             } else {
+//                 baseTypeSymbol = "0";
+//             }
+//             break;
+//         case "sus2" :
+//             baseTypeSymbol = "sus2"
+//             break;
+//         case "sus4" :
+//             baseTypeSymbol = "sus4"
+//             break;
+//         case "phrygian" :
+//             baseTypeSymbol = " sus(b)2"
+//             break;
+//         case "lydian" :
+//             baseTypeSymbol = " sus(#)4"
+//             break;
+//         default:
+//             baseTypeSymbol = "invalid type"
+//         }
+//     return baseTypeSymbol;
 
-}
+// }
 
 // OPTIONALLY ADD EXTENSIONS TO BASE SYMBOL ( C => Cadd9 ) FOR displayFullChordName()
+let fullSymbol;
 const addExtensionToBaseChordSymbol = () => {
 
     const type = getType();
@@ -526,6 +531,7 @@ const buildChordTones = () => {
 }
 
 // DISPLAY CHORD TONES 
+let chordTones;
 const displayChordTones = () => {
    const chordTonesSpan = document.getElementById("chord-tones");
     chordTones = buildChordTones();
@@ -1043,6 +1049,7 @@ const getAccidentalChange = () => {
 getAccidentalChange();
 
 // GET SELECTED TYPE, ENABLE EXTENSIONS 6, 7, 9, 11, 13 , SHOW INSTR
+let typeChangeVal = "";
 const getTypeChange = () => {
     const typeDropdown = document.getElementById("type");
     typeDropdown.addEventListener('change', function() {
@@ -1473,7 +1480,7 @@ const enableAllSoundAndNewButtons = () => {
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // !!!!!    classlist.remove WORKS WITH A LOOP WTF???   !!!!!
-    elements = document.querySelectorAll(".enabled-with-show-btn");
+    const elements = document.querySelectorAll(".enabled-with-show-btn");
       // remove class from all chosen elements
     for (let i=0; i<elements.length; i++) {
       elements[i].classList.remove("pre-animation-btn");
@@ -1546,15 +1553,16 @@ const enableExtensionOptions = (str) => {
 const playIntro = () => {
     setTimeout(() => {
         const sound = new Howl({
-            src: ['sounds/intro2.mp3']
+            src: ['./sounds/intro2.mp3']
           });
           sound.play();      
     }, 600)
 }
 
 window.addEventListener("load", function() {
-    console.log("page is loaded");    
-    // playIntro();
+    console.log("page is loaded");
+    helpersTest()
+    playIntro();
     disableSelectOptions();
     setTimeout(() => {
         showNameInstruction();
@@ -1581,3 +1589,5 @@ window.addEventListener("resize", () => {
         }
     }, 500);
 });
+
+export default getType;
