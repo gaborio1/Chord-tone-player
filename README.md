@@ -20,7 +20,7 @@ functions to add:
  ✔️ animate cards, sidebar (slide in)
  ✔️ add icons
  ✔️ tablet size
-  mobile size
+ ✔️ mobile size
 
   customise dropdown!
  ✔️ dynamically enable / disable extensions based on type selected! ( for example, disable 11 with sus2 )
