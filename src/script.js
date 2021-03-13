@@ -904,6 +904,11 @@ const refreshPage = () => {
     // THIS ALSO WORKS
     // location.reload(true);
 }
+const toggleBackgroundColour = () => {
+    const main = document.querySelector(".main");
+    main.classList.toggle("grey-background");
+} 
+
 
 // EVENT HANDLERS ON BUTTONS
 const handleShowChordTones = () => {
@@ -918,6 +923,7 @@ const handleShowChordTones = () => {
     addListenerArpeggiateButton();
     addListenerPlayIndividualButton();
     addListenerNewChordButton();
+    // addListenerColourButton();
 }
 
 const handlePlayChord = () => {
@@ -936,12 +942,17 @@ const handleNewChord = () => {
     refreshPage();
 }
 
+const handleColourTheme = () => {
+    toggleBackgroundColour();
+}
+
 // EVENT LISTENERS ON BUTTONS
 const showChordTonesButton = document.getElementById("chord-tones-btn");
 const playButton = document.getElementById("play-chord-btn");
 const arpeggiateButton = document.getElementById("arpeggiate-chord-btn");
 const playIndividualButton = document.getElementById("play-individual-btn");
 const newChordButton = document.getElementById("new-chord-btn");
+const colourThemeButton = document.getElementById("colour-theme-btn");
 
 // WHEN CHORD TYPE SELECTION IS MADE ( IN getTypeChange() )
 const addListenerShowChordButton = () => {
@@ -976,6 +987,12 @@ const addListenerPlayIndividualButton = () => {
 const addListenerNewChordButton = () => {
     newChordButton.addEventListener("click", function(evt) {
         handleNewChord();
+    })
+}
+
+const addListenerColourButton = () => {
+    colourThemeButton.addEventListener("click", function(evt) {
+        handleColourTheme();
     })
 }
 
@@ -1465,7 +1482,7 @@ const enableAllSoundAndNewButtons = () => {
     playButton.classList.add("animated-btn");
     arpeggiateButton.classList.add("animated-btn");
     playIndividualButton.classList.add("animated-btn");
-        
+    // colourThemeButton.classList.add("animated-btn");
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // THESE 2 WORK FINE:
@@ -1562,10 +1579,12 @@ const playIntro = () => {
 window.addEventListener("load", function() {
     console.log("page is loaded");
     helpersTest()
-    playIntro();
+    // playIntro();
     disableSelectOptions();
     setTimeout(() => {
         showNameInstruction();
+        addListenerColourButton();
+        colourThemeButton.classList.add("animated-btn");
     }, 2000)
 });
 

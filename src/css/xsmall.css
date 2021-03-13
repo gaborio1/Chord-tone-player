@@ -24,6 +24,11 @@
 
     }
 
+    /* HIDE COLOUR THEME BUTTON */
+    .hidden-in-tablet-and-mobile {
+        display: none;
+    }
+
     .text-container {
         display: none;
     }

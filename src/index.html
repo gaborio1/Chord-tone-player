@@ -52,24 +52,29 @@
           <div class="glass__sidebar__transpose-and-logo-container">
             <div id="sidebar-controls-container" class="sidebar__controls">
               <div id="transpose-select-container" class="controls__transpose-select">
-                <label class="label label--transpose" for="register">Transpose:</label>
-                <select name="register" id="register">
+                <label class="label label--transpose non-button-text" for="register">Transpose:</label>
+                <select name="register" id="register" class="non-button-text">
                   <option value="guitar">Guitar</option>
                   <option value="bass" disabled>Bass</option>
                   <option value="guitarUp" disabled>Guitar +12</option>
                 </select>
               </div>
-              <div id="new-chord-btn-container" class="controls__new-chord-container">
+              <div id="new-chord-btn-container" class="controls__new-chord-container sidebar-btn">
   
                 <!-- ORIGINAL BUTTON -->
                 <!-- <button id="new-chord-btn" disabled>New chord</button> -->
   
                 <!-- ANIMATED BUTTON  -->
                 <div id="new-chord-btn" class="pre-animation-btn enabled-with-show-btn">
-                  <span>New chord <i class="fas fa-redo-alt"></i></span>
+                  <span class="button-text">New chord<i class="fas fa-redo-alt"></i></span>
                 </div>
                 <!-- < !-- END OF ANIMATED BUTTON --> 
-              </div>  
+              </div>
+              <div class="controls__colour-theme-btn-container sidebar-btn hidden-in-tablet-and-mobile">
+                <div id="colour-theme-btn" class="pre-animation-btn">
+                  <span class="button-text">Theme</span>
+                </div>
+              </div>
             </div>
   
             <div id="logo-container" class="sidebar__logo">
@@ -91,8 +96,8 @@
         <div id="control-panel" class="glass__control-panel">
           <div class="card control-panel__triad-select animating-width animation-enabled" id="triad-select">
             <div id="triad-select-first-row" class="control-panel__row">
-              <label class="label" for="name">Letter name:</label>
-              <select name="name" id="name">
+              <label class="label non-button-text" for="name">Letter name:</label>
+              <select name="name" id="name" class="non-button-text">
                 <option class="note-name"></option>
                 <option value="c" class="note-name">c</option>
                 <option value="d" class="note-name">d</option>
@@ -102,21 +107,21 @@
                 <option value="a" class="note-name">a</option>
                 <option value="b" class="note-name">b</option>
               </select>
-              <p class="instruction hidden" id="name-instruction"><i class="fas fa-arrow-circle-left"></i> Select name!</p>
+              <p class="instruction hidden non-button-text" id="name-instruction"><i class="fas fa-arrow-circle-left"></i> Select name!</p>
             </div>
             <div id="triad-select-second-row" class="control-panel__row">
-              <label class="label" for="accidental">Accidental:</label>
-              <select name="accidental" id="accidental">
+              <label class="label non-button-text" for="accidental">Accidental:</label>
+              <select name="accidental" id="accidental" class="non-button-text">
                 <option class="note-accidental"></option>
                 <option value="" class="note-accidental">natural</option>
                 <option value="#" class="note-accidental">sharp #</option>
                 <option value="b" class="note-accidental">flat b</option>
               </select>
-              <p class="instruction hidden" id="accidental-instruction"><i class="fas fa-arrow-circle-left"></i> Select accidental!</p>
+              <p class="instruction hidden non-button-text" id="accidental-instruction"><i class="fas fa-arrow-circle-left"></i> Select accidental!</p>
             </div>
             <div id="triad-select-third-row" class="control-panel__row">
-              <label class="label" for="type">Chord type:</label>
-              <select name="type" id="type">
+              <label class="label non-button-text" for="type">Chord type:</label>
+              <select name="type" id="type" class="non-button-text">
                 <option></option>
                 <option value="major">major</option>
                 <option value="minor">minor</option>
@@ -129,33 +134,33 @@
                 <option value="lydian">lydian</option>
                 <option value="invalid type" disabled>invalid type</option>
               </select>
-              <p class="instruction hidden" id="type-instruction"><i class="fas fa-arrow-circle-left"></i> Select type!</p>
+              <p class="instruction hidden non-button-text" id="type-instruction"><i class="fas fa-arrow-circle-left"></i> Select type!</p>
             </div>
           </div>
           <!-- <br> -->
           <div class="control-panel__extension-select card animating-width animation-enabled" id="extension-select">
             <div class="control-panel__row">
-            <p class="">Extensions: <span class="instruction hidden" id="extension-instruction"><i class="fas fa-question-circle"></i> Optional!</span></p>
+            <p class="non-button-text">Extensions: <span class="instruction hidden" id="extension-instruction"><i class="fas fa-question-circle"></i> Optional!</span></p>
             </div>
             <!-- <p class="instruction hidden" id="extension-instruction">Optional!</p> -->
             <div id="extension-select-first-row" class="control-panel__row">
               <div class="label-select">
-                <label class="label" for="sixth">6th:</label>
-                <select name="sixth" id="sixth">
+                <label class="label non-button-text" for="sixth">6th:</label>
+                <select name="sixth" id="sixth" class="non-button-text">
                   <option value=""></option>
                   <option value="6">6</option>
                 </select>
               </div>
               <div class="label-select">
-                <label class="label" for="seventh">7th:</label>
-                <select name="seventh" id="seventh">
+                <label class="label non-button-text" for="seventh">7th:</label>
+                <select name="seventh" id="seventh" class="non-button-text">
                   <option value=""></option>
                   <option value="7">7</option>
                 </select>
               </div>
               <div class="label-select">
-                <label class="label" for="ninth">9th:</label>
-                <select name="ninth" id="ninth">
+                <label class="label non-button-text" for="ninth">9th:</label>
+                <select name="ninth" id="ninth" class="non-button-text">
                   <option value=""></option>
                   <option value="9">9</option>
                   <option value="add9">add9</option>
@@ -164,16 +169,16 @@
             </div>
             <div id="extension-select-second-row" class="control-panel__row">
               <div class="label-select">
-                <label class="label" for="eleventh">11th:</label>
-                <select name="eleventh" id="eleventh">
+                <label class="label non-button-text" for="eleventh">11th:</label>
+                <select name="eleventh" id="eleventh" class="non-button-text">
                   <option value=""></option>
                   <option value="11">11</option>
                   <option value="add11">add11</option>
                 </select>
               </div>
               <div class="label-select">
-                <label class="label" for="thirteenth">13th:</label>
-                  <select name="thirteenth" id="thirteenth">
+                <label class="label non-button-text" for="thirteenth">13th:</label>
+                  <select name="thirteenth" id="thirteenth" class="non-button-text">
                   <option value=""></option>
                   <option value="13">13</option>
                   <option value="add13">add13</option>
@@ -190,15 +195,15 @@
 
             <!-- ANIMATED BUTTON  -->
             <div id="chord-tones-btn" class="chord-tones-btn pre-animation-btn">
-              <span>Show chord <i class="fas fa-info"></i></span>
+              <span class="button-text">Show chord <i class="fas fa-info"></i></span>
             </div>
             <!-- END OF ANIMATED BUTTON -->
 
             <p id="invalid-key-message" class="hidden">Theoretical key!</p>
             <div id="display-chord-text-rows" class=" control-panel__display-chord__text-rows control-panel__row">
-              <p>Chord name: <span id="full-chord-name" class="chord-name-span"></span></p>
-              <p>Chord tones: <span id="chord-tones" class="chord-tones-span"></span></p>
-              <p>Chord scale: <span id="chord-scale" class="chord-scale-span"></span></p>
+              <p class="non-button-text">Chord name: <span id="full-chord-name" class="chord-name-span"></span></p>
+              <p class="non-button-text">Chord tones: <span id="chord-tones" class="chord-tones-span"></span></p>
+              <p class="non-button-text">Chord scale: <span id="chord-scale" class="chord-scale-span"></span></p>
             </div>
           </div>
           <!-- <br> -->
@@ -212,13 +217,13 @@
 
               <!-- ANIMATED BUTTONS -->
               <div id="play-chord-btn" class="pre-animation-btn enabled-with-show-btn">
-                <span>Chord <i class="fas fa-play"></i></span>
+                <span class="button-text">Chord <i class="fas fa-play"></i></span>
               </div>
               <div id="arpeggiate-chord-btn" class="pre-animation-btn enabled-with-show-btn">
-                <span>Arpeggio <i class="fas fa-play"></i></span>
+                <span class="button-text">Arpeggio <i class="fas fa-play"></i></span>
               </div>
               <div id="play-individual-btn" class="pre-animation-btn enabled-with-show-btn">
-                <span>Notes <i class="fas fa-music"></i></span>
+                <span class="button-text">Notes <i class="fas fa-music"></i></span>
               </div>
               <!-- END OF ANIMATED BUTTONS -->
 

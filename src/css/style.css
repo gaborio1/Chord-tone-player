@@ -10,12 +10,24 @@
         font-family: 'Mukta Vaani', sans-serif;
         font-weight: 200;
     }
+
     /* 
     .resize-animation-stopper * {
         animation: none !important;
         transition: none !important;
       } */
     
+    .non-button-text {
+          /* color: rgb(255, 255, 255); */
+          font-size: 18px;
+    }
+
+    .button-text {
+        /* color: rgb(255, 255, 255); */
+          font-size: 18px;
+    }
+
+
     /* BACKGROUND */
     .main {
         min-height: 100vh;
@@ -29,9 +41,12 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-around;
+        justify-content: center;
     }
     
+    .grey-background {
+        background: #000000d5;
+    }
     
     .text-container {
         background: rgba(255, 255, 255, 0.108);
@@ -40,24 +55,21 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        /* margin: 0px auto; */
-        /* margin-top: 1rem; */
         border-radius: .5rem;
         /* border: 2px solid rgba(9, 241, 241, 0.718); */
         /* box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.4); */
-        padding: .5rem
+        padding: .5rem;
+        margin-bottom: 50px;
     }
     
     .text-container h1 {
-        font-size: 5rem;
+        font-size: 72px;
         margin-left: 2rem;
         margin-right: 1rem;
         font-weight: bold;
         padding-top: 0px;
-        /* color: rgba(255, 99, 71, 0.882); */
-        /* color: rgba(1, 92, 134, 0.998); */
-        /* background: linear-gradient(to right bottom, rgba(255, 248, 220, 0.9), rgba(38, 208, 206, 0.9)); */
-        background: #00b09b;  /* fallback for old browsers */
+        background: #00b09b;
+        /* UI GRADIENTS Ohhappiness */ 
         background: -webkit-linear-gradient(to bottom, #96c93d, #00b09b);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to bottom, #96c93d, #00b09b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         
@@ -66,16 +78,12 @@
         /* STANDARD STYLE RULE */
         background-clip: text;
         color: transparent;
-        /* opacity: 0.5; */
     }
     
     .text-container h2 {
-        font-size: 2.5rem;
+        font-size: 36px;
         text-align: left;
         margin-left: 2rem;
-        /* color: rgba(1, 92, 134, 0.998); */
-        /* UI GRADIENTS Ohhappiness */
-        /* color: rgba(255, 255, 0, 0.635); */
         color: beige;
         opacity: .75;
         letter-spacing: .5rem;
@@ -88,20 +96,6 @@
         font-size: 1rem;
     }
     
-    /* THIS DIV IS COVERED BY THE GLASS BUT ITS BORDER CAN BE SEEN BLURRED AROUND THE INNER EDGE OF GLASS */
-    /* THIS POSITIONS DIV DIRECLY UNDER GLASS: position: absolute;*/
-    /* NOT IN USE */
-    /* .under-the-glass {
-        width: 820px;
-        height: 600px;
-        border: 2px solid rgba(9, 241, 241, 0.9);
-        border-radius: .5rem;
-        position: absolute;
-        margin: 0px auto;
-        z-index: 0;
-    } */
-    
-    /* PLAYER GLASS BOARD STACKED ON TOP OF .under-the-glass */
     .glass {
         display: flex;
         /* width: 60%; */
@@ -129,13 +123,11 @@
         flex: 2;
         border-right: none;
         border-right: 1px solid rgba(245, 245, 220, 0.416);
-        /* border-top-left-radius: .5rem; */
-        border-bottom-left-radius: .5rem;
         border-top-left-radius: .5rem;
+        border-bottom-left-radius: .5rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        /* background: rgba(166, 189, 187, 0.349); */
         background: rgba(255, 255, 255, 0.108);
     }
     
@@ -147,22 +139,14 @@
     .title {
         /* CHROME DEFAULT FONTS */
         /* font-family: 'Times New Roman', Times, serif; */
-        font-size: 4rem;
-        /* font-weight: bold; */
-        /* text-transform: uppercase; */
+        font-size: 54px;
         text-align: center;
         padding: 1rem;
         line-height: 3.5rem;
         /* color: rgba(0, 0, 0, 0.779); */
         color: rgb(1, 92, 134);
-        /* color: rgba(255, 99, 71, 0.807); */
-        /* color: rgba(255, 255, 0, 0.546); */
-        /* color: rgba(245, 245, 220, 0.635); */
-        /* color: rgba(32, 32, 32, 0.738); */
-        /* text-shadow: 2px 2px 3px rgba(122, 122, 122, 0.5); */
         background: -webkit-linear-gradient(to bottom, #96c93d, #00b09b);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to bottom, #96c93d, #00b09b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        
         /* VENDOR PREFIX */
         -webkit-background-clip: text;
         /* STANDARD STYLE RULE */
@@ -175,7 +159,6 @@
         flex: 2;
         display: flex;
         flex-direction: column;
-        /* border: 3px solid green; */
     }
 
 
@@ -199,12 +182,12 @@
     }
     
     .controls__transpose-select select {
-        margin: 1.2em auto;
+        margin-top: 5px;
     }
     
     .controls__new-chord-container {
         /* border: 2px solid white; */
-        margin-bottom: 1rem;
+        margin-top: .5rem;
     }
     
     .sidebar__logo {
@@ -220,8 +203,6 @@
         /* CHROME DEFAULT FONTS */
         font-family: 'Times New Roman', Times, serif;
         height: 8rem;
-        font-size: 1rem;
-        /* border: 7px solid rgb(1, 92, 134); */
         border: 7px solid #0e16425b;
         border-bottom-left-radius: .8rem;
         display: flex;
@@ -242,7 +223,7 @@
     .letter-d {
         /* border: 2px solid rgb(193, 204, 34); */
         color: #0e16425b;
-        font-size: 5rem;
+        font-size: 72px;
         /* font-weight: 500; */
     }
     
@@ -251,19 +232,19 @@
         border-bottom: 1px solid rgba(245, 245, 220, 0.457);
         color: #0e16425b;
         color: #0e16425b;
-        font-size: 2.5rem;
-        margin-top: 0.3rem;
+        font-size: 36px;
+        margin-top: 8px;
+        margin-bottom: 0px;
+        line-height: 2.2rem;
     }
     
     .word-nine {
-        /* border: 2px solid rgb(207, 40, 207); */
-        margin-bottom: 1.1rem;
-        margin-top: .3rem;
-        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        margin-top: 3px;
+        font-size: 18px;
         /* color: tomato; */
         background: -webkit-linear-gradient(to bottom, #96c93d, #00b09b);  /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to bottom, #96c93d, #00b09b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        
         /* VENDOR PREFIX */
         -webkit-background-clip: text;
         /* STANDARD STYLE RULE */
@@ -313,7 +294,6 @@
         transition: all 0.8s;
         position: relative;
         width: 7.5rem;
-        /* padding: .3rem; */
         padding-top: .1rem;
         text-align: center;
         margin: .5rem;
@@ -328,7 +308,6 @@
         width: 100%;
         height: 100%;
         z-index: 1;
-        /* background-color: rgba(86, 125, 143, 0.45); */
         border: 1px solid  rgba(0, 107, 156, 0.348);
         background-color: rgba(0, 107, 156, 0.307);
         box-shadow: 4px 2px 4px rgba(122, 122, 122, 0.4);
@@ -367,26 +346,29 @@
     .animated-btn span {
         font-weight: 300;
     }
+
+    /* NEW CHORD, THEME BUTTON CONTAINERS */
+    /* div.sidebar-btn {
+        border: 1px solid white;
+    } */
+
     /* END OF ANIMATED BUTTON */
     
     
     /*  FONT AWESOME ICONS*/
     i {
-        font-size: .8rem;
+        font-size: 12px;
         margin: 0px 4px 0px 4px;
         color: rgba(0, 37, 54, 0.546);
     }
     
     select {
         border: none;
-        /* border-bottom: 1px solid beige; */
-        /* width: fit-content; */
         font-size: 1.0rem;
         min-width: 3rem;
         height: 1.3rem;
         border-radius: .2rem;
         outline: none;
-        color:rgba(255, 99, 71, 0.8);
         color: #96c93d;
         background-color:rgba(222, 240, 241, 0.087);
     }
@@ -396,8 +378,6 @@
     }
     
     .card {
-        /* background: rgba(26, 41, 128, 0.2); */
-        /* background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4)); */
         background: linear-gradient(to right , rgba(255, 255, 255, 0.176), rgba(255, 255, 255, 0.094));
         height: 20%;
         margin: 0px 0px 0px 5%;
@@ -540,7 +520,6 @@
     .sound-div {
         width: 4.2rem;
         color: black;    
-        /* background-color: rgba(255, 99, 71, 0.5); */
         background-color: #96c93d8f;
         /* border: 1px solid rgba(255, 99, 71, 0.361); */
         /* box-shadow: 2px 1px 2px rgba(255, 99, 71, 0.211); */

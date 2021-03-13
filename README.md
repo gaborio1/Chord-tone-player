@@ -21,6 +21,7 @@ functions to add:
  ✔️ add icons
  ✔️ tablet size
  ✔️ mobile size
+ ✔️ add colour theme button in large size
 
   customise dropdown!
  ✔️ dynamically enable / disable extensions based on type selected! ( for example, disable 11 with sus2 )
