@@ -249,6 +249,7 @@
         margin: .5rem;
       }
     
+
     .animated-btn::before {
         border-radius: .2rem;
         content: '';

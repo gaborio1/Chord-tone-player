@@ -909,7 +909,14 @@ const toggleBackgroundColour = () => {
     main.classList.toggle("grey-background");
 } 
 
-
+const toggleButtonStyle = () => {
+    newChordButton.classList.toggle("grey-theme-btn");
+    playButton.classList.toggle("grey-theme-btn");
+    arpeggiateButton.classList.toggle("grey-theme-btn");
+    playIndividualButton.classList.toggle("grey-theme-btn");
+    colourThemeButton.classList.toggle("grey-theme-btn");
+    showChordTonesButton.classList.toggle("grey-theme-btn");
+}
 // EVENT HANDLERS ON BUTTONS
 const handleShowChordTones = () => {
     displayFullChordName();
@@ -944,7 +951,11 @@ const handleNewChord = () => {
 
 const handleColourTheme = () => {
     toggleBackgroundColour();
+
+    toggleButtonStyle();
+
 }
+
 
 // EVENT LISTENERS ON BUTTONS
 const showChordTonesButton = document.getElementById("chord-tones-btn");
