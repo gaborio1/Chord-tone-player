@@ -23,7 +23,6 @@ functions to add:
  ✔️ mobile size
  ✔️ add colour theme button in large size
 
-  customise dropdown!
  ✔️ dynamically enable / disable extensions based on type selected! ( for example, disable 11 with sus2 )
   dynamically enable / disable extensions based on other extensions ( for example, add9add13 )
   add alterations
@@ -31,6 +30,8 @@ functions to add:
  refactor:
 ✔️ BEM naming convention 
 ✔️ no ID selectors in CSS
+✔️ arrow funcions
+
 
 
 bugs:
