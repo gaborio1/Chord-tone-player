@@ -304,8 +304,8 @@
         color: black;
         transition: all 0.8s;
         position: relative;
-        width: 7.5rem;
-        padding-top: .1rem;
+        width: 8rem;
+        height: 1.8rem;
         text-align: center;
         margin: .5rem;
       }
@@ -314,8 +314,8 @@
         color: black;
         transition: all 0.8s;
         position: relative;
-        width: 7.5rem;
-        padding-top: .1rem;
+        width: 8.5rem;
+        height: 1.8rem;
         text-align: center;
         margin: .5rem;
 
@@ -334,6 +334,7 @@
         /* border: 1px solid  rgba(0, 107, 156, 0.348); */
         background-color: rgba(0, 107, 156, 0.307);
         /* box-shadow: 4px 2px 4px rgba(122, 122, 122, 0.4); */
+        opacity: .8;
         transition: all 0.5s;
     }
 
@@ -350,20 +351,20 @@
         /* background: -webkit-linear-gradient(to bottom, #96c93d, #00b09b);  */
         /* background: linear-gradient(to bottom, #96c93d, #00b09b);  */
         opacity: .2;
-
         transition: all 0.5s;
-
         /* border: 1px solid white; */
     }
     
     .animated-btn:hover::before {
-        opacity: 0 ;
-        transform: scale(0.5,0.5);
+        opacity: .5;
+        /* BUTTON SHRINKS AND DISAPPEARS IN THE CENTER */
+        transform: scale(0, 0);
     }
 
     .animated-btn.grey-theme-btn:hover::before {
-        opacity: 0 ;
-        transform: scale(0.5,0.5);
+        opacity: .5;
+        /* BUTTON SHRINKS AND DISAPPEARS IN THE CENTER */
+        transform: scale(0, 0);
     }
     
     .animated-btn::after {
@@ -408,6 +409,7 @@
     .animated-btn.grey-theme-btn:hover::after {
         /* background-color: rgba(31, 212, 167, 0.766); */
         background: #00b09b;
+        background-color: rgba(255, 99, 71, 0.8);
         /* background: -webkit-linear-gradient(to bottom, #96c93d, #00b09b);   */
         /* background: linear-gradient(to bottom, #96c93d, #00b09b);  */
         opacity: .4;
@@ -462,10 +464,11 @@
         border-bottom-right-radius: .5rem;
         /* box-shadow: 6px 3px 10px rgba(122, 122, 122, 0.4); */
         display: flex;
-        /* THIS FIXES SHOW CHORD TONES CARD HEIGHT */
-        line-height: 1.1rem;
     }
     
+
+
+
     .control-panel__row {
         margin-left: 1.5rem;
     } 
@@ -497,7 +500,12 @@
     } 
     
     .control-panel__display-chord__text-rows p {
-        margin-bottom: .4rem;
+        line-height: 1.4rem;
+    }
+
+    .control-panel__display-chord .chord-tones-btn {
+       /* border: 1px solid white; */
+       margin: 0px auto;
     }
     
     .control-panel__triad-select {
@@ -596,11 +604,12 @@
     
     .sound-div {
         width: 4.2rem;
+        height: 2.5rem;
         color: black;    
         background-color: #96c93d8f;
         /* border: 1px solid rgba(255, 99, 71, 0.361); */
         /* box-shadow: 2px 1px 2px rgba(255, 99, 71, 0.211); */
-        box-shadow: 2px 1px 1px #96c93d49;
+        /* box-shadow: 2px 1px 1px #96c93d49; */
         border-radius: .3rem;
         /* display: block; */
         padding: .4rem;
@@ -617,8 +626,8 @@
     }
     
     .sound-div:hover {
-        background-color: rgba(255, 99, 71, 0.471);
-        box-shadow: 2px 1px 2px rgba(255, 99, 71, 0.211);
+        background-color: rgba(255, 99, 71, 0.436);
+        /* box-shadow: 2px 1px 2px rgba(255, 99, 71, 0.211); */
     }
     
     /* HEADER FROM RIGHT */

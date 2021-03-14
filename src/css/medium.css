@@ -78,7 +78,8 @@
         flex: 1;
         /* border-top-left-radius: .5rem; */
         /* border-bottom-left-radius: .5rem; */
-        border-radius: .5rem;
+        border-top-right-radius: .5rem;
+        border-top-left-radius: .5rem;
         display: flex;
         border-bottom: 1px solid white;
         flex-direction: row;
@@ -205,8 +206,7 @@
         flex: 4;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        justify-content: center;
+        justify-content: space-around;
     }
     
     /* CURRENTLY NOT IN USE */
@@ -326,15 +326,17 @@
     .card {
         /* background: rgba(26, 41, 128, 0.2); */
         background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4));
+        /* border-bottom: 1px solid white; */
+        border: 1px solid rgba(255, 255, 255, 0.238);
         /* height: 25%; */
-        height: 100px;
+        height: 110px;
         margin: 23px 0px 0px 5%;
         border-top-right-radius: .5rem;
         border-bottom-right-radius: .5rem;
         box-shadow: 6px 3px 10px rgba(122, 122, 122, 0.4);
         display: flex;
         /* THIS FIXES SHOW CHORD TONES CARD HEIGHT */
-        line-height: 1.1rem;
+        /* line-height: 1.1rem; */
     }
     
     .control-panel__row {
@@ -369,6 +371,7 @@
     
     .control-panel__display-chord__text-rows p {
         margin-bottom: .4rem;
+        line-height: 1rem;
     }
     
     .control-panel__triad-select {
