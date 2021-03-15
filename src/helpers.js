@@ -1,4 +1,4 @@
-import getType from "./script.js";
+import { getType, getOptNinth, getOptEleventh, getOptThirteenth } from "./script.js";
 
 
 

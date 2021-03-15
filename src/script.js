@@ -1,6 +1,8 @@
 // import Chord from "./classes/Chord.js";
 // import helpersTest from "./helpers.js";
 import  { helpersTest, buildBaseTypeSymbol } from "./helpers.js";
+import circleOfFifths from "./utils/circleOfFifths.js";
+import soundNames from "./utils/soundNames.js";
 // import buildBaseTypeSymbol from "./helpers.js";
 
 class Chord {
@@ -531,9 +533,10 @@ const buildChordTones = () => {
 }
 
 // DISPLAY CHORD TONES 
-let chordTones;
+// let chordTones;
 const displayChordTones = () => {
-   const chordTonesSpan = document.getElementById("chord-tones");
+    let chordTones;
+    const chordTonesSpan = document.getElementById("chord-tones");
     chordTones = buildChordTones();
     chordTonesSpan.innerText = buildChordTones();
 }
@@ -542,38 +545,42 @@ const displayChordTones = () => {
 // const c1 = new Chord("c", "", "major");
 // const c2 = new Chord("a#", "major");
 
-// MODELLING SCALES
-
-const circleOfFifths = {
-    // NATURAL NOTES
-    degrees : ["c", "d", "e", "f", "g", "a", "b"],
-    // FIND TONIC  AND ITS INDEX WILL CORRESPOND TO ITS LAST ACCIDENTAL NOTE'S IDX IN sharps/flats
-    majorSharpKeys : ["g", "d", "a", "e", "b", "f#", "c#"],
-    majorFlatKeys : ["f", "bb", "eb", "ab", "db", "gb", "cb"],
-    
-    minorSharpKeys : ["e", "b", "f#", "c#", "g#", "d#", "a#"],
-    minorFlatKeys : ["d", "g", "c","f", "bb", "eb", "ab" ],
-    // FOR EXAMPLE: E MAJOR IS AT IDX 3, WILL GIVE F,C,G,D AS D IS AT IDX 3 IN sharps
-    // THEN ADD SHARPS TO THOSE NOTES IN THE NATURAL SCALE
-    sharps : ["f", "c", "g", "d", "a", "e", "b"],
-    flats : ["b", "e", "a", "d", "g", "c", "f"]
-}
-
 // BUILD NATURAL SCALE STARTING WITH TONIC 
-const getNaturalScale = (name) => {
-    let tonic = name;
+const getNaturalScale = (letterName) => {
+    const tonic = letterName;
     // GET TONIC IDX
-    let tonicIdx = circleOfFifths["degrees"].indexOf(tonic);
+    const tonicIdx = circleOfFifths["degrees"].indexOf(tonic);
     // GET 2 SUBSCALES 
-    let subScale1 = circleOfFifths["degrees"].slice(tonicIdx);
-    let subScale2 = circleOfFifths["degrees"].slice(0, tonicIdx);
+    const subScale1 = circleOfFifths["degrees"].slice(tonicIdx);
+    const subScale2 = circleOfFifths["degrees"].slice(0, tonicIdx);
     // MERGE SUBSCALES
-    let naturalScale = subScale1.concat(subScale2);
+    const naturalScale = subScale1.concat(subScale2);
     return naturalScale;
 }
 
  // INVALID CHORD MESSAGE WITH HIDDEN CLASS
  const invalidKeyMessage = document.getElementById("invalid-key-message");
+
+// MAKE NATURAL SCALE DIATONIC BY ADDING APPROPRIATE NUMBER/TYPE OF ACCIDENTALS FOR getDiatonicScale()
+const addSharpsToNaturalScale = (naturalScale,accidentals,diatonicScale) => {
+    for (const el of naturalScale) {
+        if (accidentals.indexOf(el) > -1) {
+            diatonicScale.push(el.concat("#"));
+        } else diatonicScale.push(el);
+        hideInvalidKeyMessage();
+    }
+}
+
+const addFlatsToNaturalScale = (naturalScale,accidentals,diatonicScale) => {
+    for (const el of naturalScale) {
+        if (accidentals.indexOf(el) > -1) {
+            diatonicScale.push(el.concat("b"));
+        } else {
+            diatonicScale.push(el);
+            hideInvalidKeyMessage();
+        }
+    }
+}
 
 // BUILD DIATONIC SCALE (MAJOR OR MINOR)
 const getDiatonicScale = (name, accidental, type) => {  
@@ -584,11 +591,12 @@ const getDiatonicScale = (name, accidental, type) => {
     firstDegree += accidental;
     // EMPTY ARRAY FOR RESULT
     let diatonicScale = [];
-    // !!! THESE WORK WITHOUT INITIALISING ???
-    // let foundMajorKeys; NOW foundKeyCenters !!!
-    // let foundMinorKeys; NOW foundKeyCenters !!!
-    // let accidentalNotes = [];
-    // let idx;
+    // MAJOR FLAT, MAJOR SHARP, MINOR FLAT OR MINOR SHARP
+    let foundKeyCenters = [];
+    // SUB-ARRAY OR ENTIRE ARRAY OF sharps OR flats
+    let accidentalNotes = [];
+    // POSITION AT WHICH FIRST DEGREE IS FOUND. THIS DETERMINES NUMBER OF ACCIDENTALS
+    let idx;
 
     // BASED ON type, FIND THAT NOTE IN EITHER majorSharpKeys OR majorFlatKeys
     // IF MAJOR
@@ -603,35 +611,20 @@ const getDiatonicScale = (name, accidental, type) => {
         // IF MAJOR SHARP
         if (circleOfFifths["majorSharpKeys"].indexOf(firstDegree) > -1) {
             // ASSIGN APPROPRIATE ARRAY TO VARIABLE
-            foundKeyCenters = circleOfFifths["majorSharpKeys"];
+            foundKeyCenters = [...circleOfFifths["majorSharpKeys"]];
             // GET INDEX OF TONIC (LETTER NAME OF SCALE) FROM KEY SIGNATURES
             idx = foundKeyCenters.indexOf(firstDegree) + 1;
             // GET FIRST n NOTES THAT NEED ACCIDENTALS (FROM sharps)
-            accidentalNotes = circleOfFifths["sharps"].slice(0, idx);
+            accidentalNotes = [...circleOfFifths["sharps"].slice(0, idx)];
             // ITERATE OVER scale AND IF ELEMENT IS CONTAINED IN accidentalNotes, ADD "#" TO IT
-            // const diatonicScale = [];
-            for (const el of naturalScale) {
-                if (accidentalNotes.indexOf(el) > -1) {
-                    diatonicScale.push(el.concat("#"));
-                } else diatonicScale.push(el);
-                hideInvalidKeyMessage();
-            }
-
+            addSharpsToNaturalScale(naturalScale, accidentalNotes, diatonicScale);
         //  IF MAJOR FLAT
         } else if (circleOfFifths["majorFlatKeys"].indexOf(firstDegree) > -1) {
-            foundKeyCenters = circleOfFifths["majorFlatKeys"];
+            foundKeyCenters = [...circleOfFifths["majorFlatKeys"]];
             idx = foundKeyCenters.indexOf(firstDegree) + 1;
-            accidentalNotes = circleOfFifths["flats"].slice(0, idx);
+            accidentalNotes = [...circleOfFifths["flats"].slice(0, idx)];
             // ITERATE OVER scale AND IF ELEMENT IS CONTAINED IN accidentalNotes, ADD "b" TO IT
-            for (const el of naturalScale) {
-                if (accidentalNotes.indexOf(el) > -1) {
-                    diatonicScale.push(el.concat("b"));
-                } else {
-                    diatonicScale.push(el);
-                    hideInvalidKeyMessage();
-                }
-            }
-
+            addFlatsToNaturalScale(naturalScale, accidentalNotes, diatonicScale);
         // IF C NATURAL MAJOR OR AUGMENTED
         } else if (name === "c" && accidental === "" && 
                 (type === "major" || 
@@ -654,30 +647,16 @@ const getDiatonicScale = (name, accidental, type) => {
 
         //  IF MINOR SHARP
         if (circleOfFifths["minorSharpKeys"].indexOf(firstDegree) > -1) {
-            foundKeyCenters = circleOfFifths["minorSharpKeys"];
+            foundKeyCenters = [...circleOfFifths["minorSharpKeys"]];
              idx = foundKeyCenters.indexOf(firstDegree) + 1;
-             accidentalNotes = circleOfFifths["sharps"].slice(0, idx);
-             for (const el of naturalScale) {
-                 if (accidentalNotes.indexOf(el) > -1) {
-                     diatonicScale.push(el.concat("#"));
-                 } else {
-                    diatonicScale.push(el);
-                    hideInvalidKeyMessage();
-                 }
-             }
+             accidentalNotes = [...circleOfFifths["sharps"].slice(0, idx)];
+            addSharpsToNaturalScale(naturalScale, accidentalNotes, diatonicScale);
         // IF MINOR FLAT
         } else if (circleOfFifths["minorFlatKeys"].indexOf(firstDegree) > -1) {
-            foundKeyCenters = circleOfFifths["minorFlatKeys"];        
+            foundKeyCenters = [...circleOfFifths["minorFlatKeys"]];        
             idx = foundKeyCenters.indexOf(firstDegree) + 1;
-            accidentalNotes = circleOfFifths["flats"].slice(0, idx);
-            for (const el of naturalScale) {
-                if (accidentalNotes.indexOf(el) > -1) {
-                    diatonicScale.push(el.concat("b"));
-                } else {
-                    diatonicScale.push(el);
-                    hideInvalidKeyMessage();
-                }
-            }
+            accidentalNotes = [...circleOfFifths["flats"].slice(0, idx)];
+            addFlatsToNaturalScale(naturalScale, accidentalNotes, diatonicScale);
         // IF A NATURAL MINOR
         } else if (name === "a" && accidental === "" && (type === "minor" || type === "diminished")) {
             diatonicScale = naturalScale.slice();
@@ -701,18 +680,6 @@ const displayChordScale = () => {
     console.log(scaleArr);
     chordScaleSpan.innerText = scale.join("  ");
 }
-
-// PLAY CHORD 
-
-// SHARP-FLAT COMBINED CHROMATIC SCALE E2-B4 
-// "s"="sharp" AND "b"="flat"
-const soundNames = [
-    "E1", "FEs1", "FsGb1", "GFss1", "GsAb1", "AGssBbb1", "AsBb1", "BCb1", "C2", "CsDb2", "DCssEbb2", "DsEb2",
-    "E2", "FEs2", "FsGb2", "GFss2", "GsAb2", "AGssBbb2", "AsBb2", "BCb2", "C3", "CsDb3", "DCssEbb3", "DsEb3", 
-    "E3", "FEs3", "FsGb3", "GFss3", "GsAb3", "AGssBbb3", "AsBb3", "BCb3", "C4", "CsDb4", "DCssEbb4", "DsEb4", 
-    "E4", "FEs4", "FsGb4", "GFss4", "GsAb4", "AGssBbb4", "AsBb4", "BCb4", "C5", "CsDb5", "DCssEbb5", "DsEb5", 
-    "E5", "FEs5", "FsGb5", "GFss5", "GsAb5", "AGssBbb5", "AsBb5", "BCb5", "C6", "CsDb6", "DCssEbb6"
-];
 
 // WON'T WORK WITH let !!!
 let chordNotesArr = [];
@@ -796,7 +763,7 @@ const getChordToneSounds = () => {
 }
 
 // PLAY CHORD NOTES TOGETHER ( PLAY CHORD BUTTON )
-const playChordTones = (arr) => {
+const playChord = (arr) => {
     // const soundFiles = getChordToneSounds();
     const soundFiles = arr;
     console.log("soundFiles: " + soundFiles);
@@ -811,60 +778,20 @@ const playChordTones = (arr) => {
     }, 500)
 }
 
-// PLAY CHORD NOTES IN SEQUENCE ( ARPEGGIO BUTTON )
-const arpeggiateChord = () => {
-
-    const soundFiles = getChordToneSounds();
-    setTimeout(() => {
-        const sound = new Howl({
-            src: [soundFiles[0]],
-            volume: 0.3
-        });
-        sound.play();
-    }, 500)
-    setTimeout(() => {
-        const sound = new Howl({
-            src: [soundFiles[1]],
-            volume: 0.33
-        });
-        sound.play();
-    }, 700)
-    setTimeout(() => {
-        const sound = new Howl({
-            src: [soundFiles[2]],
-            volume: 0.36
-        });
-        sound.play();
-    }, 900)
-    setTimeout(() => {
-        const sound = new Howl({
-            src: [soundFiles[3]],
-            volume: 0.39
-        });
-        sound.play();
-    }, 1100)
-    setTimeout(() => {
-        const sound = new Howl({
-            src: [soundFiles[4]],
-            volume: 0.42
-        });
-        sound.play();
-    }, 1300)
-    setTimeout(() => {
-        const sound = new Howl({
-            src: [soundFiles[5]],
-            volume: 0.45
-        });
-        sound.play();
-    }, 1500)
-    setTimeout(() => {
-        const sound = new Howl({
-            src: [soundFiles[6]],
-            volume: 0.48
-        });
-        sound.play();
-    }, 1700)
-
+// PLAY CHORD NOTES IN SEQUENCE ( ARPEGGIO BUTTON ) WITH AN INITIAL DELAY OF 500 INCREMENTED BY 200 FOR EACH CHORDTONE
+const arpeggiateChord = (arr) => {
+    const soundFiles = arr;
+    let delay = 500;
+    for (let i = 0; i < soundFiles.length; i++) {
+        setTimeout(() => {
+            const sound = new Howl({
+                src: [soundFiles[i]],
+                volume: 0.3
+            });
+            sound.play();
+        }, delay)
+        delay+=200;
+    }
 }
 
 // CREATE A RESPONSIVE DIV FOR EACH CHORD DEGREE ( NOTES BUTTON )
@@ -934,11 +861,11 @@ const handleShowChordTones = () => {
 }
 
 const handlePlayChord = () => {
-    playChordTones(getChordToneSounds());
+    playChord(getChordToneSounds());
 }
 
 const handleArpeggiate = () => {
-    arpeggiateChord();
+    arpeggiateChord(getChordToneSounds());
 }
 
 const handlePlayIndividual = () => {
@@ -955,7 +882,6 @@ const handleColourTheme = () => {
     toggleButtonStyle();
 
 }
-
 
 // EVENT LISTENERS ON BUTTONS
 const showChordTonesButton = document.getElementById("chord-tones-btn");
@@ -1620,4 +1546,4 @@ window.addEventListener("resize", () => {
     }, 500);
 });
 
-export default getType;
+export { getType, getOptNinth, getOptEleventh, getOptThirteenth };
