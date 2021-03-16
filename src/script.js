@@ -1,126 +1,25 @@
 import Chord from "./classes/Chord.js";
 // import helpersTest from "./helpers.js";
+import { 
+    getName,
+    getType,
+    getAccidental,
+    getOptSixth,
+    getOptSeventh,
+    getOptNinth,
+    getOptEleventh,
+    getOptThirteenth,
+    getRegister,
+    getNameChange,
+    getAccidentalChange,
+    getTypeChange
+} from "./utils/getDropdownValues.js";
 import  { helpersTest, buildBaseTypeSymbol } from "./helpers.js";
 import circleOfFifths from "./utils/circleOfFifths.js";
 import soundNames from "./utils/soundNames.js";
 // import buildBaseTypeSymbol from "./helpers.js";
 
-// GET OPTIONS FROM DROPDOWN
-
-const getName = () => {
-    const nameSelect = document.getElementById("name");
-    let chordName = nameSelect.options[nameSelect.selectedIndex].value;
-    return chordName;
-}
-
-const getType = () => {
-    const typeSelect = document.getElementById("type");
-    let chordType = typeSelect.options[typeSelect.selectedIndex].value;
-    return chordType;
-}
-
-const getAccidental = () => {
-    const accidentalSelect = document.getElementById("accidental");
-    let chordAccidental = accidentalSelect.options[accidentalSelect.selectedIndex].value;
-    return chordAccidental;
-}
-
-const getOptSixth  = () => {
-    const sixthSelect = document.getElementById("sixth");
-    let chordSixth = sixthSelect.options[sixthSelect.selectedIndex].value;
-    return chordSixth;
-}
-
-const getOptSeventh = () => {
-    const seventhSelect = document.getElementById("seventh");
-    let chordSeventh = seventhSelect.options[seventhSelect.selectedIndex].value;
-    return chordSeventh;
-}
-
-const getOptNinth = () => {
-    const ninthSelect = document.getElementById("ninth");
-    let chordNinth = ninthSelect.options[ninthSelect.selectedIndex].value;
-    return chordNinth;
-}
-
-const getOptEleventh = () => {
-    const eleventhSelect = document.getElementById("eleventh");
-    let chordEleventh = eleventhSelect.options[eleventhSelect.selectedIndex].value;
-    return chordEleventh;
-}
-
-const getOptThirteenth = () => {
-    const thirteenthSelect = document.getElementById("thirteenth");
-    let chordThirteenth = thirteenthSelect.options[thirteenthSelect.selectedIndex].value;
-    return chordThirteenth;
-}
-
-const getRegister = () => {
-    const registerSelect = document.getElementById("register");
-    let register = registerSelect.options[registerSelect.selectedIndex].value;
-    return register;
-}
-
-// CONSTRUCT BASE TRIAD / DOMINANT(7) SYMBOL, BASED ON name, accidetal and type ( sus2, aug, 7 etc ) FOR addExtensionToBaseTypeSymbol() 
-// const buildBaseTypeSymbol = () => {
-
-//     let baseTypeSymbol;
-//     let type = getType();
-//     switch (type) {
-//         case "major" :
-//             baseTypeSymbol = "";
-//             break;
-//         case "minor" :
-//             baseTypeSymbol = "m";
-//             break;
-//         case "dominant" :
-//             if (getOptNinth() === "9" || getOptNinth() === "add9") {
-//                 baseTypeSymbol = "9";
-//                 break;
-//             } else if (getOptEleventh() === "11") {
-//                 baseTypeSymbol = "11";
-//                 break;
-//             } else if (getOptThirteenth() === "13") {
-//                 baseTypeSymbol = "13"
-//             }
-//             else {
-//                 baseTypeSymbol = "7";
-//             }
-//             break;
-//         case "augmented" :
-//             if (getOptSeventh()) {
-//                 baseTypeSymbol = "+7 (7#5)";
-//                 break;
-//             } else {
-//                 baseTypeSymbol = "+";
-//             }
-//             break;
-//         case "diminished" :
-//             if (getOptSeventh()) {
-//                 baseTypeSymbol = "07";
-//                 break;
-//             } else {
-//                 baseTypeSymbol = "0";
-//             }
-//             break;
-//         case "sus2" :
-//             baseTypeSymbol = "sus2"
-//             break;
-//         case "sus4" :
-//             baseTypeSymbol = "sus4"
-//             break;
-//         case "phrygian" :
-//             baseTypeSymbol = " sus(b)2"
-//             break;
-//         case "lydian" :
-//             baseTypeSymbol = " sus(#)4"
-//             break;
-//         default:
-//             baseTypeSymbol = "invalid type"
-//         }
-//     return baseTypeSymbol;
-
-// }
+// GET OPTIONS FROM DROPDOWN: getDropdownValues.js
 
 // OPTIONALLY ADD EXTENSIONS TO BASE SYMBOL ( C => Cadd9 ) FOR displayFullChordName()
 let fullSymbol;
@@ -792,91 +691,26 @@ const addListenerColourButton = () => {
 
 // WHEN PAGE LOADS, ONLY NAME SELECTION IS ENABLED. ENABLE DROPDOWNS IN SEQUENCE: ONCE ONE IS SELECTED, ENABLE NEXT THEN ATER TYPE IS SELECTED, ENABLE EXTENSIONS 6, 7, 9, 11, 13
 
-// INITIALISE VARS TO TRACK WHAT'S SELECTED AS NAME AND ACCIDENTAL
-let nameChangeVal;
-let accidentalChangeVal;
-
 // SELECT PARAGRAPHS TO SHOW / HIDE INSTRUCTIONS
 const nameInstruction = document.getElementById("name-instruction");
 const accidentalInstruction = document.getElementById("accidental-instruction");
 const typeInstruction = document.getElementById("type-instruction");
 const extensionInstruction = document.getElementById("extension-instruction");
 
-// BOOLEANS
-let isNameSelected = false;
 // NOT USED
 // let isAccidentalSelected = false;
 // NOT USED
 // let isTypeSelected = false;
 
+
+
 // EVENT LISTENERS ON NAME/ACCIDENTAL/TYPE DROPDOWN OPTIONS:
 
-// GET SELECTED NAME, ENABLE ACCIDENTAL OPTIONS, SHOW INSTR ONCE NAME IS SELECTED
-const getNameChange = () => {
-    const nameDropdown = document.getElementById("name");
-    nameDropdown.addEventListener('change', function() {
-    nameChangeVal = this.value;
-    if (!isNameSelected) {
-        isNameSelected = true;
-        accidentalEnable();
-        hideNameInstruction();
-        showAccidentalInstruction();
-    } else if (isNameSelected && !accidentalInstruction.classList.contains("hidden")) {
-        showAccidentalInstruction();
-    } else {
-        hideAccidentalInstruction();
-    }
-    //   WHAT IS FALSE ???
-    }, false);
-}
-getNameChange();
+// GET SELECTED NAME, ENABLE ACCIDENTAL OPTIONS, SHOW INSTR ONCE NAME IS SELECTED: getDropdownValues.js - getNameChange();
+// GET SELECTED ACCIDENTAL, ENABLE TYPE OPTIONS, SHOW INSTR ONCE ACCIDENTAL IS SELECTED: getDropdownValues.js - getAccidentalChange()
+// GET SELECTED TYPE, ENABLE EXTENSIONS 6, 7, 9, 11, 13 , SHOW INSTR: getDropdownValues.js - getTypeChange()
 
-let isImpossibleKey = false;
 
-// GET SELECTED ACCIDENTAL, ENABLE TYPE OPTIONS, SHOW INSTR ONCE ACCIDENTAL IS SELECTED
-const getAccidentalChange = () => {
-    const accidentalDropdown = document.getElementById("accidental");
-    accidentalDropdown.addEventListener('change', function() {
-
-        accidentalChangeVal = this.value;
-        isImpossibleKey = ((nameChangeVal === "b" && accidentalChangeVal ===  "#") ||
-        (nameChangeVal === "e" && accidentalChangeVal ===  "#") ||
-        (nameChangeVal === "f" && accidentalChangeVal ===  "b"));
-        console.log(isImpossibleKey);
-        typeEnable();
-        if (!accidentalInstruction.classList.contains("hidden") && accidentalOptions.selectedIndex > 0) {
-            hideAccidentalInstruction();
-        } 
-        hideAccidentalInstruction();
-        // showTypeInstruction();
-        if (isImpossibleKey) {
-            showAccidentalInstruction();
-            // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            hideTypeInstruction();
-        }
-        showTypeInstruction();
-    }, false);
-}
-getAccidentalChange();
-
-// GET SELECTED TYPE, ENABLE EXTENSIONS 6, 7, 9, 11, 13 , SHOW INSTR
-let typeChangeVal = "";
-const getTypeChange = () => {
-    const typeDropdown = document.getElementById("type");
-    typeDropdown.addEventListener('change', function() {
-        typeChangeVal = this.value;
-        enableExtensionOptions(typeChangeVal);
-        hideTypeInstruction();
-        showExtensionInstruction();
-        enableShowChordButton();
-        // ENABLE SHOW CHORD BUTTON 
-        showChordTonesButton.classList.add("animated-btn");
-        addListenerShowChordButton()
-    }, false);
-}
-getTypeChange();
-
-// arraySelects[i].options[selectedOption].disabled = true;
 
 // GRAB ALL DROPDOWNS AND THEIR OPTIONS
 
@@ -940,7 +774,7 @@ const accidentalDisable = () => {
 
 // ONLY ENABLE POSSIBLE ACCIDENTALS
 const accidentalEnable = () => {
-    switch (nameChangeVal) {
+    switch (getNameChange()) {
         case "c" :
         case "d" :
         case "g" :
@@ -1079,31 +913,31 @@ const enableAllTypes = () => {
 // ONLY ENABLE CHORD TYPES FOR VALID KEY SIGNATURES !!!
 // THIS DOES NOT HANDLE INSTRUCTIONS, ONLY THE TYPE SELECTION !!!
 const typeEnable = () => {
-    if (nameChangeVal=== "b" && accidentalChangeVal === "#") {
+    if (getNameChange()=== "b" && getAccidentalChange() === "#") {
         disableBSharpTypes();
     }
-     else if (nameChangeVal=== "d" && accidentalChangeVal === "b") {
+     else if (getNameChange()=== "d" && getAccidentalChange() === "b") {
         enableDFlatTypes();
     }
-     else if (nameChangeVal=== "d" && accidentalChangeVal === "#") {
+     else if (getNameChange()=== "d" && getAccidentalChange() === "#") {
         enableDSharpTypes()
     }
-     else if (nameChangeVal=== "e" && accidentalChangeVal === "#") {
+     else if (getNameChange()=== "e" && getAccidentalChange() === "#") {
         disableESharpTypes();
     }
-     else if (nameChangeVal=== "f" && accidentalChangeVal === "b") {
+     else if (getNameChange()=== "f" && getAccidentalChange() === "b") {
         disableFFlatTypes();
     }
-     else if (nameChangeVal=== "g" && accidentalChangeVal === "b") {
+     else if (getNameChange()=== "g" && getAccidentalChange() === "b") {
         enableGFlatTypes();
     }
-     else if (nameChangeVal=== "g" && accidentalChangeVal === "#") {
+     else if (getNameChange()=== "g" && getAccidentalChange() === "#") {
         enableGSharpTypes();
     }
-     else if (nameChangeVal=== "a" && accidentalChangeVal === "#") {
+     else if (getNameChange()=== "a" && getAccidentalChange() === "#") {
         enableASharpTypes();
     } 
-    else if (nameChangeVal=== "c" && accidentalChangeVal === "b") {
+    else if (getNameChange()=== "c" && getAccidentalChange() === "b") {
         enableCFlatTypes();
     // ENABLE ALL TYPES
     }
@@ -1403,4 +1237,27 @@ window.addEventListener("resize", () => {
     }, 500);
 });
 
-export { getName, getType, getOptNinth, getOptEleventh, getOptThirteenth, getAccidental, getOptSixth, getOptSeventh, getDiatonicScale };
+export { 
+    getName,
+    getType,
+    getOptNinth,
+    getOptEleventh,
+    getOptThirteenth,
+    getAccidental,
+    getOptSixth,
+    getOptSeventh,
+    getDiatonicScale,
+    accidentalEnable,
+    hideNameInstruction,
+    showAccidentalInstruction,
+    typeEnable,
+    accidentalOptions,
+    hideAccidentalInstruction,
+    showTypeInstruction,
+    enableExtensionOptions,
+    hideTypeInstruction,
+    showExtensionInstruction,
+    enableShowChordButton,
+    addListenerShowChordButton,
+    showChordTonesButton 
+};
