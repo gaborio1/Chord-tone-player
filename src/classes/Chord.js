@@ -1,3 +1,5 @@
+import { getName, getAccidental, getType, getOptSixth, getOptSeventh, getOptNinth, getOptEleventh, getOptThirteenth, getDiatonicScale } from "../script.js";
+
 export default class Chord {
     constructor(name, accidental, type, optSixth = "", optSeventh = "", optNinth = "", optEleventh = "", optThirteenth = "") {
         this.name = name;
