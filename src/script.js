@@ -594,19 +594,19 @@ const getChordToneSounds = () => {
             let condH = (soundNames[i].indexOf(chordTone) === 0 || soundNames[i].indexOf(chordTone) === 1 || soundNames[i].indexOf(chordTone) === 2);
             // chordTone.length = 1    (  "F" )
             if (condA && condB && condC && condH) {
-                soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
+                soundsArr.push("src/sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
                 // console.log(chordTone);
                 break;
             // chordTone.length = 2    ( F#" )
             } else if (condC && condD && condE && condF & condH) {
-                soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
+                soundsArr.push("src/sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
                 // console.log(chordTone);
                 break;
             // chordTone.length = 3 "   ( F##" )
             } else if (condC && condE && condG) {
-                soundsArr.push("sounds/" + soundNames[i].concat(".mp3"));
+                soundsArr.push("src/sounds/" + soundNames[i].concat(".mp3"));
                 minIdx = i;
                 // console.log(chordTone);
                 break;
@@ -1364,7 +1364,7 @@ const enableExtensionOptions = (str) => {
 const playIntro = () => {
     setTimeout(() => {
         const sound = new Howl({
-            src: ['./sounds/intro2.mp3']
+            src: ['src/sounds/intro2.mp3']
           });
           sound.play();      
     }, 600)
@@ -1373,7 +1373,7 @@ const playIntro = () => {
 window.addEventListener("load", function() {
     console.log("page is loaded");
     helpersTest()
-    // playIntro();
+    playIntro();
     disableSelectOptions();
     setTimeout(() => {
         showNameInstruction();
