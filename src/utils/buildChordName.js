@@ -1,8 +1,8 @@
 import { getName, getType, getAccidental, getOptSixth, getOptSeventh, getOptNinth, getOptEleventh, getOptThirteenth } from "../script.js";
 
-const helpersTest = () => {
-    console.log("hello from helpers.js");
-}
+// const helpersTest = () => {
+//     console.log("hello from helpers.js");
+// }
 
 const buildBaseTypeSymbol = () => {
 
@@ -190,4 +190,4 @@ const buildFullChordName = () => {
     return fullChordName;
 }
 
-export  { helpersTest, buildBaseTypeSymbol, addExtensionToBaseChordSymbol, buildFullChordName };
+export  {  buildBaseTypeSymbol, addExtensionToBaseChordSymbol, buildFullChordName };
