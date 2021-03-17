@@ -1,4 +1,15 @@
-import { getName, getType, getAccidental, getOptSixth, getOptSeventh, getOptNinth, getOptEleventh, getOptThirteenth } from "../script.js";
+// BUILD FULL CHORD NAME (NAME, TYPE, EXTENSIONS)
+
+import {
+    getName,
+    getType,
+    getAccidental,
+    getOptSixth,
+    getOptSeventh,
+    getOptNinth,
+    getOptEleventh,
+    getOptThirteenth
+} from "./getDropdownValues.js";
 
 // const helpersTest = () => {
 //     console.log("hello from helpers.js");

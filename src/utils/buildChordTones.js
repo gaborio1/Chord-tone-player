@@ -1,4 +1,7 @@
+// BUILD CHORD TONES
+
 import Chord from "../classes/Chord.js";
+
 import {
     getName,
     getType,
@@ -147,4 +150,4 @@ const buildChordTones = () => {
 
 }
 
-export { buildChordTones } ;
+export { buildChordTones };
