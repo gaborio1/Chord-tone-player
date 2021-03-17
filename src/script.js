@@ -14,142 +14,30 @@ import {
     getAccidentalChange,
     getTypeChange
 } from "./utils/getDropdownValues.js";
-import  { helpersTest, buildBaseTypeSymbol } from "./helpers.js";
+
+import  { 
+    helpersTest,
+    buildBaseTypeSymbol,
+    addExtensionToBaseChordSymbol,
+    buildFullChordName 
+} from "./utils/buildChordName.js";
+
 import circleOfFifths from "./utils/circleOfFifths.js";
 import soundNames from "./utils/soundNames.js";
 // import buildBaseTypeSymbol from "./helpers.js";
 
-// GET OPTIONS FROM DROPDOWN: getDropdownValues.js
-
-// OPTIONALLY ADD EXTENSIONS TO BASE SYMBOL ( C => Cadd9 ) FOR displayFullChordName()
-let fullSymbol;
-const addExtensionToBaseChordSymbol = () => {
-
-    const type = getType();
-    const sixthValue = getOptSixth();
-    const seventhValue = getOptSeventh();
-    const ninthValue = getOptNinth();
-    const eleventhValue = getOptEleventh();
-    const thirteenthValue = getOptThirteenth();
-
-    fullSymbol = buildBaseTypeSymbol();
-
-    // ADD OPTIONAL 6,7,9,11,13 TO SYMBOL
-    if (sixthValue && !seventhValue) {
-        if (type === "major") {
-            fullSymbol += "6";
-        } else if (type === "minor") {
-            fullSymbol += "6";
-        } else if (type === "dominant") {
-            fullSymbol += "/6";
-        }
-    }
-
-    if (seventhValue && !sixthValue) {
-        if (type === "major") {
-            fullSymbol += "M7";
-        } else if (type === "minor") {
-            fullSymbol += "7";
-        } else {
-            console.log("another type you have to fix");
-        }
-    }
-
-    // 6/7
-    if (sixthValue && seventhValue) {
-        if (type === "minor") {
-            fullSymbol += "7/6";
-        } else if (type === "major") {
-            fullSymbol += "M7/6"
-        } else {
-            console.log("another type you have to fix")
-        }
-    }
-
-    if (ninthValue === "9") {
-        if (type === "major") {
-            if (sixthValue) {
-                fullSymbol = "M9/6"
-            } else {
-                fullSymbol = "M9";
-            }
-        } else if (type === "minor") {
-            if (sixthValue) {
-                fullSymbol = "m9/6"
-            } else {
-                fullSymbol += "9";
-            }
-            
-        } else if (type === "dominant") {
-            fullSymbol += "";
-        } else {
-            console.log("another type you have to fix");
-        }
-    } 
-    
-    else if (ninthValue === "add9") {
-        if (type === "dominant") {
-            if (sixthValue) {
-                console.log("dom9 = dom add9 !!!");
-            } else {
-                fullSymbol = "9";
-            }
-        } else {
-            fullSymbol += " add9";
-        }
-    }
-
-    if (eleventhValue === "11") {
-        if (type === "major") {
-            fullSymbol += "M11";
-        } else if (type === "minor") {
-            fullSymbol += "11";
-        } else if (type === "dominant") {
-            fullSymbol += "";
-        } else {
-            console.log("another type you have to fix");
-        }
-
-    } else if (eleventhValue === "add11") {
-        if (type === "dominant") {
-            fullSymbol = "11";
-        } else {
-            fullSymbol += " add11";
-        }
-    }
-
-    if (thirteenthValue === "13") {
-        if (type === "major") {
-            fullSymbol += "M13";
-        } else if (type === "minor") {
-            fullSymbol += "13";
-        } else if (type === "dominant") {
-            fullSymbol += "";
-        } else {
-            console.log("another type you have to fix");
-        }
-
-    } else if (thirteenthValue === "add13") {
-        if (type === "dominant") {
-            fullSymbol = "13";
-        } else {
-            fullSymbol += " add13";
-        }
-    }
-    return fullSymbol;
-
-}
-
-// CAPITALISE LETTER NAME, ADD ACCIDENTAL AND TYPE SYMBOL ( c => C + # + m9 ==> Cm9 ) FOR DISPLAYFULLCHORDNAME()
-const buildFullChordName = () => {
-    fullSymbol = addExtensionToBaseChordSymbol();
-    let fullChordName;
-    fullChordName = `${getName().toUpperCase()}${getAccidental()}${fullSymbol}`;
-    return fullChordName;
-}
+// ********** GET OPTIONS FROM DROPDOWN: getDropdownValues.js - getName(), getType(), etc... **********
 
 // SEQUENCE OF BUILDING AND DISPLAYING FULL CHORD NAME:
 // buildBaseTypeSymbol() => addExtensionToBaseChordSymbol() => buildFullChordName() => displayFullChordName()
+
+// ********** BUILS BASE CHORD SYBOL: FOR displayFullChordName(): builChordName.js - buildBaseTypeSymbol() ***********
+// ********** OPTIONALLY ADD EXTENSIONS TO BASE SYMBOL ( C => Cadd9 ) FOR displayFullChordName(): builChordName.js - addExtensionToBaseChordSymbol ***********
+// ********** CAPITALISE LETTER NAME, ADD ACCIDENTAL AND TYPE SYMBOL ( c => C + # + m9 ==> Cm9 ) FOR DISPLAYFULLCHORDNAME(): builChordName.js - buildFullChordName ***********
+
+// SEQUENCE OF BUILDING AND DISPLAYING FULL CHORD NAME:
+// buildBaseTypeSymbol() => addExtensionToBaseChordSymbol() => buildFullChordName() => displayFullChordName()
+
 const displayFullChordName = () => {
     const fullChordNameSpan = document.getElementById("full-chord-name");
     fullChordNameSpan.innerText = buildFullChordName();
@@ -1207,7 +1095,7 @@ const playIntro = () => {
 window.addEventListener("load", function() {
     console.log("page is loaded");
     helpersTest()
-    playIntro();
+    // playIntro();
     disableSelectOptions();
     setTimeout(() => {
         showNameInstruction();
