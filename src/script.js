@@ -110,34 +110,46 @@ const arpeggiateChord = (arr) => {
 }
 
 // ********** CREATE A RESPONSIVE DIV FOR EACH CHORD DEGREE ( NOTES BUTTON ) **********
-const makeSoundDivs = () => {
 
-    const soundFiles = getChordToneSounds();
+const audioContainer = document.getElementById("audio-container");
+
+// REMOVE EXISTING DIVS IF ANY TO CLEAR CONTENT IN AUDIOCONTAINER
+const removeChildElements = (el) => {
+    while (el.firstChild) {
+        el.removeChild(el.firstChild);
+    }
+}
+
+// CREATE ELEMENTS WITH EVENT LISTENER FOR EACH EL IN ARRAY
+const makeNewElements = (arr) => {
     // NEED ACTUAL NOTE NAMES WITHOUT PATH AND EXTENSION
     const chordTones = buildChordTones().split(" ");
-    const audioContainer = document.getElementById("audio-container");
-    // REMOVE EXISTING DIVS IF ANY TO CLEAR CONTENT IN AUDIOCONTAINER
-    while (audioContainer.firstChild) {
-        audioContainer.removeChild(audioContainer.firstChild);
-    }
-    soundFiles.forEach((soundFile, i) => {
-        soundFiles[i] = new Howl({
-            src: [soundFile],
-            volume: 0.6
-        })
+    arr.forEach((soundFile, i) => {
+        
         let elem = document.createElement("div");
         // ??? THIS IS NOT WORKING !!!
         // elem.class = "btn";
         // INSTEAD:
         elem.classList.add("sound-div");
         elem.id = `sound-div${i}`;
-        elem.addEventListener('mouseover', () => soundFiles[i].play());
         // elem.innerText = `Deg.${i + 1}: ${chordTones[i]}`    
         elem.innerText = chordTones[i];    
         audioContainer.appendChild(elem);
         // document.body.append(elem);
-    })
 
+        soundFile = new Howl({
+            src: [soundFile],
+            volume: 0.6
+        })
+        elem.addEventListener('mouseover', () => soundFile.play());
+
+    })
+}
+
+const makeSoundDivs = () => {
+    const soundFiles = getChordToneSounds();
+    removeChildElements(audioContainer);
+    makeNewElements(soundFiles);
 }
 
 // ********** REFRESH PAGE FOR NEW CHORD ( NEW CHORD BUTTON ) **********
