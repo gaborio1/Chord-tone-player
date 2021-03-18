@@ -3,16 +3,7 @@
 import { 
     getName,
     getType,
-    getAccidental,
-    // getOptSixth,
-    // getOptSeventh,
-    // getOptNinth,
-    // getOptEleventh,
-    // getOptThirteenth,
-    getRegister,
-    getNameChange,
-    getAccidentalChange,
-    // getTypeChange
+    getAccidental
 } from "./utils/getDropdownValues.js";
 
 import getDiatonicScale from "../src/utils/buildScale.js";
@@ -31,6 +22,33 @@ import circleOfFifths from "./utils/circleOfFifths.js";
 import soundNames from "./utils/soundNames.js";
 
 import getChordToneSounds from "./utils/buildAudioFilenames.js";
+
+import {
+    accidentalEnable,
+    accidentalDisable,
+    typeDisable,
+    typeEnable,
+    showInvalidKeyMessage,
+    hideInvalidKeyMessage,
+    showNameInstruction,
+    hideNameInstruction,
+    showAccidentalInstruction,
+    hideAccidentalInstruction,
+    showTypeInstruction,
+    hideTypeInstruction,
+    showExtensionInstruction,
+    hideExtensionInstruction,
+    sixthDisable,
+    sixthEnable,
+    seventhDisable,
+    seventhEnable,
+    ninthDisable,
+    ninthEnable,
+    eleventhDisable,
+    eleventhEnable,
+    thirteenthDisable,
+    thirteenthEnable
+} from "./utils/handleOptionsMessagesButtons.js";
 // NOT IN USE !!!
 // import buildBaseTypeSymbol from "./helpers.js";
 
@@ -176,7 +194,7 @@ const toggleButtonStyle = () => {
 
 // EVENT HANDLERS ON BUTTONS:
 
-// SHOW CHORD BUTTON
+// ********** SHOW CHORD BUTTON **********
 const handleShowChordTones = () => {
     displayFullChordName();
     displayChordTones();
@@ -192,32 +210,30 @@ const handleShowChordTones = () => {
     // addListenerColourButton();
 }
 
-// CHORD PLAY BUTTON
+// ********** CHORD PLAY BUTTON **********
 const handlePlayChord = () => {
     playChord(getChordToneSounds());
 }
 
-// ARPEGGIO BUTTON
+// ********** ARPEGGIO BUTTON **********
 const handleArpeggiate = () => {
     arpeggiateChord(getChordToneSounds());
 }
 
-// NOTES BUTTON
+// ********** NOTES BUTTON **********
 const handlePlayIndividual = () => {
     makeSoundDivs();
 }
 
-// NEW CHORD BUTTON
+// ********** NEW CHORD BUTTON **********
 const handleNewChord = () => {
     refreshPage();
 }
 
-// THEME BUTTON
+// ********** THEME BUTTON **********
 const handleColourTheme = () => {
     toggleBackgroundColour();
-
     toggleButtonStyle();
-
 }
 
 // EVENT LISTENERS ON BUTTONS:
@@ -228,7 +244,7 @@ const playIndividualButton = document.getElementById("play-individual-btn");
 const newChordButton = document.getElementById("new-chord-btn");
 const colourThemeButton = document.getElementById("colour-theme-btn");
 
-// WHEN CHORD TYPE SELECTION IS MADE ( IN getTypeChange() )
+// ********** WHEN CHORD TYPE SELECTION IS MADE ( IN getTypeChange() ) **********
 const addListenerShowChordButton = () => {
     showChordTonesButton.addEventListener("click", function(evt) {
         evt.preventDefault();
@@ -236,34 +252,34 @@ const addListenerShowChordButton = () => {
     })
 }
 
-// WHEN SHOW CHORD IS CLICKED ( IN handleShowChordTones() )
+// ********** WHEN SHOW CHORD IS CLICKED ( IN handleShowChordTones() ) **********
 const addListenerPlayButton = () => {
     playButton.addEventListener("click", function(evt) {
         evt.preventDefault();
         handlePlayChord();
     })
 }
-
+// ********** WHEN ARPEGGIO IS CLICKED ( IN handleShowChordTones() ) **********
 const addListenerArpeggiateButton = () => {
     arpeggiateButton.addEventListener("click", function(evt) {
         evt.preventDefault();
         handleArpeggiate();
     })
 }
-
+// ********** WHEN NOTES IS CLICKED ( IN handleShowChordTones() ) **********
 const addListenerPlayIndividualButton = () => {
     playIndividualButton.addEventListener("click", function(evt) {
         evt.preventDefault();
         handlePlayIndividual();
     })
 }
-
+// ********** WHEN NEW CHORD IS CLICKED ( IN handleShowChordTones() ) **********
 const addListenerNewChordButton = () => {
     newChordButton.addEventListener("click", function(evt) {
         handleNewChord();
     })
 }
-
+// ********** WHEN THEME IS CLICKED ( IN handleShowChordTones() ) **********
 const addListenerColourButton = () => {
     colourThemeButton.addEventListener("click", function(evt) {
         handleColourTheme();
@@ -283,391 +299,25 @@ const extensionInstruction = document.getElementById("extension-instruction");
 // NOT USED
 // let isTypeSelected = false;
 
-// EVENT LISTENERS ON NAME/ACCIDENTAL/TYPE DROPDOWN OPTIONS:
+// ********** EVENT LISTENERS ON NAME/ACCIDENTAL/TYPE DROPDOWN OPTIONS: **********
 
 // GET SELECTED NAME, ENABLE ACCIDENTAL OPTIONS, SHOW INSTR ONCE NAME IS SELECTED: getDropdownValues.js - getNameChange();
 // GET SELECTED ACCIDENTAL, ENABLE TYPE OPTIONS, SHOW INSTR ONCE ACCIDENTAL IS SELECTED: getDropdownValues.js - getAccidentalChange()
 // GET SELECTED TYPE, ENABLE EXTENSIONS 6, 7, 9, 11, 13 , SHOW INSTR: getDropdownValues.js - getTypeChange()
 
-// GRAB ALL DROPDOWNS AND THEIR OPTIONS
 
-// CURRENTLY NOT IN USE:
-// const nameOptions = document.getElementById("name");
-// const cOpt = nameOptions.options[1]; 
-// const dOpt = nameOptions.options[2]; 
-// const eOpt = nameOptions.options[3]; 
-// const fOpt = nameOptions.options[4]; 
-// const gOpt = nameOptions.options[5]; 
-// const aOpt = nameOptions.options[6]; 
-// const bOpt = nameOptions.options[7]; 
-
+//  USED IN getDropdownValues.js
 const accidentalOptions = document.getElementById("accidental");
-const naturalOpt = accidentalOptions.options[1];
-const sharpOpt = accidentalOptions.options[2];
-const flatOpt = accidentalOptions.options[3];
-
-const typeOptions = document.getElementById("type");
-const majorOpt = typeOptions.options[1];
-const minorOpt = typeOptions.options[2];
-const dominantOpt = typeOptions.options[3];
-const augmentedOpt = typeOptions.options[4];
-const diminishedOpt = typeOptions.options[5];
-const susTwoOpt = typeOptions.options[6];
-const susFourOpt = typeOptions.options[7];
-const phrygianOpt = typeOptions.options[8];
-const lydianOpt = typeOptions.options[9];
-
-const sixthOptions = document.getElementById("sixth");
-const sixthOpt = sixthOptions[1];
-
-const seventhOptions = document.getElementById("seventh");
-const seventhOpt = seventhOptions.options[1];
-
-const ninthOptions = document.getElementById("ninth");
-const ninthOpt = ninthOptions.options[1];
-const addNinthOpt = ninthOptions.options[2];
-
-const eleventhOptions = document.getElementById("eleventh");
-const eleventhOpt = eleventhOptions.options[1];
-const addEleventhOpt = eleventhOptions.options[2];
-
-const thirteenthOptions = document.getElementById("thirteenth");
-const thirteenthOpt = thirteenthOptions.options[1];
-const addThirteenthOpt = thirteenthOptions.options[2];
 
 const registerOptions = document.getElementById("register");
-// guitarOpt IS NOT DISABLED BY DEFAULT
+// // guitarOpt IS NOT DISABLED BY DEFAULT
 const guitarOpt = registerOptions.options[0];
 const bassOpt = registerOptions.options[1];
 const guitarUpOpt = registerOptions.options[2];
 
-// DISABLE / ENABLE OPTIONS
-const accidentalDisable = () => {
-    accidentalOptions.options[0].disabled = true;
-    naturalOpt.disabled = true;
-    sharpOpt.disabled = true;
-    flatOpt.disabled = true;
-}
-
-// ONLY ENABLE POSSIBLE ACCIDENTALS
-const accidentalEnable = () => {
-    switch (getNameChange()) {
-        case "c" :
-        case "d" :
-        case "g" :
-        case "a" :    
-            naturalOpt.disabled = false;
-            sharpOpt.disabled = false;
-            flatOpt.disabled = false;
-            break;
-        case "e" :
-        case "b" :    
-            naturalOpt.disabled = false;
-            // sharpOpt.disabled = false;
-            flatOpt.disabled = false;
-            break;
-        case "f" :
-            naturalOpt.disabled = false;
-            sharpOpt.disabled = false;
-            // flatOpt.disabled = false;
-            break;
-    }
-}
-
-const typeDisable = () => {
-    typeOptions.options[0].disabled = true;
-    majorOpt.disabled = true;
-    minorOpt.disabled = true;
-    dominantOpt.disabled = true;
-    augmentedOpt.disabled = true;
-    diminishedOpt.disabled = true;
-    susTwoOpt.disabled = true;
-    susFourOpt.disabled = true;
-    phrygianOpt.disabled = true;
-    lydianOpt.disabled = true;
-}
-
+// ********** DISABLE / ENABLE OPTIONS: enableDisableOptionsAndButtons.js **********
 // FUMCTIONS FOR typeEnable()
 
-// NO KEY IN B#
-const disableBSharpTypes = () => {
-    showInvalidKeyMessage();
-}
-
-// NO MINOR IN Db
-const enableDFlatTypes = () => {
-    majorOpt.disabled = false;
-    dominantOpt.disabled = false;
-    augmentedOpt.disabled = false;
-    // diminishedOpt.disabled = false;
-    susTwoOpt.disabled = false;
-    susFourOpt.disabled = false;
-    phrygianOpt.disabled = false;
-    lydianOpt.disabled = false;
-}
-
-// NO MAJOR IN D#
-const enableDSharpTypes = () => {
-    minorOpt.disabled = false;
-    // augmentedOpt.disabled = false;
-    diminishedOpt.disabled = false;
-    susTwoOpt.disabled = false;
-    susFourOpt.disabled = false;
-    phrygianOpt.disabled = false;
-    lydianOpt.disabled = false;
-}
-
-// NO KEY IN E#
-const disableESharpTypes = () => {
-    showInvalidKeyMessage();
-}
-
-// NO KEY IN Fb
-const disableFFlatTypes = () => {
-    showInvalidKeyMessage();
-}
-
-// NO MINOR IN Gb
-const enableGFlatTypes = () => {
-    majorOpt.disabled = false;
-    dominantOpt.disabled = false;
-    augmentedOpt.disabled = false;
-    // diminishedOpt.disabled = false;
-    susTwoOpt.disabled = false;
-    susFourOpt.disabled = false;
-    phrygianOpt.disabled = false;
-    lydianOpt.disabled = false;
-}
-
-// NO MAJOR IN G#
-const enableGSharpTypes = () => {
-    minorOpt.disabled = false;
-    // augmentedOpt.disabled = false;
-    diminishedOpt.disabled = false;
-    susTwoOpt.disabled = false;
-    susFourOpt.disabled = false;
-    phrygianOpt.disabled = false;
-    lydianOpt.disabled = false;
-}
-
-// NO MAJOR IN A#
-const enableASharpTypes = () => {
-    minorOpt.disabled = false;
-    // augmentedOpt.disabled = false;
-    diminishedOpt.disabled = false;
-    susTwoOpt.disabled = false;
-    susFourOpt.disabled = false;
-    phrygianOpt.disabled = false;
-    lydianOpt.disabled = false;    
-}
-
-// NO MINOR IN Cb
-const enableCFlatTypes = () => {
-    majorOpt.disabled = false;
-    dominantOpt.disabled = false;
-    augmentedOpt.disabled = false;
-    // diminishedOpt.disabled = false;
-    susTwoOpt.disabled = false;
-    susFourOpt.disabled = false;
-    phrygianOpt.disabled = false;
-    lydianOpt.disabled = false;   
-}
-
-// BOTH MAJOR AND MINOR (FOR EXAMPLE F#, D ETC...)
-const enableAllTypes = () => {
-    // typeOptions.options[0].disabled = false;
-    majorOpt.disabled = false;
-    minorOpt.disabled = false;
-    dominantOpt.disabled = false;
-    augmentedOpt.disabled = false;
-    diminishedOpt.disabled = false;
-    susTwoOpt.disabled = false;
-    susFourOpt.disabled = false;
-    phrygianOpt.disabled = false;
-    lydianOpt.disabled = false;
-}
-
-// ONLY ENABLE CHORD TYPES FOR VALID KEY SIGNATURES !!!
-// THIS DOES NOT HANDLE INSTRUCTIONS, ONLY THE TYPE SELECTION !!!
-const typeEnable = () => {
-    if (getNameChange()=== "b" && getAccidentalChange() === "#") {
-        disableBSharpTypes();
-    }
-     else if (getNameChange()=== "d" && getAccidentalChange() === "b") {
-        enableDFlatTypes();
-    }
-     else if (getNameChange()=== "d" && getAccidentalChange() === "#") {
-        enableDSharpTypes()
-    }
-     else if (getNameChange()=== "e" && getAccidentalChange() === "#") {
-        disableESharpTypes();
-    }
-     else if (getNameChange()=== "f" && getAccidentalChange() === "b") {
-        disableFFlatTypes();
-    }
-     else if (getNameChange()=== "g" && getAccidentalChange() === "b") {
-        enableGFlatTypes();
-    }
-     else if (getNameChange()=== "g" && getAccidentalChange() === "#") {
-        enableGSharpTypes();
-    }
-     else if (getNameChange()=== "a" && getAccidentalChange() === "#") {
-        enableASharpTypes();
-    } 
-    else if (getNameChange()=== "c" && getAccidentalChange() === "b") {
-        enableCFlatTypes();
-    // ENABLE ALL TYPES
-    }
-     else {
-        enableAllTypes();
-    }
-}
-
-
-const showInvalidKeyMessage = () => {
-    invalidKeyMessage.classList.remove("hidden");
-}
-
-const hideInvalidKeyMessage = () => {
-    invalidKeyMessage.classList.add("hidden");
-}
-
-const showNameInstruction = () => {
-    nameInstruction.classList.remove("hidden");
-}
-
-const hideNameInstruction = () => {
-    nameInstruction.classList.add("hidden");
-}
-
-const showAccidentalInstruction = () => {
-    accidentalInstruction.classList.remove("hidden");
-}
-
-const hideAccidentalInstruction = () => {
-    accidentalInstruction.classList.add("hidden");
-}
-
-const showTypeInstruction = () => {
-    typeInstruction.classList.remove("hidden");
-}
-
-const hideTypeInstruction = () => {
-    typeInstruction.classList.add("hidden");
-}
-
-const showExtensionInstruction = () => {
-    extensionInstruction.classList.remove("hidden");
-}
-
-const hideExtensionInstruction = () => {
-    extensionInstruction.classList.add("hidden");
-}
-
-
-const sixthDisable = () => {
-    sixthOptions.options[0].disabled = true;
-    sixthOpt.disabled = true;
-}
-
-const sixthEnable = () => {
-    sixthOptions.options[0].disabled = false;
-    sixthOpt.disabled = false;
-}
-const seventhDisable = () => {
-    seventhOptions.options[0].disabled = true;
-    seventhOpt.disabled = true;
-}
-
-const seventhEnable = () => {
-    seventhOptions.options[0].disabled = false;
-    seventhOpt.disabled =false;
-}
-
-const ninthDisable = () => {
-    ninthOptions.options[0].disabled = true;
-    ninthOpt.disabled = true;
-    addNinthOpt.disabled = true;
-}
-
-const ninthEnable = (typeChangeVal) => {
-    switch (typeChangeVal) {
-        case "major" :
-        case "minor" :
-        case "augmented" :
-        case "diminished" :
-        case "sus4" :
-        case "phrygian" :
-        case "lydian" :
-            ninthOptions.options[0].disabled = false;
-            ninthOpt.disabled = false;
-            addNinthOpt.disabled = false;
-            break;
-        case "dominant" :
-            ninthOptions.options[0].disabled = false;
-            ninthOpt.disabled = false;
-            break;
-        // sus2
-        default:
-            console.log("FROM typeChangeVal: sus2");
-    }
-}
-
-const eleventhDisable = () => {
-    eleventhOptions.options[0].disabled = true;
-    eleventhOpt.disabled = true;
-    addEleventhOpt.disabled = true;
-}
-
-const eleventhEnable = (typeChangeVal) => {
-    switch (typeChangeVal) {
-        case "major" :
-        case "minor" :
-        case "dominant" :
-        case "augmented" :
-        case "diminished" :
-        case "phrygian" :
-            eleventhOptions.options[0].disabled = false;
-            eleventhOpt.disabled = false;
-            addEleventhOpt.disabled = false;
-            break;
-        case "sus2" :
-            eleventhOptions.options[0].disabled = false;
-            addEleventhOpt.disabled = false;
-            break;
-        // sus4, lydian
-        default:
-            console.log("FROM typeChangeVal: sus4 / lydian");
-    }
-}
-
-const thirteenthDisable = () => {
-    thirteenthOptions.options[0].disabled = true;
-    thirteenthOpt.disabled = true;
-    addThirteenthOpt.disabled = true;
-}
-
-const thirteenthEnable = (str) => {
-    const typeChangeVal = str;
-    switch (typeChangeVal) {
-        case "major" :
-        case "minor" :
-        case "dominant" :
-        case "augmented" :
-        case "diminished" :
-        case "phrygian" :
-            thirteenthOptions.options[0].disabled = false;
-            thirteenthOpt.disabled = false;
-            addThirteenthOpt.disabled = false;
-            break;
-        case "sus2" :
-        case "sus4" :
-        case "lydian" :
-            thirteenthOptions.options[0].disabled = false;
-            addThirteenthOpt.disabled = false;
-            break;
-    }
-}
 
 const enableAllSoundAndNewButtons = () => {
     // NOT IN USE
@@ -675,12 +325,6 @@ const enableAllSoundAndNewButtons = () => {
     // playIndividualButton.disabled = false;
     // newChordButton.disabled = false;
     // arpeggiateButton.disabled = false;
-    
-    // MAKE BUTTONS HOVER-ABLE
-    // newChordButton.classList.add("hover");
-    // playButton.classList.add("hover");
-    // arpeggiateButton.classList.add("hover");
-    // playIndividualButton.classList.add("hover");
 
     //  ENABLE ANIMATED BUTTONS
     newChordButton.classList.add("animated-btn");
@@ -725,6 +369,7 @@ const enableShowChordButton = () => {
     showChordTonesButton.classList.add("animated-btn");
     showChordTonesButton.classList.remove("pre-animation-btn");
 }
+
 // DISABLE ALL
 const disableSelectOptions = () => {
     accidentalDisable();
@@ -815,15 +460,6 @@ window.addEventListener("resize", () => {
 });
 
 export { 
-    // getName,
-    // getType,
-    // getAccidental,
-    // getOptSixth,
-    // getOptSeventh,
-    // getOptNinth,
-    // getOptEleventh,
-    // getOptThirteenth,
-    // getDiatonicScale,
     accidentalEnable,
     hideNameInstruction,
     showAccidentalInstruction,
@@ -836,5 +472,9 @@ export {
     showExtensionInstruction,
     enableShowChordButton,
     addListenerShowChordButton,
-    showChordTonesButton 
+    showChordTonesButton,
+    nameInstruction,
+    accidentalInstruction,
+    typeInstruction,
+    extensionInstruction,
 };

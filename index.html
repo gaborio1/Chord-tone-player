@@ -25,8 +25,6 @@
     <link rel='stylesheet' type="text/css" media='screen and (min-width: 601px) and (max-width: 1024px)' href='src/css/medium.css' />
     <link rel="stylesheet" type="text/css" media="screen and (min-width: 1025px) " href="src/css/style.css" />
 
-    
-
   </head>
   <body>
     <div id="main" class="main">
@@ -36,9 +34,6 @@
         <h2>Then play.</h2>
       </div>
       
-      <!-- THIS DIV IS STACKED UNDERNEATH GLASS, ONLY HAS STYLING PURPOSE -->
-      <!-- NOT IN USE -->
-      <!-- <div class="under-the-glass"></div> -->
       <div id="player" class="glass animation-enabled">
       <!-- <form action="#"> -->
       <!--  The value property of an HTML option element can only be a string !!! -->
@@ -61,14 +56,10 @@
               </div>
               <div id="new-chord-btn-container" class="controls__new-chord-container sidebar-btn">
   
-                <!-- ORIGINAL BUTTON -->
-                <!-- <button id="new-chord-btn" disabled>New chord</button> -->
-  
                 <!-- ANIMATED BUTTON  -->
                 <div id="new-chord-btn" class="pre-animation-btn enabled-with-show-btn">
                   <span class="button-text">New chord<i class="fas fa-redo-alt"></i></span>
                 </div>
-                <!-- < !-- END OF ANIMATED BUTTON --> 
               </div>
               <div class="controls__colour-theme-btn-container sidebar-btn hidden-in-tablet-and-mobile">
                 <div id="colour-theme-btn" class="pre-animation-btn">
@@ -85,8 +76,6 @@
                   <div id="word-nine" class="word-nine">nine</div>
                 </div>
               </div>
-              <!-- <h1 id="g">Maci ❤️ Bogar</h1> -->
-              <!-- <h1 id="g">❤️ Hello szia, Tomi vagyok ❤️ </h1> -->
             </div>
           </div>
           
@@ -186,18 +175,12 @@
               </div>
             </div>
           </div>
-          <!-- <br> -->
-          <!-- <button type="button" onclick="displayData()">Get chord tones-onclick</button> -->
           <div class="control-panel__display-chord card animating-width animation-enabled" id="display-chord">
-
-            <!-- ORIGINAL BUTTON -->
-            <!-- <button id="chord-tones-btn" disabled>Show chord tones</button> -->
 
             <!-- ANIMATED BUTTON  -->
             <div id="chord-tones-btn" class="chord-tones-btn pre-animation-btn">
               <span class="button-text">Show chord <i class="fas fa-info"></i></span>
             </div>
-            <!-- END OF ANIMATED BUTTON -->
 
             <p id="invalid-key-message" class="hidden">Theoretical key!</p>
             <div id="display-chord-text-rows" class=" control-panel__display-chord__text-rows control-panel__row">
@@ -206,14 +189,8 @@
               <p class="non-button-text">Chord scale: <span id="chord-scale" class="chord-scale-span"></span></p>
             </div>
           </div>
-          <!-- <br> -->
           <div id="play-options" class="control-panel__play-options card animation-enabled">
             <div id="play-options-btn-row" class="play-options__btn-row">
-
-              <!-- ORIGINAL BUTTONS -->
-              <!-- <button id="play-chord-btn" disabled>Play chord</button> -->
-              <!-- <button id="arpeggiate-chord-btn" disabled>Arpeggiate</button> -->
-              <!-- <button id="play-individual-btn" disabled>Individual notes</button> -->
 
               <!-- ANIMATED BUTTONS -->
               <div id="play-chord-btn" class="pre-animation-btn enabled-with-show-btn">
@@ -225,7 +202,6 @@
               <div id="play-individual-btn" class="pre-animation-btn enabled-with-show-btn">
                 <span class="button-text">Notes <i class="fas fa-music"></i></span>
               </div>
-              <!-- END OF ANIMATED BUTTONS -->
 
             </div>
             <div id="audio-container" class="play-options__audio-container"></div>
