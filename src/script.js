@@ -1,19 +1,21 @@
-// import Chord from "./classes/Chord.js";
+// MODULE IMPORTS
 
 import { 
     getName,
     getType,
     getAccidental,
-    getOptSixth,
-    getOptSeventh,
-    getOptNinth,
-    getOptEleventh,
-    getOptThirteenth,
+    // getOptSixth,
+    // getOptSeventh,
+    // getOptNinth,
+    // getOptEleventh,
+    // getOptThirteenth,
     getRegister,
     getNameChange,
     getAccidentalChange,
-    getTypeChange
+    // getTypeChange
 } from "./utils/getDropdownValues.js";
+
+import getDiatonicScale from "../src/utils/buildScale.js";
 
 import  { 
     // helpersTest,
@@ -22,13 +24,14 @@ import  {
     buildFullChordName 
 } from "./utils/buildChordName.js";
 
-import  { 
-    // helpersTest,
-    buildChordTones
-} from "./utils/buildChordTones.js";
+import buildChordTones from "./utils/buildChordTones.js";
 
 import circleOfFifths from "./utils/circleOfFifths.js";
+
 import soundNames from "./utils/soundNames.js";
+
+import getChordToneSounds from "./utils/buildAudioFilenames.js";
+// NOT IN USE !!!
 // import buildBaseTypeSymbol from "./helpers.js";
 
 // ********** GET OPTIONS FROM DROPDOWN: getDropdownValues.js - getName(), getType(), etc... **********
@@ -57,133 +60,12 @@ const displayChordTones = () => {
     chordTonesSpan.innerText = buildChordTones();
 }
 
-// BUILD NATURAL SCALE STARTING WITH TONIC 
-const getNaturalScale = (letterName) => {
-    const tonic = letterName;
-    // GET TONIC IDX
-    const tonicIdx = circleOfFifths["degrees"].indexOf(tonic);
-    // GET 2 SUBSCALES 
-    const subScale1 = circleOfFifths["degrees"].slice(tonicIdx);
-    const subScale2 = circleOfFifths["degrees"].slice(0, tonicIdx);
-    // MERGE SUBSCALES
-    const naturalScale = subScale1.concat(subScale2);
-    return naturalScale;
-}
-
  // INVALID CHORD MESSAGE WITH HIDDEN CLASS
  const invalidKeyMessage = document.getElementById("invalid-key-message");
 
-// MAKE NATURAL SCALE DIATONIC BY ADDING APPROPRIATE NUMBER/TYPE OF ACCIDENTALS FOR getDiatonicScale()
-const addSharpsToNaturalScale = (naturalScale,accidentals,diatonicScale) => {
-    for (const el of naturalScale) {
-        if (accidentals.indexOf(el) > -1) {
-            diatonicScale.push(el.concat("#"));
-        } else diatonicScale.push(el);
-        hideInvalidKeyMessage();
-    }
-}
+// ********** BUILD DIATONIC SCALE: buildScale.js - getNaturalScale(), addSharpsToNaturalScale(), addFlatsToNaturalScale() **********
 
-const addFlatsToNaturalScale = (naturalScale,accidentals,diatonicScale) => {
-    for (const el of naturalScale) {
-        if (accidentals.indexOf(el) > -1) {
-            diatonicScale.push(el.concat("b"));
-        } else {
-            diatonicScale.push(el);
-            hideInvalidKeyMessage();
-        }
-    }
-}
-
-// BUILD DIATONIC SCALE (MAJOR OR MINOR)
-const getDiatonicScale = (name, accidental, type) => {  
-    let naturalScale = getNaturalScale(name);
-    // GET FIRST NOTE OF SCALE
-    let firstDegree = naturalScale[0];
-    // CONCAT OPTIONAL ACCIDENTAL SO FULL NAME CAN BE USED IN SEARCH
-    firstDegree += accidental;
-    // EMPTY ARRAY FOR RESULT
-    let diatonicScale = [];
-    // MAJOR FLAT, MAJOR SHARP, MINOR FLAT OR MINOR SHARP
-    let foundKeyCenters = [];
-    // SUB-ARRAY OR ENTIRE ARRAY OF sharps OR flats
-    let accidentalNotes = [];
-    // POSITION AT WHICH FIRST DEGREE IS FOUND. THIS DETERMINES NUMBER OF ACCIDENTALS
-    let idx;
-
-    // BASED ON type, FIND THAT NOTE IN EITHER majorSharpKeys OR majorFlatKeys
-    // IF MAJOR
-    if (type === "major" || 
-        type === "augmented" || 
-        type === "dominant" || 
-        type === "sus2" || 
-        type === "sus4" || 
-        type === "phrygian" || 
-        type === "lydian") {
-       
-        // IF MAJOR SHARP
-        if (circleOfFifths["majorSharpKeys"].indexOf(firstDegree) > -1) {
-            // ASSIGN APPROPRIATE ARRAY TO VARIABLE
-            foundKeyCenters = [...circleOfFifths["majorSharpKeys"]];
-            // GET INDEX OF TONIC (LETTER NAME OF SCALE) FROM KEY SIGNATURES
-            idx = foundKeyCenters.indexOf(firstDegree) + 1;
-            // GET FIRST n NOTES THAT NEED ACCIDENTALS (FROM sharps)
-            accidentalNotes = [...circleOfFifths["sharps"].slice(0, idx)];
-            // ITERATE OVER scale AND IF ELEMENT IS CONTAINED IN accidentalNotes, ADD "#" TO IT
-            addSharpsToNaturalScale(naturalScale, accidentalNotes, diatonicScale);
-        //  IF MAJOR FLAT
-        } else if (circleOfFifths["majorFlatKeys"].indexOf(firstDegree) > -1) {
-            foundKeyCenters = [...circleOfFifths["majorFlatKeys"]];
-            idx = foundKeyCenters.indexOf(firstDegree) + 1;
-            accidentalNotes = [...circleOfFifths["flats"].slice(0, idx)];
-            // ITERATE OVER scale AND IF ELEMENT IS CONTAINED IN accidentalNotes, ADD "b" TO IT
-            addFlatsToNaturalScale(naturalScale, accidentalNotes, diatonicScale);
-        // IF C NATURAL MAJOR OR AUGMENTED
-        } else if (name === "c" && accidental === "" && 
-                (type === "major" || 
-                type === "augmented" || 
-                type === "dominant" || 
-                type === "sus2" || 
-                type === "sus4" || 
-                type === "phrygian" || 
-                type === "lydian")) {
-            diatonicScale = naturalScale.slice();
-            hideInvalidKeyMessage();
-        } 
-        // HANDLE THEORETICAL KEY SIGNATURES 
-        else {
-            showInvalidKeyMessage();
-        }
-
-    // IF MINOR
-    } else if (type === "minor" || type === "diminished") {
-
-        //  IF MINOR SHARP
-        if (circleOfFifths["minorSharpKeys"].indexOf(firstDegree) > -1) {
-            foundKeyCenters = [...circleOfFifths["minorSharpKeys"]];
-             idx = foundKeyCenters.indexOf(firstDegree) + 1;
-             accidentalNotes = [...circleOfFifths["sharps"].slice(0, idx)];
-            addSharpsToNaturalScale(naturalScale, accidentalNotes, diatonicScale);
-        // IF MINOR FLAT
-        } else if (circleOfFifths["minorFlatKeys"].indexOf(firstDegree) > -1) {
-            foundKeyCenters = [...circleOfFifths["minorFlatKeys"]];        
-            idx = foundKeyCenters.indexOf(firstDegree) + 1;
-            accidentalNotes = [...circleOfFifths["flats"].slice(0, idx)];
-            addFlatsToNaturalScale(naturalScale, accidentalNotes, diatonicScale);
-        // IF A NATURAL MINOR
-        } else if (name === "a" && accidental === "" && (type === "minor" || type === "diminished")) {
-            diatonicScale = naturalScale.slice();
-            hideInvalidKeyMessage();
-        } else {
-            showInvalidKeyMessage();
-        }
-    } 
-    // UPPERCASE NOTE LETTER NAMES BUT NOT THE ACCIDENTAL
-    const result = diatonicScale.map(note => note.charAt(0).toUpperCase() + note.slice(1));
-
-    return result;
-}
-
-// GET AND DISPLAY DIATONIC SCALE 
+// ********** DISPLAY DIATONIC SCALE BUILT IN buildScale.js **********
 const displayChordScale = () => {
     const chordScaleSpan = document.getElementById("chord-scale");
     const scale = getDiatonicScale(getName(), getAccidental(), getType());
@@ -193,88 +75,9 @@ const displayChordScale = () => {
     chordScaleSpan.innerText = scale.join("  ");
 }
 
-// WON'T WORK WITH let !!!
-let chordNotesArr = [];
+// ********** BUILD AUDIO FILENAMES ( "src/sounds/EbF4.mp3" ) FOR HOWLER JS: buildAudioFilenames.js - makeChordNotesArr(),calcRegisterIdx(), getChordToneSounds() **********
 
-// THESE 2 ARE USED IN getChordToneSounds 
-
-const makeChordNotesArr = () => {
-    // SPLIT CHORD NOTES INTO ARRAY ["C", "E", "G", "Bb"]
-    chordNotesArr = buildChordTones().split(" ");
-    // !!! REPLACE ALL SPECIAL CHARS "#" WITH "s" FOR SHARP AS HOWLER WILL NOT LOAD MP3'S WITH SPEC CHARACTER IN FILENAME !!! 
-    // ["C#", "E#", "G##"]  =>   ["Cs", "Es", "Gss"]
-    for (let i = 0; i < chordNotesArr.length; i++) {
-        let sharpRe = /#/gi;
-        chordNotesArr[i] = chordNotesArr[i].replace(sharpRe , "s");
-    }
-    console.log(chordNotesArr);
-    return chordNotesArr;
-}
-
-// THIS IS WHERE FOR LOOP SHOULD START (DEPENDING ON SELECTED REGISTER) IN getChordToneSounds()
-const calcRegisterIdx = () => {
-    let registerIdx;
-    switch (getRegister()) {
-        case "bass" :
-            registerIdx = 0
-            break;
-        case "guitar" :
-            registerIdx = 12
-            break;
-        case "guitarUp" :
-            registerIdx = 24
-            break;
-    }
-    return registerIdx;
-}
-
-// ASSIGN PATH/NAME/REGISTER/FILE EXTENSION TO EVERY NOTE IN chordNotesArr: [C,E,G] => [sounds/C3.mp3, sounds/E3.mp3, sounds/G3.mp3]
-const getChordToneSounds = () => {
-
-    makeChordNotesArr();
-    // EMPTY ARRAY FOR SOUNDS WITH PATHS AND EXTENSION
-    const soundsArr = [];
-     // KEEP TRACK OF ACTUAL MINIMUM INDEX (OUTSIDE OF LOOP!!!), INITIALISE WITH A VALUE OF 0 AND ACCUMULATE IN INNER LOOP
-    let minIdx = 0;
-    // FIND EACH NOTE OF chordNotesArr [C,E,G] IN soundNames[] 
-    chordNotesArr.forEach((chordTone) => {
-        for (let i = calcRegisterIdx(); i < soundNames.length; i++) {
-            let condA = chordTone.length === 1;
-            let condB = soundNames[i].charAt(0) === chordTone;
-            let condC = i > minIdx;
-            let condD = chordTone.length === 2;
-            let condE = soundNames[i].includes(chordTone);
-            let condF = soundNames[i].length < 8;
-            let condG = chordTone.length === 3;
-            let condH = (soundNames[i].indexOf(chordTone) === 0 || soundNames[i].indexOf(chordTone) === 1 || soundNames[i].indexOf(chordTone) === 2);
-            // chordTone.length = 1    (  "F" )
-            if (condA && condB && condC && condH) {
-                soundsArr.push("src/sounds/" + soundNames[i].concat(".mp3"));
-                minIdx = i;
-                // console.log(chordTone);
-                break;
-            // chordTone.length = 2    ( F#" )
-            } else if (condC && condD && condE && condF & condH) {
-                soundsArr.push("src/sounds/" + soundNames[i].concat(".mp3"));
-                minIdx = i;
-                // console.log(chordTone);
-                break;
-            // chordTone.length = 3 "   ( F##" )
-            } else if (condC && condE && condG) {
-                soundsArr.push("src/sounds/" + soundNames[i].concat(".mp3"));
-                minIdx = i;
-                // console.log(chordTone);
-                break;
-            }
-        }
-        return minIdx;
-    })
-    console.log("soundsArr updated octave: " + soundsArr);
-    return soundsArr;
-
-}
-
-// PLAY CHORD NOTES TOGETHER ( PLAY CHORD BUTTON )
+// ********** PLAY CHORD NOTES TOGETHER ( PLAY CHORD BUTTON ) **********
 const playChord = (arr) => {
     // const soundFiles = getChordToneSounds();
     const soundFiles = arr;
@@ -290,7 +93,7 @@ const playChord = (arr) => {
     }, 500)
 }
 
-// PLAY CHORD NOTES IN SEQUENCE ( ARPEGGIO BUTTON ) WITH AN INITIAL DELAY OF 500 INCREMENTED BY 200 FOR EACH CHORDTONE
+// ********** PLAY CHORD NOTES IN SEQUENCE ( ARPEGGIO BUTTON ) WITH AN INITIAL DELAY OF 500 INCREMENTED BY 200 FOR EACH CHORDTONE **********
 const arpeggiateChord = (arr) => {
     const soundFiles = arr;
     let delay = 500;
@@ -306,7 +109,7 @@ const arpeggiateChord = (arr) => {
     }
 }
 
-// CREATE A RESPONSIVE DIV FOR EACH CHORD DEGREE ( NOTES BUTTON )
+// ********** CREATE A RESPONSIVE DIV FOR EACH CHORD DEGREE ( NOTES BUTTON ) **********
 const makeSoundDivs = () => {
 
     const soundFiles = getChordToneSounds();
@@ -337,12 +140,14 @@ const makeSoundDivs = () => {
 
 }
 
-// REFRESH PAGE FOR NEW CHORD ( NEW CHORD BUTTON )
+// ********** REFRESH PAGE FOR NEW CHORD ( NEW CHORD BUTTON ) **********
 const refreshPage = () => {
     location.reload();
     // THIS ALSO WORKS
     // location.reload(true);
 }
+
+// ********** TOGGLE COLOUR THEMES ( THEME BUTTON ) **********
 const toggleBackgroundColour = () => {
     const main = document.querySelector(".main");
     main.classList.toggle("grey-background");
@@ -356,7 +161,10 @@ const toggleButtonStyle = () => {
     colourThemeButton.classList.toggle("grey-theme-btn");
     showChordTonesButton.classList.toggle("grey-theme-btn");
 }
-// EVENT HANDLERS ON BUTTONS
+
+// EVENT HANDLERS ON BUTTONS:
+
+// SHOW CHORD BUTTON
 const handleShowChordTones = () => {
     displayFullChordName();
     displayChordTones();
@@ -372,22 +180,27 @@ const handleShowChordTones = () => {
     // addListenerColourButton();
 }
 
+// CHORD PLAY BUTTON
 const handlePlayChord = () => {
     playChord(getChordToneSounds());
 }
 
+// ARPEGGIO BUTTON
 const handleArpeggiate = () => {
     arpeggiateChord(getChordToneSounds());
 }
 
+// NOTES BUTTON
 const handlePlayIndividual = () => {
     makeSoundDivs();
 }
 
+// NEW CHORD BUTTON
 const handleNewChord = () => {
     refreshPage();
 }
 
+// THEME BUTTON
 const handleColourTheme = () => {
     toggleBackgroundColour();
 
@@ -395,7 +208,7 @@ const handleColourTheme = () => {
 
 }
 
-// EVENT LISTENERS ON BUTTONS
+// EVENT LISTENERS ON BUTTONS:
 const showChordTonesButton = document.getElementById("chord-tones-btn");
 const playButton = document.getElementById("play-chord-btn");
 const arpeggiateButton = document.getElementById("arpeggiate-chord-btn");
@@ -458,15 +271,11 @@ const extensionInstruction = document.getElementById("extension-instruction");
 // NOT USED
 // let isTypeSelected = false;
 
-
-
 // EVENT LISTENERS ON NAME/ACCIDENTAL/TYPE DROPDOWN OPTIONS:
 
 // GET SELECTED NAME, ENABLE ACCIDENTAL OPTIONS, SHOW INSTR ONCE NAME IS SELECTED: getDropdownValues.js - getNameChange();
 // GET SELECTED ACCIDENTAL, ENABLE TYPE OPTIONS, SHOW INSTR ONCE ACCIDENTAL IS SELECTED: getDropdownValues.js - getAccidentalChange()
 // GET SELECTED TYPE, ENABLE EXTENSIONS 6, 7, 9, 11, 13 , SHOW INSTR: getDropdownValues.js - getTypeChange()
-
-
 
 // GRAB ALL DROPDOWNS AND THEIR OPTIONS
 
@@ -963,7 +772,7 @@ const playIntro = () => {
 window.addEventListener("load", function() {
     console.log("page is loaded");
     // helpersTest()
-    playIntro();
+    // playIntro();
     disableSelectOptions();
     setTimeout(() => {
         showNameInstruction();
@@ -994,15 +803,15 @@ window.addEventListener("resize", () => {
 });
 
 export { 
-    getName,
-    getType,
-    getOptNinth,
-    getOptEleventh,
-    getOptThirteenth,
-    getAccidental,
-    getOptSixth,
-    getOptSeventh,
-    getDiatonicScale,
+    // getName,
+    // getType,
+    // getAccidental,
+    // getOptSixth,
+    // getOptSeventh,
+    // getOptNinth,
+    // getOptEleventh,
+    // getOptThirteenth,
+    // getDiatonicScale,
     accidentalEnable,
     hideNameInstruction,
     showAccidentalInstruction,

@@ -150,4 +150,4 @@ const buildChordTones = () => {
 
 }
 
-export { buildChordTones };
+export default buildChordTones;

@@ -1,4 +1,6 @@
-import { getName, getAccidental, getType, getOptSixth, getOptSeventh, getOptNinth, getOptEleventh, getOptThirteenth, getDiatonicScale } from "../script.js";
+// MODELLING CHORDS
+
+import getDiatonicScale from "../utils/buildScale.js";
 
  class Chord {
     constructor(name, accidental, type, optSixth = "", optSeventh = "", optNinth = "", optEleventh = "", optThirteenth = "") {
