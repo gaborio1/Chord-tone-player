@@ -34,6 +34,7 @@ const buildChordTones = () => {
 
     const root = chordObj.getRoot();
     const flatSecond = chordObj.getFlatSecond();
+    const second = chordObj.getSecond();
     const third = chordObj.getThird();
     const fourth = chordObj.getFourth();
     const sharpFourth = chordObj.getSharpFourth();
