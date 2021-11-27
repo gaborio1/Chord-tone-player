@@ -20,7 +20,7 @@ const makeChordNotesArr = () => {
         let sharpRe = /#/gi;
         chordNotesArr[i] = chordNotesArr[i].replace(sharpRe , "s");
     }
-    console.log(chordNotesArr);
+    // console.log(chordNotesArr);
     return chordNotesArr;
 }
 
@@ -82,7 +82,7 @@ const getChordToneSounds = () => {
         }
         return minIdx;
     })
-    console.log("soundsArr updated octave: " + soundsArr);
+    // console.log("soundsArr updated octave: " + soundsArr);
     return soundsArr;
 
 }
