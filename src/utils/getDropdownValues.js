@@ -114,7 +114,7 @@ const getAccidentalChange = () => {
         isImpossibleKey = ((getNameChange() === "b" && accidentalChangeVal ===  "#") ||
         (getNameChange() === "e" && accidentalChangeVal ===  "#") ||
         (getNameChange() === "f" && accidentalChangeVal ===  "b"));
-        console.log(isImpossibleKey);
+        // console.log(isImpossibleKey);
         typeEnable();
         if (!accidentalInstruction.classList.contains("hidden") && accidentalOptions.selectedIndex > 0) {
             hideAccidentalInstruction();

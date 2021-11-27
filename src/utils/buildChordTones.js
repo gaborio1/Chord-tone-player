@@ -20,9 +20,10 @@ import {
 const buildChordTones = () => {
     // MAKE NEW CHORD AND USE ITS METHODS TO RETRIEVE ITS NOTES BASED OFF OF ITS CHORD SCALE
     const chordObj = new Chord(getName(), getAccidental(), getType(), getOptSixth(), getOptSeventh(), getOptNinth(), getOptEleventh(), getOptThirteenth());
-    // this.test FROM CONSTRUCTOR
-    console.log(chordObj.test());
-    console.log(chordObj);
+    // this.test FROM CONSTRUCTOR:
+    // console.log(chordObj.test());
+
+    // console.log(chordObj);
 
     let chordTones = "";
     const type = getType();
@@ -34,6 +35,7 @@ const buildChordTones = () => {
 
     const root = chordObj.getRoot();
     const flatSecond = chordObj.getFlatSecond();
+    const second = chordObj.getSecond();
     const third = chordObj.getThird();
     const fourth = chordObj.getFourth();
     const sharpFourth = chordObj.getSharpFourth();

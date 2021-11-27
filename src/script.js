@@ -87,9 +87,9 @@ const displayChordTones = () => {
 const displayChordScale = () => {
     const chordScaleSpan = document.getElementById("chord-scale");
     const scale = getDiatonicScale(getName(), getAccidental(), getType());
-    console.log(scale.join(" "));
+    // console.log(scale.join(" "));
     const scaleArr = scale.join(" ");
-    console.log(scaleArr);
+    // console.log(scaleArr);
     chordScaleSpan.innerText = scale.join("  ");
 }
 
@@ -99,7 +99,7 @@ const displayChordScale = () => {
 const playChord = (arr) => {
     // const soundFiles = getChordToneSounds();
     const soundFiles = arr;
-    console.log("soundFiles: " + soundFiles);
+    // console.log("soundFiles: " + soundFiles);
     setTimeout(() => {
         for (const soundFile of soundFiles) {
             const sound = new Howl({
@@ -427,8 +427,10 @@ const playIntro = () => {
 }
 
 window.addEventListener("load", function() {
-    console.log("page is loaded");
+    // console.log("page is loaded");
     // helpersTest()
+
+    // PLAY INTRO WHEN PAGE LOADS:
     // playIntro();
     disableSelectOptions();
     setTimeout(() => {
