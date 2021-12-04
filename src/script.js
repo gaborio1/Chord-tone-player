@@ -171,20 +171,28 @@ const makeSoundDivs = () => {
 }
 
 // ********** REFRESH PAGE FOR NEW CHORD ( NEW CHORD BUTTON ) **********
+const  resetSelect = (selectElement) => {
+    selectElement.selectedIndex = 0;
+}
+
 const refreshPage = () => {
     console.log("clear all inputs for new chord");
-    function resetSelectElement(selectElement) {
-        selectElement.selectedIndex = 0;
-    }
-    resetSelectElement(document.getElementById("name"));
-    resetSelectElement(document.getElementById("type"));
-    resetSelectElement(document.getElementById("accidental"));
-    resetSelectElement(document.getElementById("sixth"));
-    resetSelectElement(document.getElementById("seventh"));
-    resetSelectElement(document.getElementById("ninth"));
-    resetSelectElement(document.getElementById("eleventh"));
-    resetSelectElement(document.getElementById("thirteenth"));
-
+    // CLEAR SECECT OPTIONS
+    resetSelect(document.getElementById("name"));
+    // NOT DEFINED:
+    // resetSelect(nameSelect);
+    resetSelect(document.getElementById("type"));
+    resetSelect(document.getElementById("accidental"));
+    resetSelect(document.getElementById("sixth"));
+    resetSelect(document.getElementById("seventh"));
+    resetSelect(document.getElementById("ninth"));
+    resetSelect(document.getElementById("eleventh"));
+    resetSelect(document.getElementById("thirteenth"));
+    resetSelect(document.getElementById("register"));
+    // CLEAR CHORDTONES AND CHORD SCALE
+    document.getElementById("chord-tones").innerText = "";
+    document.getElementById("chord-scale").innerText = "";
+    document.getElementById("full-chord-name").innerText = "";
 
     // location.reload();
     // THIS ALSO WORKS
