@@ -1,5 +1,5 @@
 
-@media only screen and (min-width : 1025px) and (max-width : 3440px) {
+@media only screen and (min-width: 1025px) {
     * {
         margin: 0;
         padding: 0;
@@ -661,7 +661,7 @@
     /* SIDEBAR FROM ABOVE */
     @keyframes slideInFromAbove {
         0% {
-          transform: translateY(-375%);
+          transform: translateY(-550%);
         }
         100% {
           transform: translateY(0);
