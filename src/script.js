@@ -171,30 +171,40 @@ const makeSoundDivs = () => {
 }
 
 // ********** REFRESH PAGE FOR NEW CHORD ( NEW CHORD BUTTON ) **********
-const  resetSelect = (selectElement) => {
+const resetSelect = (selectElement) => {
     selectElement.selectedIndex = 0;
 }
 
 const refreshPage = () => {
-    console.log("clear all inputs for new chord");
-    // CLEAR SECECT OPTIONS
-    resetSelect(document.getElementById("name"));
-    // NOT DEFINED:
-    // resetSelect(nameSelect);
-    resetSelect(document.getElementById("type"));
-    resetSelect(document.getElementById("accidental"));
-    resetSelect(document.getElementById("sixth"));
-    resetSelect(document.getElementById("seventh"));
-    resetSelect(document.getElementById("ninth"));
-    resetSelect(document.getElementById("eleventh"));
-    resetSelect(document.getElementById("thirteenth"));
-    resetSelect(document.getElementById("register"));
-    // CLEAR CHORDTONES AND CHORD SCALE
-    document.getElementById("chord-tones").innerText = "";
-    document.getElementById("chord-scale").innerText = "";
-    document.getElementById("full-chord-name").innerText = "";
+    // console.log("clear all inputs for new chord");
+    // // CLEAR SELECT OPTIONS
+    // resetSelect(document.getElementById("name"));
+    // // NOT DEFINED:
+    // // resetSelect(nameSelect);
+    // resetSelect(document.getElementById("type"));
+    // resetSelect(document.getElementById("accidental"));
+    // resetSelect(document.getElementById("sixth"));
+    // resetSelect(document.getElementById("seventh"));
+    // resetSelect(document.getElementById("ninth"));
+    // resetSelect(document.getElementById("eleventh"));
+    // resetSelect(document.getElementById("thirteenth"));
+    // resetSelect(document.getElementById("register"));
+    // // CLEAR CHORDTONES AND CHORD SCALE
+    // document.getElementById("chord-tones").innerText = "";
+    // document.getElementById("chord-scale").innerText = "";
+    // document.getElementById("full-chord-name").innerText = "";
 
-    // location.reload();
+    // removeChildElements(audioContainer);
+
+    // disableSelectOptions();
+
+    // setTimeout(() => {
+    //     showNameInstruction();
+    //     addListenerColourButton();
+    //     colourThemeButton.classList.add("animated-btn");
+    // }, 2000);
+
+    location.reload();
     // THIS ALSO WORKS
     // location.reload(true);
 }
@@ -308,7 +318,7 @@ const addListenerColourButton = () => {
     })
 }
 
-// WHEN PAGE LOADS, ONLY NAME SELECTION IS ENABLED. ENABLE DROPDOWNS IN SEQUENCE: ONCE ONE IS SELECTED, ENABLE NEXT THEN ATER TYPE IS SELECTED, ENABLE EXTENSIONS 6, 7, 9, 11, 13
+// WHEN PAGE LOADS, ONLY NAME SELECTION IS ENABLED. ENABLE DROPDOWNS IN SEQUENCE: ONCE ONE IS SELECTED, ENABLE NEXT THEN AFTER TYPE IS SELECTED, ENABLE EXTENSIONS 6, 7, 9, 11, 13
 
 // SELECT PARAGRAPHS TO SHOW / HIDE INSTRUCTIONS
 const nameInstruction = document.getElementById("name-instruction");
@@ -438,7 +448,7 @@ const enableExtensionOptions = (str) => {
 
 }
 
-// PLAY INTRO WHEN PAGE LOADS
+// PLAY INTRO WHEN PAGE LOADS (DISABLED SEE BELOW IN window.addEvtListener)
 const playIntro = () => {
     setTimeout(() => {
         const sound = new Howl({
@@ -462,26 +472,28 @@ window.addEventListener("load", function () {
     }, 2000)
 });
 
-let resizeTimer;
-window.addEventListener("resize", () => {
-    const animatedElements = document.querySelectorAll(".animation-enabled");
-    for (let el of animatedElements) {
-        el.classList.remove("animation-enabled");
-        el.classList.add("animation-disabled");
-        // console.log("removed class");
-    }
-    // document.body.classList.add("resize-animation-stopper");
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-        // document.body.classList.remove("resize-animation-stopper");
-        const animationDisabledElements = document.querySelectorAll(".animation-disabled");
-        for (let el of animationDisabledElements) {
-            el.classList.add("animation-enabled");
-            el.classList.remove("animation-disabled");
-            // console.log("added class");
-        }
-    }, 500);
-});
+// DISABLED:
+
+// let resizeTimer;
+// window.addEventListener("resize", () => {
+//     const animatedElements = document.querySelectorAll(".animation-enabled");
+//     for (let el of animatedElements) {
+//         el.classList.remove("animation-enabled");
+//         el.classList.add("animation-disabled");
+//         // console.log("removed class");
+//     }
+//     // document.body.classList.add("resize-animation-stopper");
+//     clearTimeout(resizeTimer);
+//     resizeTimer = setTimeout(() => {
+//         // document.body.classList.remove("resize-animation-stopper");
+//         const animationDisabledElements = document.querySelectorAll(".animation-disabled");
+//         for (let el of animationDisabledElements) {
+//             el.classList.add("animation-enabled");
+//             el.classList.remove("animation-disabled");
+//             // console.log("added class");
+//         }
+//     }, 500);
+// });
 
 export {
     accidentalEnable,
