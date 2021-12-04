@@ -1,6 +1,6 @@
 // MODULE IMPORTS
 
-import { 
+import {
     getName,
     getType,
     getAccidental
@@ -8,11 +8,11 @@ import {
 
 import getDiatonicScale from "../src/utils/buildScale.js";
 
-import  { 
+import {
     // helpersTest,
     buildBaseTypeSymbol,
     addExtensionToBaseChordSymbol,
-    buildFullChordName 
+    buildFullChordName
 } from "./utils/buildChordName.js";
 
 import buildChordTones from "./utils/buildChordTones.js";
@@ -78,8 +78,8 @@ const displayChordTones = () => {
     chordTonesSpan.innerText = buildChordTones();
 }
 
- // INVALID CHORD MESSAGE WITH HIDDEN CLASS
- const invalidKeyMessage = document.getElementById("invalid-key-message");
+// INVALID CHORD MESSAGE WITH HIDDEN CLASS
+const invalidKeyMessage = document.getElementById("invalid-key-message");
 
 // ********** BUILD DIATONIC SCALE: buildScale.js - getNaturalScale(), addSharpsToNaturalScale(), addFlatsToNaturalScale() **********
 
@@ -123,7 +123,7 @@ const arpeggiateChord = (arr) => {
             });
             sound.play();
         }, delay)
-        delay+=200;
+        delay += 200;
     }
 }
 
@@ -143,7 +143,7 @@ const makeNewElements = (arr) => {
     // NEED ACTUAL NOTE NAMES WITHOUT PATH AND EXTENSION
     const chordTones = buildChordTones().split(" ");
     arr.forEach((soundFile, i) => {
-        
+
         let elem = document.createElement("div");
         // ??? THIS IS NOT WORKING !!!
         // elem.class = "btn";
@@ -151,7 +151,7 @@ const makeNewElements = (arr) => {
         elem.classList.add("sound-div");
         elem.id = `sound-div${i}`;
         // elem.innerText = `Deg.${i + 1}: ${chordTones[i]}`    
-        elem.innerText = chordTones[i];    
+        elem.innerText = chordTones[i];
         audioContainer.appendChild(elem);
         // document.body.append(elem);
 
@@ -172,7 +172,21 @@ const makeSoundDivs = () => {
 
 // ********** REFRESH PAGE FOR NEW CHORD ( NEW CHORD BUTTON ) **********
 const refreshPage = () => {
-    location.reload();
+    console.log("clear all inputs for new chord");
+    function resetSelectElement(selectElement) {
+        selectElement.selectedIndex = 0;
+    }
+    resetSelectElement(document.getElementById("name"));
+    resetSelectElement(document.getElementById("type"));
+    resetSelectElement(document.getElementById("accidental"));
+    resetSelectElement(document.getElementById("sixth"));
+    resetSelectElement(document.getElementById("seventh"));
+    resetSelectElement(document.getElementById("ninth"));
+    resetSelectElement(document.getElementById("eleventh"));
+    resetSelectElement(document.getElementById("thirteenth"));
+
+
+    // location.reload();
     // THIS ALSO WORKS
     // location.reload(true);
 }
@@ -181,7 +195,7 @@ const refreshPage = () => {
 const toggleBackgroundColour = () => {
     const main = document.querySelector(".main");
     main.classList.toggle("grey-background");
-} 
+}
 
 const toggleButtonStyle = () => {
     newChordButton.classList.toggle("grey-theme-btn");
@@ -246,7 +260,7 @@ const colourThemeButton = document.getElementById("colour-theme-btn");
 
 // ********** WHEN CHORD TYPE SELECTION IS MADE ( IN getTypeChange() ) **********
 const addListenerShowChordButton = () => {
-    showChordTonesButton.addEventListener("click", function(evt) {
+    showChordTonesButton.addEventListener("click", function (evt) {
         evt.preventDefault();
         handleShowChordTones();
     })
@@ -254,34 +268,34 @@ const addListenerShowChordButton = () => {
 
 // ********** WHEN SHOW CHORD IS CLICKED ( IN handleShowChordTones() ) **********
 const addListenerPlayButton = () => {
-    playButton.addEventListener("click", function(evt) {
+    playButton.addEventListener("click", function (evt) {
         evt.preventDefault();
         handlePlayChord();
     })
 }
 // ********** WHEN ARPEGGIO IS CLICKED ( IN handleShowChordTones() ) **********
 const addListenerArpeggiateButton = () => {
-    arpeggiateButton.addEventListener("click", function(evt) {
+    arpeggiateButton.addEventListener("click", function (evt) {
         evt.preventDefault();
         handleArpeggiate();
     })
 }
 // ********** WHEN NOTES IS CLICKED ( IN handleShowChordTones() ) **********
 const addListenerPlayIndividualButton = () => {
-    playIndividualButton.addEventListener("click", function(evt) {
+    playIndividualButton.addEventListener("click", function (evt) {
         evt.preventDefault();
         handlePlayIndividual();
     })
 }
 // ********** WHEN NEW CHORD IS CLICKED ( IN handleShowChordTones() ) **********
 const addListenerNewChordButton = () => {
-    newChordButton.addEventListener("click", function(evt) {
+    newChordButton.addEventListener("click", function (evt) {
         handleNewChord();
     })
 }
 // ********** WHEN THEME IS CLICKED ( IN handleShowChordTones() ) **********
 const addListenerColourButton = () => {
-    colourThemeButton.addEventListener("click", function(evt) {
+    colourThemeButton.addEventListener("click", function (evt) {
         handleColourTheme();
     })
 }
@@ -342,14 +356,14 @@ const enableAllSoundAndNewButtons = () => {
 
     // arpeggiateButton.classlist.remove("pre-animation-btn");
     // playIndividualButton.classlist.remove("pre-animation-btn");
-   
+
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // !!!!!    classlist.remove WORKS WITH A LOOP WTF???   !!!!!
     const elements = document.querySelectorAll(".enabled-with-show-btn");
-      // remove class from all chosen elements
-    for (let i=0; i<elements.length; i++) {
-      elements[i].classList.remove("pre-animation-btn");
+    // remove class from all chosen elements
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].classList.remove("pre-animation-btn");
     }
 }
 
@@ -405,7 +419,7 @@ const enableExtensionOptions = (str) => {
         seventhEnable();
         ninthEnable(typeChangeVal);
         thirteenthEnable(typeChangeVal);
-    // MAJOR, MINOR, AUGMENTED OR DIMINISHED 
+        // MAJOR, MINOR, AUGMENTED OR DIMINISHED 
     } else {
         sixthEnable();
         seventhEnable();
@@ -421,12 +435,12 @@ const playIntro = () => {
     setTimeout(() => {
         const sound = new Howl({
             src: ['src/sounds/intro2.mp3']
-          });
-          sound.play();      
+        });
+        sound.play();
     }, 600)
 }
 
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
     // console.log("page is loaded");
     // helpersTest()
 
@@ -461,7 +475,7 @@ window.addEventListener("resize", () => {
     }, 500);
 });
 
-export { 
+export {
     accidentalEnable,
     hideNameInstruction,
     showAccidentalInstruction,

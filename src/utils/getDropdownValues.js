@@ -1,4 +1,4 @@
-import { 
+import {
     accidentalEnable,
     typeEnable,
     hideNameInstruction,
@@ -34,7 +34,7 @@ const getAccidental = () => {
     return chordAccidental;
 }
 
-const getOptSixth  = () => {
+const getOptSixth = () => {
     const sixthSelect = document.getElementById("sixth");
     let chordSixth = sixthSelect.options[sixthSelect.selectedIndex].value;
     return chordSixth;
@@ -85,19 +85,19 @@ let isImpossibleKey = false;
 // GET SELECTED NAME, ENABLE ACCIDENTAL OPTIONS, SHOW INSTR ONCE NAME IS SELECTED
 const getNameChange = () => {
     const nameDropdown = document.getElementById("name");
-    nameDropdown.addEventListener('change', function() {
-    nameChangeVal = this.value;
-    if (!isNameSelected) {
-        isNameSelected = true;
-        accidentalEnable();
-        hideNameInstruction();
-        showAccidentalInstruction();
-    } else if (isNameSelected && !accidentalInstruction.classList.contains("hidden")) {
-        showAccidentalInstruction();
-    } else {
-        hideAccidentalInstruction();
-    }
-    //   WHAT IS FALSE ???
+    nameDropdown.addEventListener('change', function () {
+        nameChangeVal = this.value;
+        if (!isNameSelected) {
+            isNameSelected = true;
+            accidentalEnable();
+            hideNameInstruction();
+            showAccidentalInstruction();
+        } else if (isNameSelected && !accidentalInstruction.classList.contains("hidden")) {
+            showAccidentalInstruction();
+        } else {
+            hideAccidentalInstruction();
+        }
+        //   WHAT IS FALSE ???
     }, false);
     return nameChangeVal;
 }
@@ -108,17 +108,17 @@ const accidentalInstruction = document.getElementById("accidental-instruction");
 
 const getAccidentalChange = () => {
     const accidentalDropdown = document.getElementById("accidental");
-    accidentalDropdown.addEventListener('change', function() {
+    accidentalDropdown.addEventListener('change', function () {
 
         accidentalChangeVal = this.value;
-        isImpossibleKey = ((getNameChange() === "b" && accidentalChangeVal ===  "#") ||
-        (getNameChange() === "e" && accidentalChangeVal ===  "#") ||
-        (getNameChange() === "f" && accidentalChangeVal ===  "b"));
+        isImpossibleKey = ((getNameChange() === "b" && accidentalChangeVal === "#") ||
+            (getNameChange() === "e" && accidentalChangeVal === "#") ||
+            (getNameChange() === "f" && accidentalChangeVal === "b"));
         // console.log(isImpossibleKey);
         typeEnable();
         if (!accidentalInstruction.classList.contains("hidden") && accidentalOptions.selectedIndex > 0) {
             hideAccidentalInstruction();
-        } 
+        }
         hideAccidentalInstruction();
         // showTypeInstruction();
         if (isImpossibleKey) {
@@ -136,7 +136,7 @@ getAccidentalChange();
 let typeChangeVal = "";
 const getTypeChange = () => {
     const typeDropdown = document.getElementById("type");
-    typeDropdown.addEventListener('change', function() {
+    typeDropdown.addEventListener('change', function () {
         typeChangeVal = this.value;
         enableExtensionOptions(typeChangeVal);
         hideTypeInstruction();
@@ -150,7 +150,7 @@ const getTypeChange = () => {
 }
 getTypeChange();
 
-export { 
+export {
     getName,
     getType,
     getAccidental,
@@ -161,6 +161,6 @@ export {
     getOptThirteenth,
     getRegister,
     getNameChange,
-    getAccidentalChange ,
+    getAccidentalChange,
     getTypeChange
 };
