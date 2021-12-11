@@ -104,7 +104,8 @@ const playChord = (arr) => {
         for (const soundFile of soundFiles) {
             const sound = new Howl({
                 src: [soundFile],
-                volume: 0.4
+                volume: 0.4,
+                html5: false
             });
             sound.play();
         }
@@ -119,7 +120,8 @@ const arpeggiateChord = (arr) => {
         setTimeout(() => {
             const sound = new Howl({
                 src: [soundFiles[i]],
-                volume: 0.3
+                volume: 0.4,
+                html5: false
             });
             sound.play();
         }, delay)
@@ -157,7 +159,8 @@ const makeNewElements = (arr) => {
 
         soundFile = new Howl({
             src: [soundFile],
-            volume: 0.6
+            volume: 0.6,
+            html5: false
         })
         elem.addEventListener('mouseover', () => soundFile.play());
 
